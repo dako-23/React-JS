@@ -1,0 +1,32 @@
+import React from "react";
+import Typed from "react-typed";
+// import { ReactTyped } from "react-typed";
+import '@fortawesome/fontawesome-free/css/all.min.css';
+
+export default function Content() {
+    return (
+        <div className="bg-hero-pattern h-screen bg-cover bg-center flex items-center justify-center text-white text-2xl font-bold">
+            <div className="flex flex-col text-center justify-center w-full h-full  mt-[-600px] mx-auto max-w-[1100px]">
+                <h1 className="font-bold md:text-5xl sm:text-5xl text-3xl md:py-6">
+                    The place where moms become friends!
+                </h1>
+                <div className="flex justify-center items-center">
+                    <p className="md:text-4xl sm:text-3xl text-xl font-bold ">
+                        Momma’s Gang – a place to
+                    </p>
+                    <Typed
+                        className="md:text-4xl sm:text-3xl text-xl font-bold  pl-2"
+                        strings={["connect", "share", "support"]}
+                        typeSpeed={120}
+                        backSpeed={140}
+                        loop
+                    />
+
+                </div>
+                <button className="active:opacity-[0.7] absolute bottom-24 left-1/2 transform -translate-x-1/2 font-bold bg-lime-700 shadow-xl shadow-lime-700/100 mx-auto my-12 w-[170px] h-[45px] rounded-lg overflow-hidden transition-all flex items-center justify-center before:ease before:absolute before:right-0 before:top-0 before:h-full before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-lime-500 hover:before:-translate-x-40">
+                    Get Started
+                </button>
+            </div>
+        </div>
+    )
+}

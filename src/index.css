@@ -1,0 +1,12 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.fa-solid {
+  font-size: 18px;
+  color: rgb(58, 53, 53);
+}
+
+.fa-solid.fa-circle-check.fa-lg.text-white{
+  color: rgb(240, 248, 248);
+}
