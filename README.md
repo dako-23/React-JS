@@ -25,8 +25,8 @@ Open http://localhost:5173 to view it in the browser.
 # Screenshots
 
 # Desktop View
-[homePage](./src/assets/homePage.png)
+![homePage](./src/assets/homePage.png)
 
 # Phone View
-[homePageMob](./src/assets/homePageMob.jpg)
-[naviMob](./src/assets/naviMob.jpg)
+![homePageMob](./src/assets/homePageMob.jpg)
+![naviMob](./src/assets/naviMob.jpg)
