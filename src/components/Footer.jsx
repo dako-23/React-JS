@@ -1,4 +1,6 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
+
 
 export default function Footer() {
 
@@ -49,10 +51,10 @@ export default function Footer() {
 
                     {/* Navigation Links */}
                     <div className="flex space-x-6 text-gray-400">
-                        <a href="/" className="hover:text-white">Home</a>
-                        <a href="/about" className="hover:text-white">About</a>
-                        <a href="/community" className="hover:text-white">Community</a>
-                        <a href="/contact" className="hover:text-white">Contact</a>
+                        <Link to="/about" className="hover:text-white">About</Link>
+                        <Link to="/community" className="hover:text-white">Community</Link>
+                        <Link to="/" className="hover:text-white">Home</Link>
+                        <Link to="/contact" className="hover:text-white">Contact</Link>
                     </div>
 
                     {/* Social Icons */}
@@ -74,6 +76,6 @@ export default function Footer() {
                     © {new Date().getFullYear()} Momma’s Gang. All rights reserved.
                 </div>
             </div>
-        </footer>
+        </footer >
     );
 }
