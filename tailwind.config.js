@@ -7,7 +7,7 @@ module.exports = {
   theme: {
     extend: {
       backgroundImage: {
-        'home-pattern': "url('/home1.webp')",
+        'home-pattern': "url('/home.webp')",
         'page-pattern': "url('/dot.png')"
       },
     },

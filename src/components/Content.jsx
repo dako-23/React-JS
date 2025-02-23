@@ -3,7 +3,7 @@ import Typed from "react-typed";
 // import { ReactTyped } from "react-typed";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 
-export default function Home() {
+export default function Content() {
     return (
         <div className="bg-home-pattern h-screen bg-cover bg-center flex items-center justify-center text-white text-2xl font-bold">
             <div className="flex flex-col text-center justify-center w-full h-full  mt-[-600px] mx-auto max-w-[1100px]">
