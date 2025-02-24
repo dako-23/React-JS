@@ -23,7 +23,7 @@ export default function Content() {
                     />
 
                 </div>
-                <button className="active:opacity-[0.7] absolute bottom-24 left-1/2 transform -translate-x-1/2 font-bold bg-lime-700 shadow-xl shadow-lime-700/100 mx-auto my-12 w-[170px] h-[45px] rounded-lg overflow-hidden transition-all flex items-center justify-center before:ease before:absolute before:right-0 before:top-0 before:h-full before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-lime-500 hover:before:-translate-x-40">
+                <button className="active:opacity-[0.7] absolute bottom-24 left-1/2 transform -translate-x-1/2 font-bold bg-gray-800 shadow-xl shadow-lime-700/100 mx-auto my-12 w-[170px] h-[45px] rounded-lg overflow-hidden transition-all flex items-center justify-center before:ease before:absolute before:right-0 before:top-0 before:h-full before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-lime-500 hover:before:-translate-x-40">
                     Sign Up
                 </button>
             </div>

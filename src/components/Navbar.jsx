@@ -31,7 +31,7 @@ export default function Navbar() {
             </div>
 
             <ul
-                className={`md:flex md:items-center md:space-x-6 text-amber-950 font-medium ${isMobileMenuOpen
+                className={`md:flex md:items-center md:space-x-6 text-gray-800 font-medium ${isMobileMenuOpen
                     ? "flex flex-col absolute top-16 right-0 w-full bg-lime-200 bg-opacity-40 backdrop-blur-md px-4 py-6 z-10"
                     : "hidden"
                     }`}>
