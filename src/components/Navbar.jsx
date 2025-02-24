@@ -1,14 +1,34 @@
 import React, { useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
+    const textVariants = {
+        hidden: { y: -150, opacity: 0 },
+        visible: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                type: "spring",
+                stiffness: 80,
+                damping: 20,
+                bounce: 0.1,
+                delay: 0.3,
+            },
+        },
+    };
 
     const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
 
-    return (
+    return (<motion.h1
+        variants={textVariants}
+        initial="hidden"
+        animate="visible"
+        className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-opacity-40 backdrop-blur-md z-10 h-14"
+    >
         <nav className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-lime-200 bg-opacity-40 backdrop-blur-md z-10 h-14">
 
             <div className="flex items-center">
@@ -18,8 +38,6 @@ export default function Navbar() {
                     className="w-20 h-auto"
                 />
             </div>
-
-
             <div className="md:hidden flex items-center">
                 <button onClick={toggleMobileMenu}>
                     {isMobileMenuOpen ? (
@@ -36,7 +54,7 @@ export default function Navbar() {
                     : "hidden"
                     }`}>
                 <li className="hover:text-lime-700 py-2 md:py-0">
-                    <Link to="/">Home</Link>
+                    <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</Link>
                 </li>
                 <li className="hover:text-lime-700 py-2 md:py-0">
                     <Link to="/login">Login</Link>
@@ -53,5 +71,6 @@ export default function Navbar() {
                 </li> */}
             </ul>
         </nav>
+    </motion.h1>
     )
 }
