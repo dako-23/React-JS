@@ -4,22 +4,22 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 function PartnersCarousel() {
-  const [activeSlide, setActiveSlide] = useState(2); // Задаване на третия елемент като начален активен слайд
+  const [activeSlide, setActiveSlide] = useState(2);
 
   const settings = {
     dots: true,
     infinite: true,
     arrows: false,
     speed: 500,
-    slidesToShow: 5, // Показване на 5 лога едновременно
+    slidesToShow: 5,
     slidesToScroll: 1,
     autoplay: true,
     autoplaySpeed: 2000,
     pauseOnHover: true,
-    centerMode: true, // Активиране на режим "център"
-    centerPadding: "60px", // Добавяне на padding за по-добър визуален ефект
-    focusOnSelect: true, // Фокусиране на слайда при клик
-    afterChange: (current) => setActiveSlide(current), // Актуализиране на активния слайд след промяна
+    centerMode: true, 
+    centerPadding: "60px", 
+    focusOnSelect: true,
+    afterChange: (current) => setActiveSlide(current), 
     responsive: [
       {
         breakpoint: 768,
