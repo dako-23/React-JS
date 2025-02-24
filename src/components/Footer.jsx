@@ -19,8 +19,6 @@ export default function Footer() {
     return (
         <footer className="bg-gray-900 text-white py-10">
             <div className="container mx-auto px-6">
-
-                {/* FAQ Section */}
                 <div className="mb-10">
                     <h2 className="text-xl font-bold text-center mb-4">Frequently Asked Questions</h2>
                     <div className="max-w-2xl mx-auto">
@@ -39,25 +37,17 @@ export default function Footer() {
                         ))}
                     </div>
                 </div>
-
-                {/* Footer Links & Socials */}
                 <div className="flex flex-col md:flex-row justify-between items-center border-t border-gray-700 pt-6">
-
-                    {/* Logo & About */}
                     <div className="text-center md:text-left mb-6 md:mb-0">
                         <h2 className="text-lg font-bold">Momma’s Gang</h2>
                         <p className="text-sm text-gray-400">A place where moms connect, share, and support each other.</p>
                     </div>
-
-                    {/* Navigation Links */}
                     <div className="flex space-x-6 text-gray-400">
                         <Link to="/about" className="hover:text-white">About</Link>
                         <Link to="/community" className="hover:text-white">Community</Link>
                         <Link to="/" className="hover:text-white">Home</Link>
                         <Link to="/contact" className="hover:text-white">Contact</Link>
                     </div>
-
-                    {/* Social Icons */}
                     <div className="flex space-x-4 mt-4 md:mt-0">
                         <a href="https://web.telegram.org/" target="_blank" rel="noopener noreferrer">
                             <img src="/telegram.png" alt="Telegram" className="h-6" />
@@ -70,8 +60,6 @@ export default function Footer() {
                         </a>
                     </div>
                 </div>
-
-                {/* Copyright */}
                 <div className="text-gray-500 text-sm mt-6">
                     © {new Date().getFullYear()} Momma’s Gang. All rights reserved.
                 </div>
