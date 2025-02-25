@@ -2,7 +2,8 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Home from "./pages/Home"
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Login from "./components/Login";
+import Login from "./components/Login.jsx";
+import Register from "./components/Register.jsx";
 
 
 function App() {
@@ -12,6 +13,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
         {/* <Route path="/contact" element={<Contact />} />
         <Route path="*" element={<NotFound />} />  */}
       </Routes>

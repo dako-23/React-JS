@@ -54,10 +54,16 @@ export default function Navbar() {
                     : "hidden"
                     }`}>
                 <li className="hover:text-lime-700 py-2 md:py-0">
-                    <Link to="/" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>Home</Link>
+                    <Link to="/" onClick={() => {
+                        window.scrollTo({ top: 0, behavior: 'smooth' })
+                        setIsMobileMenuOpen(false)
+                    }}>Home</Link>
                 </li>
                 <li className="hover:text-lime-700 py-2 md:py-0">
-                    <Link to="/login">Login</Link>
+                    <Link onClick={() => setIsMobileMenuOpen(false)} to="/login">Login</Link>
+                </li>
+                <li className="hover:text-lime-700 py-2 md:py-0">
+                    <Link onClick={() => setIsMobileMenuOpen(false)} to="/register">Register</Link>
                 </li>
                 {/* <li className="hover:text-lime-700 py-2 md:py-0">
                     <a href="/company">Company</a>
