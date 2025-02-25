@@ -4,6 +4,7 @@ import Slider from 'react-slick';
 import { FaHeart } from 'react-icons/fa';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 
 const initialTopics = [
     { id: 1, title: "Как да се справим с коликите?", comments: 45, likes: 0, liked: false, slug: 'cope-with-colic' },
@@ -28,9 +29,21 @@ export default function Topics() {
         }));
     };
 
+    const NextArrow = ({ onClick }) => (
+        <div className="absolute top-1/2 right-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
+            <FaChevronRight size={24} />
+        </div>
+    );
+
+    const PrevArrow = ({ onClick }) => (
+        <div className="absolute top-1/2 left-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
+            <FaChevronLeft size={24} />
+        </div>
+    );
+
     const settings = {
         dots: true,
-        arrows: false,
+        arrows: true,
         infinite: true,
         speed: 500,
         slidesToShow: 2,
@@ -46,7 +59,9 @@ export default function Topics() {
                 breakpoint: 480,
                 settings: { slidesToShow: 1 }
             }
-        ]
+        ],
+        nextArrow: <NextArrow />,
+        prevArrow: <PrevArrow />
     };
 
     return (
