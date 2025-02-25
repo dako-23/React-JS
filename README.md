@@ -31,5 +31,8 @@ Open http://localhost:5173 to view it in the browser.
 ![homePage2](./src/assets/home3.png)
 
 # Phone View
-![homePageMob](./src/assets/homePageMob.jpg)
-![naviMob](./src/assets/naviMob.jpg)
+![mobile1](./src/assets/mob1.png)
+![mobile2](./src/assets/mob2.png)
+![mobile3](./src/assets/mob3.png)
+![mobile4](./src/assets/mob4.png)
+![mobile5](./src/assets/mob5.png)
