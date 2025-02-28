@@ -1,7 +1,7 @@
 import { motion } from 'framer-motion';
 import PartnersCarousel from "../components/PartnersCarousel.jsx";
 import Content from "../components/Content";
-import Groups from "../components/Groups.jsx";
+import GroupsIntro from "../components/GroupsIntro.jsx";
 import Topics from "../components/Topics.jsx";
 import Description from "../components/Description.jsx";
 import Recommendations from "../components/Recommendations.jsx";
@@ -34,7 +34,7 @@ export default function Home() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.2 }}
                 >
-                    <Groups />
+                    <GroupsIntro />
                 </motion.div>
                 <motion.div
                     variants={childVariants}

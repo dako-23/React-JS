@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
-import ScrollToTop from "../helpers/scrollToTop.js";
+
 
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -66,16 +66,15 @@ export default function Navbar() {
                 <li className="hover:text-lime-700 py-2 md:py-0">
                     <Link onClick={() => setIsMobileMenuOpen(false)} to="/register">Register</Link>
                 </li>
-                {/* <li className="hover:text-lime-700 py-2 md:py-0">
-                    <a href="/company">Company</a>
-                </li>
-
                 <li className="hover:text-lime-700 py-2 md:py-0">
+                    <Link onClick={() => setIsMobileMenuOpen(false)} to="/groups">Groups</Link>
+                </li>
+                {/* <li className="hover:text-lime-700 py-2 md:py-0">
                     <a href="/about">About</a>
                 </li>
                 <li className="hover:text-lime-700 py-2 md:py-0">
                     <a href="/contact">Contact</a>
-                </li> */}
+                </li>  */}
             </ul>
         </nav>
     </motion.h1>
