@@ -6,7 +6,7 @@ import authService from "../services/authService.js";
 export default function Register() {
     const navigate = useNavigate()
 
-    const submitHandleRegister = async (e) => {
+    const registerSubmitHandler = async (e) => {
         e.preventDefault()
 
         const formData = new FormData(e.target)
@@ -33,7 +33,7 @@ export default function Register() {
                 className="bg-page-pattern w-full max-w-md p-6 bg-white shadow-lg rounded-2xl"
             >
                 <h2 className="text-2xl font-semibold text-center h-14 text-gray-800">Register</h2>
-                <motion.form method="POST" onSubmit={submitHandleRegister}
+                <motion.form method="POST" onSubmit={registerSubmitHandler}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}

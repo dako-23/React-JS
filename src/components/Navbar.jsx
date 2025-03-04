@@ -33,11 +33,16 @@ export default function Navbar() {
         <nav className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-lime-200 bg-opacity-40 backdrop-blur-md z-10 h-14">
 
             <div className="flex items-center">
-                <img
-                    src="/logo.png"
-                    alt="Logo"
-                    className="w-20 h-auto"
-                />
+                <Link onClick={() => {
+                    window.scrollTo({ top: 0, behavior: 'smooth' })
+                    setIsMobileMenuOpen(false)
+                }} to="/">
+                    <img
+                        src="/logo.png"
+                        alt="Logo"
+                        className="w-20 h-auto"
+                    />
+                </Link>
             </div>
             <div className="md:hidden flex items-center">
                 <button onClick={toggleMobileMenu}>
@@ -77,6 +82,6 @@ export default function Navbar() {
                 </li>  */}
             </ul>
         </nav>
-    </motion.h1>
+    </motion.h1 >
     )
 }
