@@ -1,7 +1,28 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
+import authService from "../services/authService.js";
+
 export default function Register() {
+    const navigate = useNavigate()
+
+    const submitHandleRegister = async (e) => {
+        e.preventDefault()
+
+        const formData = new FormData(e.target)
+        const { username, email, password } = Object.fromEntries(formData);
+
+        const userData = { username, email, password };
+
+        try {
+            await authService.register(userData);
+            
+            navigate('/')
+        } catch (err) {
+            console.log(err);
+        }
+
+    }
 
     return (
         <div className="bg-home-pattern h-screen bg-cover bg-center flex items-center justify-center min-h-screen bg-gray-100">
@@ -12,13 +33,13 @@ export default function Register() {
                 className="bg-page-pattern w-full max-w-md p-6 bg-white shadow-lg rounded-2xl"
             >
                 <h2 className="text-2xl font-semibold text-center h-14 text-gray-800">Register</h2>
-                <motion.form method="POST"
+                <motion.form method="POST" onSubmit={submitHandleRegister}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 0.5 }}
                     className="space-y-4"
-                > 
-                    <input type="text" name="name" placeholder="Full Name" className="w-full p-3 border rounded-lg" />
+                >
+                    <input type="text" name="username" placeholder="Username" className="w-full p-3 border rounded-lg" />
                     <input type="email" name="email" placeholder="Email" className="w-full p-3 border rounded-lg" />
                     <input type="password" name="password" placeholder="Password" className="w-full p-3 border rounded-lg" />
                     <input type="password" name="rePassword" placeholder="Confirm Password" className="w-full p-3 border rounded-lg" />

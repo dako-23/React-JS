@@ -5,10 +5,8 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Login from "./components/Login.jsx";
 import Register from "./components/Register.jsx";
-import GroupsCatalog from "./components/GroupsCatalog.jsx";
-import GroupsPage from "./components/GroupsPage.jsx";
-
-
+import GroupsList from "./components/GroupsList.jsx";
+import GroupChat from "./components/GroupChat.jsx";
 
 
 function App() {
@@ -18,10 +16,10 @@ function App() {
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-        <Route path="/groups" element={<GroupsCatalog />} />
-        <Route path="/groups/:id" element={<GroupsPage />} />
+        <Route path="/users/login" element={<Login />} />
+        <Route path="/users/register" element={<Register />} />
+        <Route path="/groups" element={<GroupsList />} />
+        <Route path="/groups/:id" element={<GroupChat />} />
         {/* <Route path="*" element={<NotFound />} />  */}
       </Routes>
       <Footer />

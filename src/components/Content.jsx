@@ -2,6 +2,7 @@ import React from "react";
 import Typed from "react-typed";
 import { motion } from "framer-motion";
 import '@fortawesome/fontawesome-free/css/all.min.css';
+import { useNavigate } from "react-router-dom";
 
 const textVariants = {
     hidden: { y: -150, opacity: 0 },
@@ -19,6 +20,8 @@ const textVariants = {
 };
 
 export default function Content() {
+    const navigate = useNavigate();
+
     return (
         <div className="bg-home-pattern h-screen bg-cover bg-center flex items-center justify-center text-white text-2xl font-bold">
             <div className="flex flex-col text-center justify-center w-full h-full mt-[-600px] mx-auto max-w-[1100px]">
@@ -48,8 +51,7 @@ export default function Content() {
                         loop
                     />
                 </motion.div>
-
-                <motion.button
+                <motion.button onClick={() => navigate('/users/login')}
                     initial={{ opacity: 0 }}
                     animate={{ opacity: 1 }}
                     transition={{ duration: 1.5, ease: "easeOut" }}

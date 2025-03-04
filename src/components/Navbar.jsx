@@ -61,10 +61,10 @@ export default function Navbar() {
                     }}>Home</Link>
                 </li>
                 <li className="hover:text-lime-700 py-2 md:py-0">
-                    <Link onClick={() => setIsMobileMenuOpen(false)} to="/login">Login</Link>
+                    <Link onClick={() => setIsMobileMenuOpen(false)} to="/users/login">Login</Link>
                 </li>
                 <li className="hover:text-lime-700 py-2 md:py-0">
-                    <Link onClick={() => setIsMobileMenuOpen(false)} to="/register">Register</Link>
+                    <Link onClick={() => setIsMobileMenuOpen(false)} to="/users/register">Register</Link>
                 </li>
                 <li className="hover:text-lime-700 py-2 md:py-0">
                     <Link onClick={() => setIsMobileMenuOpen(false)} to="/groups">Groups</Link>
