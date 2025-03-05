@@ -8,7 +8,7 @@ export default function GroupChat() {
     const [newMessage, setNewMessage] = useState("");
 
     const location = useLocation();
-    const groupName = location.state?.name
+    const groupName = location.state?.groupName
 
     const sendMessage = () => {
         if (newMessage.trim() !== "") {
