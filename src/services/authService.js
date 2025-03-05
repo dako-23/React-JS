@@ -17,6 +17,7 @@ export default {
             }
 
             localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem("userId", data._id);
 
             return data;
         } catch (err) {
@@ -28,7 +29,7 @@ export default {
             const res = await fetch(`${API_URL}/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({email, password}),
+                body: JSON.stringify({ email, password }),
                 credentials: 'include'
             });
 
@@ -39,6 +40,7 @@ export default {
             }
 
             localStorage.setItem('accessToken', data.accessToken);
+            localStorage.setItem("userId", data._id);
 
             return data;
         } catch (err) {

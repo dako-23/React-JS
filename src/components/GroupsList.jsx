@@ -4,17 +4,23 @@ import { FiPlusCircle } from "react-icons/fi";
 import GroupListItems from "./GroupListItems.jsx";
 import GroupCreate from "./GroupCreate.jsx";
 import groupService from "../services/groupService.js";
+import Loader from "./Loader.jsx";
 
 export default function GroupsList() {
     const [groups, setGroups] = useState([])
     const [joinedGroups, setJoinedGroups] = useState([]);
     const [showCreateGroup, setShowCreateGroup] = useState(null)
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        setLoading(true)
         groupService.getAll()
             .then(result => {
                 setGroups(result)
+                console.log(result);
+                
             })
+            .finally(() => setLoading(null))
     }, []);
 
     const createGroupHandler = async (e) => {
@@ -34,7 +40,7 @@ export default function GroupsList() {
             state.includes(groupId) ? state.filter(id => id !== groupId) : [...state, groupId]
         );
         console.log(joinedGroups);
-        
+
     };
 
 
@@ -60,14 +66,20 @@ export default function GroupsList() {
                     <FiPlusCircle size={22} /> Create Group
                 </button>
             </div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                {groups.map(group =>
-                    <GroupListItems
-                        key={group._id}
-                        isJoined={joinedGroups.includes(group._id)}
-                        toggleJoin={toggleJoin}
-                        {...group} />)}
-            </div>
+            {loading ? (
+                <Loader
+                />) : (
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {groups.map(group => (
+                        <GroupListItems
+                            key={group._id}
+                            isJoined={joinedGroups.includes(group._id)}
+                            toggleJoin={toggleJoin}
+                            {...group}
+                        />
+                    ))}
+                </div>
+            )}
             {showCreateGroup && <GroupCreate
                 onClose={closeShowCreateGroupHandler}
                 onSubmitCreate={createGroupHandler}
