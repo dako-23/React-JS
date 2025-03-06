@@ -17,8 +17,6 @@ export default function GroupsList() {
         groupService.getAll()
             .then(result => {
                 setGroups(result)
-                console.log(result);
-                
             })
             .finally(() => setLoading(null))
     }, []);
