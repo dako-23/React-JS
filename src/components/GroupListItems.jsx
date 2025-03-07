@@ -30,20 +30,27 @@ export default function GroupListItems({
             )}
             <h3 className="text-lg font-semibold">{groupName}</h3>
             <p className="text-gray-500">{joinedGroup.length} members</p>
-            <button
-                onClick={(e) => {
-                    e.stopPropagation();
-                    toggleJoin(_id);
-                }}
-                className={`mt-3 px-4 py-2 rounded-lg font-medium transition  ${isJoined
-                    ?
-                    "bg-red-700 text-white hover:bg-red-400"
-                    :
-                    "bg-gray-800 text-white hover:bg-gray-600"
-                    }`}
-            >
-                {isJoined ? "Leave" : "Join"}
-            </button>
+            {isJoined ?
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        toggleJoin(_id);
+                    }}
+                    className='mt-3 px-4 py-2 rounded-lg font-medium transition bg-red-700 text-white hover:bg-red-400'
+                >
+                    Leave
+                </button>
+                :
+                <button
+                    onClick={(e) => {
+                        e.stopPropagation();
+                        toggleJoin(_id);
+                    }}
+                    className='mt-3 px-4 py-2 rounded-lg font-medium transition bg-gray-800 text-white hover:bg-gray-600'
+                >
+                    Join
+                </button>
+            }
         </div>
     );
 }

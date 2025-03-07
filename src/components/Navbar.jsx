@@ -3,7 +3,6 @@ import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 
-
 export default function Navbar() {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
@@ -61,6 +60,7 @@ export default function Navbar() {
                     }`}>
                 <li className="hover:text-lime-700 py-2 md:py-0">
                     <Link to="/" onClick={() => {
+                        
                         window.scrollTo({ top: 0, behavior: 'smooth' })
                         setIsMobileMenuOpen(false)
                     }}>Home</Link>

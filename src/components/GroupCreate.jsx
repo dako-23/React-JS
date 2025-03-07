@@ -1,7 +1,5 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-
-
 export default function GroupCreate({
     onClose,
     onSubmitCreate

@@ -25,5 +25,30 @@ export default {
         const result = await response.json();
 
         return result
+    },
+    async joinGroup(groupId) {
+        const res = await fetch(`${API_URL}/groups/${groupId}/join`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        });
+
+        if (!res.ok) {
+            throw new Error('Failed to join group');
+        }
+        return await res.json();
+    },
+    async leaveGroup(groupId) {
+        const res = await fetch(`${API_URL}/groups/${groupId}/leave`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        });
+
+        if (!res.ok) {
+            throw new Error('Failed to join group');
+        }
+
+        return await res.json()
     }
 }

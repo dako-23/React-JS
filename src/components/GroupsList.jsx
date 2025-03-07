@@ -13,13 +13,22 @@ export default function GroupsList() {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        setLoading(true)
+        setLoading(true);
+
         groupService.getAll()
             .then(result => {
-                setGroups(result)
-                setLoading(null)
+                setGroups(result);
+                const userId = localStorage.getItem('userId');
+
+                const userJoinedGroups = result
+                    .filter(group => group.joinedGroup.includes(userId))
+                    .map(group => group._id);
+
+                setJoinedGroups(userJoinedGroups);
+
             })
-        }, []);
+            .finally(() => setLoading(null));
+    }, []);
 
     const createGroupHandler = async (e) => {
         e.preventDefault();
@@ -28,15 +37,66 @@ export default function GroupsList() {
         const groupData = Object.fromEntries(formData)
 
         const newGroup = await groupService.create(groupData);
+        const userId = localStorage.getItem("userId");
 
         setGroups(state => [...state, newGroup]);
+
+        if (newGroup._ownerId === userId) {
+            setJoinedGroups(state => [...state, newGroup._id])
+        }
+
         setShowCreateGroup(null)
     }
 
+    const joinGroup = async (groupId) => {
+        try {
+            await groupService.joinGroup(groupId);
+            const userId = localStorage.getItem("userId");
+
+            setGroups((prevGroups) =>
+                prevGroups.map((group) =>
+                    group._id === groupId
+                        ? {
+                            ...group, joinedGroup: [...group.joinedGroup, userId]
+                        }
+                        : group
+                )
+            );
+
+            setJoinedGroups((prev) => [...prev, groupId]);
+        } catch (err) {
+            console.error("Error joining group:", err);
+        }
+    };
+
+    const leaveGroup = async (groupId) => {
+        try {
+            await groupService.leaveGroup(groupId);
+            const userId = localStorage.getItem("userId");
+
+            setGroups((prevGroups) =>
+                prevGroups.map((group) =>
+                    group._id === groupId
+                        ? {
+                            ...group, joinedGroup: group.joinedGroup.filter(id => id !== userId)
+                        }
+                        : group
+                )
+            );
+
+            setJoinedGroups((prev) => prev.filter((id) => id !== groupId));
+        } catch (err) {
+            console.error("Error leaving group:", err);
+        }
+    };
+
     const toggleJoin = (groupId) => {
-        setJoinedGroups(state =>
-            state.includes(groupId) ? state.filter(id => id !== groupId) : [...state, groupId]
-        );
+        joinedGroups.includes(groupId)
+            ?
+            leaveGroup(groupId)
+            :
+            joinGroup(groupId)
+
     };
 
     const closeShowCreateGroupHandler = () => {
