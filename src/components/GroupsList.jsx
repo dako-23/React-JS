@@ -17,9 +17,9 @@ export default function GroupsList() {
         groupService.getAll()
             .then(result => {
                 setGroups(result)
+                setLoading(null)
             })
-            .finally(() => setLoading(null))
-    }, []);
+        }, []);
 
     const createGroupHandler = async (e) => {
         e.preventDefault();
@@ -37,10 +37,7 @@ export default function GroupsList() {
         setJoinedGroups(state =>
             state.includes(groupId) ? state.filter(id => id !== groupId) : [...state, groupId]
         );
-        console.log(joinedGroups);
-
     };
-
 
     const closeShowCreateGroupHandler = () => {
         setShowCreateGroup(null)

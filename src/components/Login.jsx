@@ -1,26 +1,37 @@
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import authService from "../services/authService.js";
+import { useState } from "react";
 
 
 export default function Login() {
-  const navigate = useNavigate()
+  const [pending, setPending] = useState(false);
+  const navigate = useNavigate();
+
+  const [values, setValues] = useState({
+    email: '',
+    password: '',
+  });
 
   const LoginSubmitHandler = async (e) => {
-    e.preventDefault()
-
-    const formData = new FormData(e.target)
-    const { email, password } = Object.fromEntries(formData);
+    e.preventDefault();
+    setPending(true);
 
     try {
-      await authService.login(email, password);
+      await authService.login(values.email, values.password);
 
-      navigate('/')
+      navigate('/');
+
     } catch (err) {
       console.log(err);
     }
-
+    console.log({ email: values.email, password: values.password });
   }
+
+  const onChangeHandler = (e) => {
+    setValues(state => ({ ...state, [e.target.name]: e.target.value }));
+
+  };
 
   return (
     <div className="bg-home-pattern h-screen bg-cover bg-center flex items-center justify-center min-h-screen bg-gray-100">
@@ -37,18 +48,22 @@ export default function Login() {
           transition={{ duration: 0.5 }}
           className="space-y-4"
         >
-          <input type="email" name="email" placeholder="Email" className="w-full p-3 border rounded-lg" />
-          <input type="password" name="password" placeholder="Password" className="w-full p-3 border rounded-lg" />
+          <input type="email" name="email" placeholder="Email" className="w-full p-3 border rounded-lg" onChange={onChangeHandler} value={values.email} />
+          <input type="password" name="password" placeholder="Password" className="w-full p-3 border rounded-lg" onChange={onChangeHandler} value={values.password} />
           <motion.button
             whileHover={{ scale: 1.05 }}
             whileTap={{ scale: 0.95 }}
-            className="w-full p-3 bg-gray-800 text-white rounded-lg hover:bg-lime-700"
+            disabled={pending}
+            value="Login"
+            className={`w-full p-3 ${pending ? 'bg-gray-400 text-white rounded-lg cursor-not-allowed' : 'bg-gray-800 text-white rounded-lg'}`}
           >
             Login
           </motion.button>
           <p className="text-center text-sm text-gray-800 mt-4">
-            Don't have an account? <Link to="/register" className="text-lime-700 font-semibold">Register</Link>
-            <button className="text-lime-700 hover:underline ml-1"></button>
+            Don't have an account? <Link to="/users/register" className="text-lime-700 font-semibold">Register</Link>
+
+            <button className='hover:underline ml-1 text-lime-700'></button>
+
           </p>
         </motion.form>
       </motion.div>

@@ -2,27 +2,38 @@ import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
 import authService from "../services/authService.js";
+import { useState } from "react";
 
 export default function Register() {
-    const navigate = useNavigate()
+    const [pending, setPending] = useState(false);
+    const navigate = useNavigate();
+
+    const [values, setValues] = useState({
+        username: '',
+        email: '',
+        password: '',
+        rePassword: '',
+    });
+
 
     const registerSubmitHandler = async (e) => {
-        e.preventDefault()
+        e.preventDefault();
+        setPending(true);
 
-        const formData = new FormData(e.target)
-        const { username, email, password } = Object.fromEntries(formData);
-
-        const userData = { username, email, password };
+        const userData = { username: values.username, email: values.email, password: values.password };
 
         try {
             await authService.register(userData);
-            
+
             navigate('/')
         } catch (err) {
             console.log(err);
         }
-
     }
+
+    const onChangeHandler = (e) => {
+        setValues(state => ({ ...state, [e.target.name]: e.target.value }));
+    };
 
     return (
         <div className="bg-home-pattern h-screen bg-cover bg-center flex items-center justify-center min-h-screen bg-gray-100">
@@ -39,19 +50,19 @@ export default function Register() {
                     transition={{ duration: 0.5 }}
                     className="space-y-4"
                 >
-                    <input type="text" name="username" placeholder="Username" className="w-full p-3 border rounded-lg" />
-                    <input type="email" name="email" placeholder="Email" className="w-full p-3 border rounded-lg" />
-                    <input type="password" name="password" placeholder="Password" className="w-full p-3 border rounded-lg" />
-                    <input type="password" name="rePassword" placeholder="Confirm Password" className="w-full p-3 border rounded-lg" />
+                    <input type="text" name="username" placeholder="Username" className="w-full p-3 border rounded-lg" onChange={onChangeHandler} value={values.username} />
+                    <input type="email" name="email" placeholder="Email" className="w-full p-3 border rounded-lg" onChange={onChangeHandler} value={values.email} />
+                    <input type="password" name="password" placeholder="Password" className="w-full p-3 border rounded-lg" onChange={onChangeHandler} value={values.password} />
+                    <input type="password" name="rePassword" placeholder="Confirm Password" className="w-full p-3 border rounded-lg" onChange={onChangeHandler} value={values.rePassword} />
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}
-                        className="w-full p-3 bg-gray-800 text-white rounded-lg hover:bg-lime-700"
+                        className={`w-full p-3 ${pending ? 'bg-gray-400 text-white rounded-lg cursor-not-allowed' : 'bg-gray-800 text-white rounded-lg'}`}
                     >
                         Register
                     </motion.button>
                     <p className="text-center text-sm text-gray-800 mt-4">
-                        Already have an account? <Link to="/login" className="text-lime-700 font-semibold">Login</Link>
+                        Already have an account? <Link to="/users/login" className="text-lime-700 font-semibold">Login</Link>
                         <button className="text-lime-700 hover:underline ml-1"></button>
                     </p>
                 </motion.form>
