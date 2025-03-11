@@ -18,6 +18,7 @@ export default {
 
             localStorage.setItem('accessToken', data.accessToken);
             localStorage.setItem("userId", data._id);
+            localStorage.setItem("username", userData.username);
 
             return data;
         } catch (err) {
@@ -41,6 +42,7 @@ export default {
 
             localStorage.setItem('accessToken', data.accessToken);
             localStorage.setItem("userId", data._id);
+            localStorage.setItem("username", data.username);
 
             return data;
         } catch (err) {

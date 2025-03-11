@@ -18,7 +18,7 @@ export default function GroupsList() {
         groupService.getAll()
             .then(result => {
                 setGroups(result);
-                const userId = localStorage.getItem('userId');
+                const userId = localStorage.getItem('userId')
 
                 const userJoinedGroups = result
                     .filter(group => group.joinedGroup.includes(userId))
