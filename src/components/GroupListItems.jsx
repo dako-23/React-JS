@@ -17,7 +17,7 @@ export default function GroupListItems({
     return (
         <div
             className="p-5 border border-gray-300 rounded-lg shadow-md cursor-pointer transition hover:shadow-lg bg-gradient-to-r from-lime-100 to-green-200"
-            onClick={() => isJoined && navigate(`/groups/${_id}`, { state: { groupName } })}
+            onClick={() => isJoined && navigate(`/groups/${_id}/chat`, { state: { groupName } })}
         >
             {imageUrl && (
                 <motion.img

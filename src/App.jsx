@@ -23,7 +23,7 @@ function App() {
           <Route path="/users/login" element={<Login />} />
           <Route path="/users/register" element={<Register />} />
           <Route path="/groups" element={<GroupsList />} />
-          <Route path="/groups/:id" element={<GroupChat />} />
+          <Route path="/groups/:id/chat" element={<GroupChat />} />
           {/* <Route path="*" element={<NotFound />} />  */}
         </Routes>
         <Footer />
