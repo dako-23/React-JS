@@ -25,7 +25,6 @@ export default function GroupsList() {
                     .map(group => group._id);
 
                 setJoinedGroups(userJoinedGroups);
-
             })
             .finally(() => setLoading(null));
     }, []);
@@ -96,7 +95,6 @@ export default function GroupsList() {
             leaveGroup(groupId)
             :
             joinGroup(groupId)
-
     };
 
     const closeShowCreateGroupHandler = () => {
