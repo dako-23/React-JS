@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import Loader from "./Loader.jsx";
 import groupChatService from '../services/groupChatService.js';
 import GroupChatMessages from './GroupChatMessages.jsx'
 import GroupChatSendMessage from './GroupChatSendMessage.jsx';
 import GroupChatUsers from './GroupChatUsers.jsx';
+import GroupChatHeader from './GroupChatHeader.jsx';
 
 const socket = io('https://server-tgjz.onrender.com', {
     withCredentials: true,
@@ -19,8 +20,6 @@ export default function GroupChat() {
     const [loading, setLoading] = useState(true);
     const chatContainerRef = useRef(null);
     const { id: groupId } = useParams();
-    const location = useLocation();
-    const { groupName } = location.state
     const userId = localStorage.getItem('userId');
     const username = localStorage.getItem('username');
 
@@ -87,12 +86,14 @@ export default function GroupChat() {
             className="max-w-4xl mx-auto py-20"
         >
             {loading ? <Loader /> : <>
-                <div className="flex h-[80vh] bg-white shadow-lg rounded-xl overflow-hidden">
-                    <GroupChatUsers />
-                    <div className="w-3/4 flex flex-col p-4">
-                        <h2 className="text-xl font-bold text-gray-800 text-center mb-3">💬 {groupName}</h2>
 
-                        <div ref={chatContainerRef} className="flex-grow bg-gray-50 border rounded-lg p-4 overflow-y-auto">
+                <div className="flex h-[80vh] bg-page-pattern shadow-lg rounded-xl overflow-hidden">
+                    <GroupChatUsers />
+
+                    <div className="w-3/4 flex flex-col p-4">
+                        <GroupChatHeader />
+                        
+                        <div ref={chatContainerRef} className="flex-grow bg-gradient-to-r from-lime-100 to-green-200 border rounded-lg p-4 overflow-y-auto">
                             {chatMessages.length === 0 ? (
                                 <p className="text-gray-500 text-center">No messages yet...</p>
                             ) : (

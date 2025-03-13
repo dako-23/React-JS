@@ -11,7 +11,7 @@ export default function GroupChatSendMessage({
                 onChange={(e) => setNewMessage(e.target.value)}
                 onKeyDown={(e) => e.key === "Enter" && sendMessage()}
                 placeholder="Write a message..."
-                className="flex-grow p-3 border rounded-lg focus:ring-2 focus:ring-lime-600"
+                className="flex-grow p-3 border rounded-lg bg-page-pattern"
             />
             <button onClick={sendMessage} className="px-4 py-2 bg-gray-800 text-white rounded-lg font-semibold hover:bg-lime-700 transition">
                 Send
