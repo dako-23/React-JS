@@ -1,5 +1,8 @@
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 import { motion } from "framer-motion";
+import { BsThreeDotsVertical } from "react-icons/bs";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 
 export default function GroupListItems({
     _id,
@@ -12,12 +15,13 @@ export default function GroupListItems({
     isJoined,
     toggleJoin,
 }) {
+    const [menuOpen, setMenuOpen] = useState(false)
     const navigate = useNavigate();
 
     return (
         <div
-            className="p-5 border border-gray-300 rounded-lg shadow-md cursor-pointer transition hover:shadow-lg bg-gradient-to-r from-lime-100 to-green-200"
-            onClick={() => isJoined && navigate(`/groups/${_id}/chat`, { state: { groupName } })}
+            className="relative p-5 border border-gray-300 rounded-lg shadow-md cursor-pointer transition hover:shadow-lg bg-gradient-to-r from-lime-100 to-green-200"
+            onClick={() => isJoined && navigate(`/groups/${_id}/chat`, { state: { groupName, groupLocation: location, rules, description } })}
         >
             {imageUrl && (
                 <motion.img
@@ -28,29 +32,59 @@ export default function GroupListItems({
                     transition={{ duration: 0.3 }}
                 />
             )}
+
             <h3 className="text-lg font-semibold">{groupName}</h3>
             <p className="text-gray-500">{joinedGroup.length} members</p>
-            {isJoined ?
+
+            <div className="flex justify-between items-center mt-3">
                 <button
                     onClick={(e) => {
                         e.stopPropagation();
                         toggleJoin(_id);
                     }}
-                    className='mt-3 px-4 py-2 rounded-lg font-medium transition bg-red-700 text-white hover:bg-red-400'
+                    className={`px-4 py-2 rounded-lg font-medium transition ${isJoined
+                        ? "bg-red-700 text-white hover:bg-red-400"
+                        : "bg-gray-800 text-white hover:bg-gray-600"
+                        }`}
                 >
-                    Leave
+                    {isJoined ? "Leave" : "Join"}
                 </button>
-                :
-                <button
-                    onClick={(e) => {
-                        e.stopPropagation();
-                        toggleJoin(_id);
-                    }}
-                    className='mt-3 px-4 py-2 rounded-lg font-medium transition bg-gray-800 text-white hover:bg-gray-600'
-                >
-                    Join
-                </button>
-            }
+
+                <div className="relative">
+                    <button
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            setMenuOpen(!menuOpen);
+                        }}
+                        className="bg-page-pattern rounded-full p-2 text-gray-700 hover:text-gray-900 shadow-md"
+                    >
+                        <BsThreeDotsVertical size={20} />
+                    </button>
+
+                    {menuOpen && (
+                        <div className="absolute bottom-10 right-0 w-32 bg-page-pattern shadow-lg rounded-lg border border-gray-200 z-10">
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    console.log("Edit Group:", _id);
+                                }}
+                                className="flex items-center w-full px-4 py-2 text-gray-800 hover:bg-gray-100"
+                            >
+                                <AiOutlineEdit className="mr-2" /> Edit
+                            </button>
+                            <button
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    console.log("Delete Group:", _id);
+                                }}
+                                className="flex items-center w-full px-4 py-2 text-red-700 hover:bg-red-100"
+                            >
+                                <AiOutlineDelete className="mr-2" /> Delete
+                            </button>
+                        </div>
+                    )}
+                </div>
+            </div>
         </div>
     );
 }
