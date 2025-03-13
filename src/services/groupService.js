@@ -50,5 +50,9 @@ export default {
         }
 
         return await res.json()
+    },
+    async deleteGroup(groupId) {
+        
+
     }
 }
