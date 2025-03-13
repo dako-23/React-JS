@@ -15,8 +15,9 @@ const center = {
 };
 
 export default function ContactMap() {
+  const apiKey = import.meta.env.VITE_GOOGLE_API_KEY
   const { isLoaded } = useLoadScript({
-    googleMapsApiKey: "AIzaSyAT1GejcsJZD2aAPXVshuqsOJ215DoKSHA",
+    googleMapsApiKey: apiKey,
   });
 
   return (
