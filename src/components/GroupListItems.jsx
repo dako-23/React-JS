@@ -3,7 +3,6 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
-import groupService from "../services/groupService.js";
 
 export default function GroupListItems({
     _id,
@@ -15,19 +14,10 @@ export default function GroupListItems({
     joinedGroup,
     isJoined,
     toggleJoin,
+    deleteGroup
 }) {
     const [menuOpen, setMenuOpen] = useState(false)
     const navigate = useNavigate();
-
-    const groupDeleteClickHandler = async (groupId) => {
-        const hasConfirm = confirm(`Are you sure you want to delete ${groupName} group?`)
-
-        if (!hasConfirm) return;
-
-        await groupService.deleteGroup(groupId)
-
-        navigate('/groups');
-    }
 
     return (
         <div
@@ -87,7 +77,7 @@ export default function GroupListItems({
                                 onClick={(e) => {
                                     e.stopPropagation();
                                     console.log("Delete Group:", _id);
-                                    groupDeleteClickHandler(groupId)
+                                    deleteGroup(_id, groupName);
                                 }}
                                 className="flex items-center w-full px-4 py-2 text-red-700 hover:bg-red-100"
                             >

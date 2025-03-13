@@ -52,7 +52,16 @@ export default {
         return await res.json()
     },
     async deleteGroup(groupId) {
-        
 
+        const res = await fetch(`${API_URL}/groups/${groupId}/delete`, {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            credentials: 'include'
+        });
+
+        if (!res.ok) {
+            throw new Error('Failed to delete group');
+        }
+        return await res.json()
     }
 }

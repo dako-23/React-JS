@@ -89,6 +89,20 @@ export default function GroupsList() {
         }
     };
 
+    const deleteGroup = async (groupId, groupName) => {
+        const hasConfirm = confirm(`Are you sure you want to delete ${groupName} group?`)
+
+        if (!hasConfirm) return;
+        try {
+            await groupService.deleteGroup(groupId);
+
+            setGroups(prevGroups => prevGroups.filter(group => group._id !== groupId));
+
+        } catch (err) {
+            console.error("Error leaving group:", err);
+        }
+    }
+
     const toggleJoin = (groupId) => {
         joinedGroups.includes(groupId)
             ?
@@ -128,6 +142,7 @@ export default function GroupsList() {
                             key={group._id}
                             isJoined={joinedGroups.includes(group._id)}
                             toggleJoin={toggleJoin}
+                            deleteGroup={deleteGroup}
                             {...group}
                         />
                     ))}
