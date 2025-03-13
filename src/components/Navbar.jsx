@@ -8,6 +8,7 @@ const navigation = [
     { name: 'Login', path: '/users/login' },
     { name: 'Register', path: '/users/Register' },
     { name: 'Groups', path: '/groups' },
+    { name: 'About', path: '/about' }
 ]
 
 export default function Navbar() {

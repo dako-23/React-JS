@@ -9,8 +9,8 @@ import Register from "./components/Register.jsx";
 import GroupsList from "./components/GroupsList.jsx";
 import Loader from "./components/Loader.jsx";
 
-const GroupChat = lazy(() => import('./components/GroupChat.jsx'))
-// import GroupChat from "./components/GroupChat.jsx";
+const GroupChat = lazy(() => import('./components/GroupChat.jsx'));
+const AboutPage = lazy(() => import('./components/About.jsx'));
 
 function App() {
   return (
@@ -24,6 +24,7 @@ function App() {
           <Route path="/users/register" element={<Register />} />
           <Route path="/groups" element={<GroupsList />} />
           <Route path="/groups/:id/chat" element={<GroupChat />} />
+          <Route path="/about" element={<AboutPage />} />
           {/* <Route path="*" element={<NotFound />} />  */}
         </Routes>
         <Footer />
