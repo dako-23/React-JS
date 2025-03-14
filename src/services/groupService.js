@@ -1,18 +1,25 @@
-const API_URL = 'https://server-tgjz.onrender.com';
+const API_URL = 'https://server-tgjz.onrender.com/groups';
 
 export default {
     async getAll() {
-        const response = await fetch(`${API_URL}/groups`, { credentials: 'include' });
+        const res = await fetch(`${API_URL}`, { credentials: 'include' });
 
-        const result = await response.json();
+        const result = await res.json();
 
         const groups = Object.values(result);
 
         return groups
     },
+    async getOne(groupId) {
+        const res = await fetch(`${API_URL}/${groupId}`, { credentials: 'include' });
+
+        const result = await res.json();
+
+        return result
+    },
     async create(groupData) {
 
-        const response = await fetch(`${API_URL}/groups`,
+        const res = await fetch(`${API_URL}/create`,
             {
                 method: 'POST',
                 headers: {
@@ -22,12 +29,12 @@ export default {
                 credentials: 'include'
             });
 
-        const result = await response.json();
+        const result = await res.json();
 
         return result
     },
     async joinGroup(groupId) {
-        const res = await fetch(`${API_URL}/groups/${groupId}/join`, {
+        const res = await fetch(`${API_URL}/${groupId}/join`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
@@ -39,7 +46,7 @@ export default {
         return await res.json();
     },
     async leaveGroup(groupId) {
-        const res = await fetch(`${API_URL}/groups/${groupId}/leave`, {
+        const res = await fetch(`${API_URL}/${groupId}/leave`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
@@ -51,9 +58,29 @@ export default {
 
         return await res.json()
     },
+    async editGroup(groupId, updatedData) {
+        try {
+
+            const res = await fetch(`${API_URL}/${groupId}/edit`, {
+                method: 'PUT',
+                headers: { 'Content-Type': 'application/json' },
+                credentials: 'include',
+                body: JSON.stringify(updatedData),
+            })
+            if (!res.ok) {
+                throw new Error('Error editing group');
+            }
+
+            const data = await res.json();
+            return data;
+        } catch (error) {
+            console.error('Edit group error:', error);
+            throw error;
+        }
+    },
     async deleteGroup(groupId) {
 
-        const res = await fetch(`${API_URL}/groups/${groupId}/delete`, {
+        const res = await fetch(`${API_URL}/${groupId}/delete`, {
             method: 'DELETE',
             headers: { 'Content-Type': 'application/json' },
             credentials: 'include'
