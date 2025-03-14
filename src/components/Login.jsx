@@ -15,17 +15,18 @@ export default function Login() {
 
   const LoginSubmitHandler = async (e) => {
     e.preventDefault();
-    setPending(true);
 
     try {
+      setPending(true);
+
       await authService.login(values.email, values.password);
 
       navigate('/');
 
     } catch (err) {
+      setPending(null)
       console.log(err);
     }
-    console.log({ email: values.email, password: values.password });
   }
 
   const onChangeHandler = (e) => {
