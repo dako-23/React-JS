@@ -2,8 +2,8 @@ import React, { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
-import Loader from "./Loader.jsx";
-import groupChatService from '../services/groupChatService.js';
+import Loader from "../Loader.jsx";
+import groupChatService from '../../services/groupChatService.js';
 import GroupChatMessages from './GroupChatMessages.jsx'
 import GroupChatSendMessage from './GroupChatSendMessage.jsx';
 import GroupChatUsers from './GroupChatUsers.jsx';
@@ -17,6 +17,7 @@ const socket = io('https://server-tgjz.onrender.com', {
 export default function GroupChat() {
     const [chatMessages, setChatMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
+    const [activeUsers, setActiveUsers] = useState([])
     const [loading, setLoading] = useState(true);
     const chatContainerRef = useRef(null);
     const { id: groupId } = useParams();
@@ -28,7 +29,22 @@ export default function GroupChat() {
 
         setLoading(true)
 
-        socket.emit('joinGroup', groupId);
+        socket.emit('joinGroup', { groupId, userId, username });
+
+        socket.on('updateActiveUsers', (users) => {
+            setActiveUsers(users);
+        });
+
+        socket.on('receiveMessage', (message) => {
+            setChatMessages(prev => [...prev, message]);
+            setTimeout(scrollToBottom, 100);
+        });
+
+        socket.on("userLeft", (userId) => {
+            setActiveUsers((prevUsers) =>
+                prevUsers.filter(user => user.userId !== userId)
+            );
+        });
 
         groupChatService.getChatHistory(groupId)
             .then(data => {
@@ -37,18 +53,17 @@ export default function GroupChat() {
                     senderId: msg.senderId?._id || msg.senderId, // always can be a string, important for validation!!
                 }));
                 setChatMessages(formattedMessages);
+                console.log(formattedMessages);
+                
                 setTimeout(scrollToBottom, 100);
             }).finally(() => setLoading(null))
             .catch(err => console.error('Error fetching chat history:', err));
 
-        socket.on('receiveMessage', (message) => {
-            // console.log('New message received:', message); 
-            setChatMessages(prev => [...prev, message]);
-            setTimeout(scrollToBottom, 100);
-        });
-
         return () => {
+            socket.emit('leaveGroup', { groupId, userId })
             socket.off('receiveMessage');
+            socket.off('updateActiveUsers');
+            socket.off('userLeft');
         };
     }, [groupId]);
 
@@ -88,18 +103,20 @@ export default function GroupChat() {
             {loading ? <Loader /> : <>
 
                 <div className="flex h-[80vh] bg-page-pattern shadow-lg rounded-xl overflow-hidden">
-                    <GroupChatUsers />
+                    <GroupChatUsers
+                        users={activeUsers}
+                    />
 
                     <div className="w-3/4 flex flex-col p-4">
                         <GroupChatHeader />
-                        
+
                         <div ref={chatContainerRef} className="flex-grow bg-gradient-to-r from-lime-100 to-green-200 border rounded-lg p-4 overflow-y-auto">
                             {chatMessages.length === 0 ? (
                                 <p className="text-gray-500 text-center">No messages yet...</p>
                             ) : (
-                                chatMessages.map((msg, index) => (
+                                chatMessages.map((msg) => (
                                     <GroupChatMessages
-                                        key={index}
+                                        key={msg._id}
                                         {...msg}
                                     />
                                 ))
