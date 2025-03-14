@@ -122,14 +122,14 @@ export default function GroupsList() {
     const editGroup = async (updatedData, groupId) => {
 
         try {
-            await groupService.editGroup(groupId, updatedData);
+            const result = await groupService.editGroup(groupId, updatedData);
 
             setGroups(prevGroups =>
                 prevGroups.map(group =>
                     group._id === groupId ? { ...group, ...updatedData } : group
                 )
             );
-
+            return result
         } catch (err) {
             console.error("Error editing group:", err);
         }
