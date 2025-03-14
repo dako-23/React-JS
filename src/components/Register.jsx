@@ -27,6 +27,7 @@ export default function Register() {
 
             navigate('/')
         } catch (err) {
+            setPending(null)
             console.log(err);
         }
     }
