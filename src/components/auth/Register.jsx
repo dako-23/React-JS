@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
-import authService from "../services/authService.js";
+import authService from "../../services/authService.js";
 import { useState } from "react";
 
 export default function Register() {

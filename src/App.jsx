@@ -1,16 +1,16 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { lazy, Suspense } from "react";
 import ScrollToTop from "./helpers/scrollToTop.js";
-import Home from "./pages/Home"
+import Home from "./components/home/Home.jsx"
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
-import Login from "./components/Login.jsx";
-import Register from "./components/Register.jsx";
-import GroupsList from "./components/GroupsList.jsx";
+import Login from "./components/auth/Login.jsx";
+import Register from "./components/auth/Register.jsx";
+import GroupsList from "./components/groups/GroupsList.jsx";
 import Loader from "./components/Loader.jsx";
 
-const GroupChat = lazy(() => import('./components/GroupChat.jsx'));
-const AboutPage = lazy(() => import('./components/About.jsx'));
+const GroupChat = lazy(() => import('./components/group-chat/GroupChat.jsx'));
+const AboutPage = lazy(() => import('./components/about/About.jsx'));
 
 function App() {
   return (

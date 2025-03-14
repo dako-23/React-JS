@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 import { FiPlusCircle } from "react-icons/fi";
 import GroupListItems from "./GroupListItems.jsx";
 import GroupCreate from "./GroupCreate.jsx";
-import groupService from "../services/groupService.js";
-import Loader from "./Loader.jsx";
-import scrollToTop from "../helpers/scrollToTop.js";
+import groupService from "../../services/groupService.js";
+import Loader from "../Loader.jsx";
+import scrollToTop from "../../helpers/scrollToTop.js";
 
 export default function GroupsList() {
     const [groups, setGroups] = useState([])

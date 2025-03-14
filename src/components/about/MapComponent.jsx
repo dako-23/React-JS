@@ -1,6 +1,6 @@
 import React from 'react';
 import { GoogleMap, useLoadScript, MarkerF } from "@react-google-maps/api";
-import Loader from './Loader.jsx';
+import Loader from '../Loader.jsx';
 
 const containerStyle = {
   width: "100%",

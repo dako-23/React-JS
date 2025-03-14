@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import groupService from "../services/groupService.js";
+import groupService from "../../services/groupService.js";
 const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600'
 
 

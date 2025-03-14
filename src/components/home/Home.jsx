@@ -1,10 +1,10 @@
 import { motion } from 'framer-motion';
-import PartnersCarousel from "../components/PartnersCarousel.jsx";
-import Content from "../components/Content";
-import GroupsIntro from "../components/GroupsIntro.jsx";
-import Topics from "../components/Topics.jsx";
-import Description from "../components/Description.jsx";
-import Recommendations from "../components/Recommendations.jsx";
+import PartnersCarousel from "./PartnersCarousel.jsx";
+import Content from "./Content.jsx";
+import GroupsIntro from "./GroupsIntro.jsx";
+import Topics from "./Topics.jsx";
+import Description from "./Description.jsx";
+import Recommendations from "./Recommendations.jsx";
 
 const childVariants = {
     hidden: { opacity: 0, y: -50 },

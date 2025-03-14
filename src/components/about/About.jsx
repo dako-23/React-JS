@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { FaEnvelope, FaUser, FaCommentDots } from "react-icons/fa";
-import MapComponent from "./mapComponent.jsx";
+import MapComponent from "./MapComponent.jsx";
 
 export default function About() {
     const [formData, setFormData] = useState({
