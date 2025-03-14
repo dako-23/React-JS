@@ -53,7 +53,6 @@ export default function GroupChat() {
                     senderId: msg.senderId?._id || msg.senderId, // always can be a string, important for validation!!
                 }));
                 setChatMessages(formattedMessages);
-                console.log(formattedMessages);
                 
                 setTimeout(scrollToBottom, 100);
             }).finally(() => setLoading(null))

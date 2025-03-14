@@ -54,7 +54,7 @@ export default function GroupsList() {
         const newGroup = await groupService.create(groupData);
         const userId = localStorage.getItem("userId");
 
-        setGroups(state => [...state, newGroup]);
+        setGroups(state => [newGroup, ...state]);
 
         if (newGroup._ownerId === userId) {
             setJoinedGroups(state => [...state, newGroup._id])
