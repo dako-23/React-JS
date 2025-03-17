@@ -37,7 +37,7 @@ export default function Navbar() {
         animate="visible"
         className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-opacity-40 backdrop-blur-md z-10 h-14"
     >
-        <nav className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-lime-200 bg-opacity-40 backdrop-blur-md z-10 h-14">
+        <nav className="fixed top-0 left-0 w-full flex justify-between items-center px-6 py-4 bg-lime-400 bg-opacity-40 backdrop-blur-md z-10 h-14">
 
             <div className="flex items-center">
                 <Link

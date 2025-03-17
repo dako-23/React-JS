@@ -7,21 +7,19 @@
   color: rgb(58, 53, 53);
 }
 
-.fa-solid.fa-circle-check.fa-lg.text-white{
+.fa-solid.fa-circle-check.fa-lg.text-white {
   color: rgb(240, 248, 248);
 }
 
-/* Стил за централното лого */
 .slick-slide.slick-center img {
-  transform: scale(1.2); /* Увеличение на размера */
-  z-index: 1; /* Поставяне в преден план */
-  transition: transform 0.3s ease; /* Плавна анимация */
+  transform: scale(1.2);
+  z-index: 1;
+  transition: transform 0.3s ease;
 }
 
-/* Стил за нецентралните лога */
 .slick-slide:not(.slick-center) img {
-  transform: scale(0.8); /* Намаляване на размера */
-  opacity: 0.7; /* Леко прозрачност */
-  z-index: 0; /* Поставяне в заден план */
-  transition: transform 0.3s ease; /* Плавна анимация */
+  transform: scale(0.8);
+  opacity: 0.7;
+  z-index: 0;
+  transition: transform 0.3s ease;
 }
