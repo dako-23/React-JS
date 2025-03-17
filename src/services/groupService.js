@@ -17,6 +17,16 @@ export default {
 
         return result
     },
+    async getLatest() {
+
+        const res = await fetch(`${API_URL}/latest`, { credentials: 'include' });
+
+        const result = await res.json();
+
+        const groups = Object.values(result);
+
+        return groups
+    },
     async create(groupData) {
 
         const res = await fetch(`${API_URL}/create`,
