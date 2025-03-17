@@ -66,7 +66,7 @@ This is a responsive React and Tailwind CSS project that I created as part of my
 - The back-end of this application is built using Express.js. It handles all API requests, manages real-time WebSocket connections, and communicates with the database to store and retrieve data.
 
 1. Server Setup & Deployment
-The application runs on an Express.js server, extended with an HTTP server to enable real-time communication via Socket.io. The back-end is deployed on Render.com, ensuring a scalable and reliable hosting solution.
+The application runs on an Express.js server, extended with an HTTP server to enable real-time communication via Socket.io. The back-end is deployed on Render.com - https://github.com/dako-23/Server ensuring a scalable and reliable hosting solution.
 
 Note: Since Render uses dynamic IPs and strict CORS policies, users may need to enable third-party cookies in their browser to avoid authentication issues when setting session cookies.
 
