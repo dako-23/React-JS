@@ -47,11 +47,17 @@ Users may need to enable third-party cookies for smooth authentication.
 
 3. Key Features
 Group Creation & Management – Users can create and manage groups.
+
 Real-Time Chat – Powered by Socket.io, users can send and receive messages instantly.
+
 User Authentication – Secure JWT-based authentication with session cookies.
+
 Live User Tracking – See active users in group chats in real-time.
+
 Pagination & Search – Navigate through groups easily with a smooth pagination system.
+
 Fully Responsive Design – Optimized for mobile, tablet, and desktop.
+
 Animations & Effects – Smooth UI interactions with Framer Motion and React Typed.
 
 # Back-End Architecture of the Application
@@ -68,16 +74,22 @@ For persistent storage, the application uses MongoDB. The database is hosted rem
 
 4. API Endpoints
 The server exposes multiple RESTful API endpoints, including:
+
 User Authentication (Register/Login/Logout) – Uses JWT-based authentication with secure HTTP-only cookies.
+
 Group Management – Allows users to create, update, delete, and join/leave groups.
+
 Chat System – Fetches chat history, sends messages, and handles real-time updates via WebSockets.
 
 All API requests are secured using authentication and validation middleware.
 
 5. Security & Middleware
 The application ensures robust security through:
+
 JWT Authentication – Used for protected routes and session management.
+
 CORS Configuration – Allows cross-origin requests, ensuring seamless interaction between the front-end and back-end.
+
 Middleware Functions – Handle request validation, error management, and cookie parsing for authentication.
 
 Important: Some browsers (e.g. Google Chrome) may block third-party cookies by default. To ensure a smooth authentication experience, users should allow third-party cookies in their browser settings.
