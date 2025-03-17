@@ -4,7 +4,7 @@ import Content from "./Content.jsx";
 import GroupsIntro from "./GroupsIntro.jsx";
 import Topics from "./Topics.jsx";
 import Description from "./Description.jsx";
-import Recommendations from "./Recommendations.jsx";
+import Reviews from "../reviews/Reviews.jsx";
 
 const childVariants = {
     hidden: { opacity: 0, y: -50 },
@@ -58,7 +58,7 @@ export default function Home() {
                     whileInView="visible"
                     viewport={{ once: true, amount: 0.2 }}
                 >
-                    <Recommendations />
+                    <Reviews />
                 </motion.div>
             </div>
         </>
