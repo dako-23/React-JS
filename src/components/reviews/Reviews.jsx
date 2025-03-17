@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
+import { FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import reviewService from '../../services/reviewService.js';
@@ -56,17 +56,18 @@ export default function Reviews({
     setShowCreateReview(false);
   };
 
-  const handleCreateReview = async (e) => {
-    e.preventDefault();
+  const handleCreateReview = async (reviewData) => {
+    try {
+      const newReview = await reviewService.create({
+        ...reviewData,
+        rating: Number(reviewData.rating) || 1,
+      });
 
-    const formData = new FormData(e.target)
-    const groupData = Object.fromEntries(formData)
-
-    const newReview = await reviewService.create(groupData);
-
-    setReviews(state => [newReview, ...state]);
-
-    closeCreateReviewModal();
+      setReviews((prev) => [newReview, ...prev]);
+      closeCreateReviewModal();
+    } catch (error) {
+      console.error("Error creating review:", error);
+    }
   };
 
   return (
@@ -88,15 +89,26 @@ export default function Reviews({
           : reviews.length === 0
             ? (<p className="text-center text-gray-600 text-lg mt-4 font-bold">No reviews yet. Be the first to leave your feedback!</p>)
             : (<Slider {...settings}>
+
               {reviews.slice(0, 3).map((review) => (
                 <div key={review._id} className="px-3">
                   <div className="p-6 bg-white border-2 border-gray-800 shadow-lg rounded-xl text-center">
                     <p className="text-lg font-semibold">{review.username}</p>
                     <p className="text-gray-600 mt-2">{review.review}</p>
-                    <p className="text-gray-600 mt-2">{review.rating}</p>
+                    <div className="flex justify-center mt-2">
+                      
+                      {[1, 2, 3, 4, 5].map((star) => (
+                        <FaStar
+                          key={star}
+                          size={20}
+                          className={star <= review.rating ? "text-yellow-500" : "text-gray-300"}
+                        />
+                      ))}
+                    </div>
                   </div>
                 </div>
               ))}
+
             </Slider>
             )}
         <div className="flex justify-center gap-4 mt-8">
