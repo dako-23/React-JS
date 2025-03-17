@@ -8,16 +8,23 @@ This is a responsive React and Tailwind CSS project that I created as part of my
 Front-End Stack
 
 React.js 
+
 Vite 
+
 Tailwind CSS 
+
 Framer Motion 
+
 React Icons 
+
 PostCSS 
 
 - State & Real-Time Features
 
 Socket.io – Live chat & active user updates
+
 Local Storage – Persistent user sessions
+
 React Hooks 
 
 1. Getting Started
@@ -33,7 +40,9 @@ Open http://localhost:5173 to view it in the browser.
 
 2. Deployment & Performance
 The client-side is hosted on Firebase Hosting, ensuring fast and secure global delivery. - https://dako23.web.app/
+
 The backend is hosted on Render.com, managing real-time interactions and database.
+
 Users may need to enable third-party cookies for smooth authentication.
 
 3. Key Features
