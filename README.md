@@ -27,8 +27,9 @@ This is a responsive React and Tailwind CSS project that I created as part of my
 
 3. React Hooks 
 
-1. Getting Started
-To get a local copy up and running, follow these steps:
+# Getting Started
+
+1. To get a local copy up and running, follow these steps:
 
 - Clone the repository git clone https://github.com/dako-23/React-JS
 
