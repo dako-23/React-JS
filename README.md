@@ -5,7 +5,7 @@ This is a responsive React and Tailwind CSS project that I created as part of my
 
 - Technologies Used
 
-1. Front-End Stack
+- Front-End Stack
 
 2. React.js 
 
@@ -40,7 +40,7 @@ This is a responsive React and Tailwind CSS project that I created as part of my
 - Open http://localhost:5173 to view it in the browser.
 
 2. Deployment & Performance
-- The client-side is hosted on Firebase Hosting, ensuring fast and secure global delivery. - https://dako23.web.app/
+- The client-side is hosted on Firebase Hosting - https://dako23.web.app/
 
 - The backend is hosted on Render.com, managing real-time interactions and database.
 
