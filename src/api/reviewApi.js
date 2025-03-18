@@ -12,10 +12,22 @@ export const useReviewCreate = () => {
             `${API_URL}/create`,
             reviewData
         );
-    }
+    };
 
     return {
         create,
+    };
+};
+
+export const useReviewGetLatest = () => {
+
+    const getLatest = async () => {
+
+        return request.get(`${API_URL}/latest`);
+    }
+
+    return {
+        getLatest,
     }
 
 }
