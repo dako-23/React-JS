@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from 'react-icons/fa'
-import { useState } from "react";
+import { useActionState, useState } from "react";
 
 
 export default function CreateReview({
@@ -16,13 +16,16 @@ export default function CreateReview({
         setRating(selectedRating);
     };
 
-    const handleSubmitReview = (e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const reviewData = Object.fromEntries(formData);
-        reviewData.rating = rating || 1
-        onSubmitCreate(reviewData);
+    const handleSubmitReview = (prevState, formData) => {
+        const values = Object.fromEntries(formData);
+        values.rating = rating || 1
+        
+        onSubmitCreate(values);
+
+        return values
     }
+
+    const [values, reviewAction, isPending] = useActionState(handleSubmitReview, { username: '', review: '', rating: '' })
 
     return (
         <AnimatePresence>
@@ -39,14 +42,15 @@ export default function CreateReview({
                 >
                     <div>
                         <h2 className="text-2xl font-bold text-gray-800 text-center mb-4"> Share Your Experience</h2>
-                        <form className="space-y-4" onSubmit={handleSubmitReview} >
-                            <input className={inputClass} type="text" name="username" placeholder="Enter your name" />
-                            <textarea rows="3" className={inputClass} type="text" name="review" placeholder="Write your review here" />
+                        <form className="space-y-4" action={reviewAction} >
+                            <input className={inputClass} type="text" name="username" placeholder="Enter your name" defaultValue={values.username} />
+                            <textarea rows="3" className={inputClass} type="text" name="review" placeholder="Write your review here" defaultValue={values.review} />
                             <div className="flex justify-center space-x-2 ">
                                 {ratingOptions.map((star) => (
                                     <FaStar
                                         key={star}
                                         size={30}
+                                        name="rating"
                                         className={star <= (hoverRating || rating)
                                             ?
                                             "text-yellow-500 cursor-pointer transition-colors duration-200"
@@ -60,7 +64,7 @@ export default function CreateReview({
                             </div>
                             <div className="flex justify-between">
                                 <button onClick={onClose} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600">Cancel</button>
-                                <button className="px-4 py-2 bg-lime-600 text-white rounded-lg hover:bg-lime-700">Create</button>
+                                <button className="px-4 py-2 bg-lime-600 text-white rounded-lg hover:bg-lime-700" disabled={isPending}>Create</button>
                             </div>
                         </form>
                     </div>
