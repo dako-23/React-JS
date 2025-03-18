@@ -5,11 +5,11 @@ import { useEffect } from 'react';
 import { FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import reviewService from '../../services/reviewService.js';
 import useFetch from '../../hooks/useFetch.js';
 import Loader from '../Loader.jsx';
 import CreateReview from './CreateReview.jsx';
-import { useReviewCreate } from '../../api/reviewApi.js';
+import { useReviewCreate, useReviewGetLatest } from '../../api/reviewApi.js';
+import { useCallback } from 'react';
 
 const NextArrow = ({ onClick }) => (
   <div className="absolute top-1/2 right-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
@@ -30,10 +30,15 @@ export default function Reviews({
 }) {
   const [reviews, setReviews] = useState([])
   const [showCreateReview, setShowCreateReview] = useState(false)
+
   const { create } = useReviewCreate();
+  const { getLatest } = useReviewGetLatest();
+  
+  const getLatestCallback = useCallback(() => getLatest(), []);
+
   const navigate = useNavigate()
 
-  const { loading, state: fetchedReviews } = useFetch(reviewService.getLatest)
+  const { loading, state: fetchedReviews } = useFetch(getLatestCallback);
 
   useEffect(() => {
     setReviews(fetchedReviews);
