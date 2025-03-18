@@ -7,25 +7,12 @@ import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import groupService from '../../services/groupService';
 import useFetch from '../../hooks/useFetch';
-import { useNavigate } from 'react-router-dom';
 
 
 export default function Topics() {
 
     const { loading, state: topics } = useFetch(groupService.getLatest)
-    const navigate = useNavigate()
-    const handleLike = (e, id) => {
-        e.preventDefault();
-        setTopics(topics.map(topic => {
-            if (topic.id === id) {
 
-                return topic.liked
-                    ? { ...topic, likes: topic.likes - 1, liked: false }
-                    : { ...topic, likes: topic.likes + 1, liked: true };
-            }
-            return topic;
-        }));
-    };
 
     const NextArrow = ({ onClick }) => (
         <div className="absolute top-1/2 right-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
