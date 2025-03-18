@@ -22,6 +22,8 @@ const PrevArrow = ({ onClick }) => (
   </div>
 );
 
+const ratingOptions = [1, 2, 3, 4, 5];
+
 export default function Reviews({
 
 }) {
@@ -40,8 +42,8 @@ export default function Reviews({
     dots: true,
     arrows: true,
     infinite: true,
-    speed: 500,
-    slidesToShow: 2,
+    speed: 800,
+    slidesToShow: 1,
     slidesToScroll: 1,
     autoplay: false,
     nextArrow: <NextArrow />,
@@ -73,6 +75,7 @@ export default function Reviews({
   return (
     <>
       {showCreateReview && <CreateReview
+        ratingOptions={ratingOptions}
         onClose={closeCreateReviewModal}
         onSubmitCreate={handleCreateReview}
       />}
@@ -96,8 +99,8 @@ export default function Reviews({
                     <p className="text-lg font-semibold">{review.username}</p>
                     <p className="text-gray-600 mt-2">{review.review}</p>
                     <div className="flex justify-center mt-2">
-                      
-                      {[1, 2, 3, 4, 5].map((star) => (
+
+                      {ratingOptions.map((star) => (
                         <FaStar
                           key={star}
                           size={20}

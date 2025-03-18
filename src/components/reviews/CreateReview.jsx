@@ -5,7 +5,8 @@ import { useState } from "react";
 
 export default function CreateReview({
     onClose,
-    onSubmitCreate
+    onSubmitCreate,
+    ratingOptions
 }) {
     const [rating, setRating] = useState(0);
     const [hoverRating, setHoverRating] = useState(0);
@@ -14,6 +15,14 @@ export default function CreateReview({
     const handleRatingClick = (selectedRating) => {
         setRating(selectedRating);
     };
+
+    const handleSubmitReview = (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const reviewData = Object.fromEntries(formData);
+        reviewData.rating = rating || 1
+        onSubmitCreate(reviewData);
+    }
 
     return (
         <AnimatePresence>
@@ -30,17 +39,11 @@ export default function CreateReview({
                 >
                     <div>
                         <h2 className="text-2xl font-bold text-gray-800 text-center mb-4"> Share Your Experience</h2>
-                        <form className="space-y-4" onSubmit={(e) => {
-                            e.preventDefault();
-                            const formData = new FormData(e.target);
-                            const reviewData = Object.fromEntries(formData);
-                            reviewData.rating = rating || 1
-                            onSubmitCreate(reviewData);
-                        }} >
+                        <form className="space-y-4" onSubmit={handleSubmitReview} >
                             <input className={inputClass} type="text" name="username" placeholder="Enter your name" />
                             <textarea rows="3" className={inputClass} type="text" name="review" placeholder="Write your review here" />
                             <div className="flex justify-center space-x-2 ">
-                                {[1, 2, 3, 4, 5].map((star) => (
+                                {ratingOptions.map((star) => (
                                     <FaStar
                                         key={star}
                                         size={30}
