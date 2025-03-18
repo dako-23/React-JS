@@ -28,20 +28,20 @@ export default {
 
         return result
     },
-    async create(reviewData) {
+    // async create(reviewData) {
 
-        const res = await fetch(`${API_URL}/create`,
-            {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(reviewData),
-                credentials: 'include'
-            });
+    //     const res = await fetch(`${API_URL}/create`,
+    //         {
+    //             method: 'POST',
+    //             headers: {
+    //                 'Content-Type': 'application/json'
+    //             },
+    //             body: JSON.stringify(reviewData),
+    //             credentials: 'include'
+    //         });
 
-        const result = await res.json();
+    //     const result = await res.json();
 
-        return result
-    },
+    //     return result
+    // },
 }
