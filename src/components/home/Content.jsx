@@ -1,5 +1,5 @@
 import React from "react";
-import Typed from "react-typed";
+import Typewriter from "react-typewriter-effect";
 import { motion } from "framer-motion";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useNavigate } from "react-router-dom";
@@ -43,13 +43,20 @@ export default function Content() {
                     <p className="md:text-4xl sm:text-3xl text-xl font-bold">
                         Momma’s Gang – a place to
                     </p>
-                    <Typed
-                        className="md:text-4xl sm:text-3xl text-xl font-bold pl-2"
-                        strings={["connect", "share", "support"]}
-                        typeSpeed={120}
-                        backSpeed={140}
-                        loop
-                    />
+                    <div className="md:text-4xl sm:text-3xl text-xl font-bold pl-2">
+                        <Typewriter
+                            startDelay={500}
+                            cursorColor="white"
+                            multiText={[
+                                "connect",
+                                "share",
+                                "support"
+                            ]}
+                            multiTextDelay={1500}
+                            typeSpeed={150}
+                            multiTextLoop={true}
+                        />
+                    </div>
                 </motion.div>
                 <motion.button onClick={() => navigate('/users/login')}
                     initial={{ opacity: 0 }}

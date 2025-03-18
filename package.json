@@ -17,11 +17,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-icons": "^5.5.0",
-    "react-rating": "^2.0.5",
-    "react-rating-stars-component": "^2.2.0",
     "react-router-dom": "^7.2.0",
     "react-slick": "^0.30.3",
-    "react-typed": "^1.2.0",
+    "react-typewriter-effect": "^1.1.0",
     "slick-carousel": "^1.8.1",
     "socket.io-client": "^4.8.1"
   },
