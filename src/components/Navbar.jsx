@@ -6,7 +6,7 @@ import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 const navigation = [
     { name: 'Home', path: '/' },
     { name: 'Login', path: '/users/login' },
-    { name: 'Register', path: '/users/Register' },
+    { name: 'Register', path: '/users/register' },
     { name: 'Groups', path: '/groups' },
     { name: 'About', path: '/about' }
 ]
