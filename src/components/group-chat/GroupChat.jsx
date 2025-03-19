@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState, useRef, useContext } from 'react';
 import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
@@ -8,6 +8,7 @@ import GroupChatMessages from './GroupChatMessages.jsx'
 import GroupChatSendMessage from './GroupChatSendMessage.jsx';
 import GroupChatUsers from './GroupChatUsers.jsx';
 import GroupChatHeader from './GroupChatHeader.jsx';
+import { UserContext } from '../../contexts/UserContext.jsx';
 
 const socket = io('https://server-tgjz.onrender.com', {
     withCredentials: true,
@@ -19,10 +20,11 @@ export default function GroupChat() {
     const [newMessage, setNewMessage] = useState('');
     const [activeUsers, setActiveUsers] = useState([])
     const [loading, setLoading] = useState(true);
+    const { _id, username } = useContext(UserContext)
     const chatContainerRef = useRef(null);
     const { id: groupId } = useParams();
-    const userId = localStorage.getItem('userId');
-    const username = localStorage.getItem('username');
+    const userId = _id
+
 
     useEffect(() => {
         if (!groupId) return;
@@ -53,7 +55,7 @@ export default function GroupChat() {
                     senderId: msg.senderId?._id || msg.senderId, // always can be a string, important for validation!!
                 }));
                 setChatMessages(formattedMessages);
-                
+
                 setTimeout(scrollToBottom, 100);
             }).finally(() => setLoading(null))
             .catch(err => console.error('Error fetching chat history:', err));
