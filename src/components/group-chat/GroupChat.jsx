@@ -3,12 +3,12 @@ import { motion } from 'framer-motion';
 import { useParams } from 'react-router-dom';
 import { io } from 'socket.io-client';
 import Loader from "../Loader.jsx";
-import groupChatService from '../../services/groupChatService.js';
 import GroupChatMessages from './GroupChatMessages.jsx'
 import GroupChatSendMessage from './GroupChatSendMessage.jsx';
 import GroupChatUsers from './GroupChatUsers.jsx';
 import GroupChatHeader from './GroupChatHeader.jsx';
 import { UserContext } from '../../contexts/UserContext.jsx';
+import { useGroupChat } from '../../api/groupChatApi.js';
 
 const socket = io('https://server-tgjz.onrender.com', {
     withCredentials: true,
@@ -21,6 +21,7 @@ export default function GroupChat() {
     const [activeUsers, setActiveUsers] = useState([])
     const [loading, setLoading] = useState(true);
     const { _id, username } = useContext(UserContext)
+    const { getChatHistory } = useGroupChat()
     const chatContainerRef = useRef(null);
     const { id: groupId } = useParams();
     const userId = _id
@@ -48,7 +49,7 @@ export default function GroupChat() {
             );
         });
 
-        groupChatService.getChatHistory(groupId)
+        getChatHistory(groupId)
             .then(data => {
                 const formattedMessages = data.map(msg => ({
                     ...msg,

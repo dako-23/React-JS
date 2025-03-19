@@ -1,6 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useEffect, useState } from "react";
-import groupService from "../../services/groupService.js";
+import { useGroup } from "../../api/groupApi.js";
 const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600'
 
 
@@ -11,9 +11,10 @@ export default function GroupEdit({
 }) {
     const [groupInfo, setGroupInfo] = useState([]);
     const [category, setCategory] = useState("");
+    const { getOne } = useGroup()
 
     useEffect(() => {
-        groupService.getOne(groupId)
+        getOne(groupId)
             .then(result => {
                 setGroupInfo(result)
 

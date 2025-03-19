@@ -1,17 +1,18 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
 import { FaHeart } from 'react-icons/fa';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
-import groupService from '../../services/groupService';
 import useFetch from '../../hooks/useFetch';
+import { useGroup } from '../../api/groupApi.js';
 
 
 export default function Topics() {
+    const { getLatest } = useGroup()
 
-    const { loading, state: topics } = useFetch(groupService.getLatest)
+    const { loading, state: topics } = useFetch(getLatest)
 
 
     const NextArrow = ({ onClick }) => (

@@ -3,10 +3,10 @@ import { motion } from "framer-motion";
 import { FiPlusCircle } from "react-icons/fi";
 import GroupListItems from "./GroupListItems.jsx";
 import GroupCreate from "./GroupCreate.jsx";
-import groupService from "../../services/groupService.js";
 import Loader from "../Loader.jsx";
 import scrollToTop from "../../helpers/scrollToTop.js";
 import { UserContext } from "../../contexts/UserContext.jsx";
+import { useGroup } from "../../api/groupApi.js";
 
 export default function GroupsList() {
     const [groups, setGroups] = useState([])
@@ -16,11 +16,12 @@ export default function GroupsList() {
     const [currentPage, setCurrentPage] = useState(1);
     const groupsPerPage = 4;
     const { _id } = useContext(UserContext)
+    const { getAll, create, joinGroup: join, leaveGroup: leave, editGroup: edit, groupDelete } = useGroup()
 
     useEffect(() => {
         setLoading(true);
 
-        groupService.getAll()
+        getAll()
             .then(result => {
                 setGroups(result);
                 const userId = _id
@@ -53,7 +54,7 @@ export default function GroupsList() {
         const formData = new FormData(e.target)
         const groupData = Object.fromEntries(formData)
 
-        const newGroup = await groupService.create(groupData);
+        const newGroup = await create(groupData);
         const userId = _id
 
         setGroups(state => [newGroup, ...state]);
@@ -67,7 +68,7 @@ export default function GroupsList() {
 
     const joinGroup = async (groupId) => {
         try {
-            await groupService.joinGroup(groupId);
+            await join(groupId);
             const userId = _id
 
             setGroups((prevGroups) =>
@@ -88,7 +89,7 @@ export default function GroupsList() {
 
     const leaveGroup = async (groupId) => {
         try {
-            await groupService.leaveGroup(groupId);
+            await leave(groupId);
             const userId = _id
 
             setGroups((prevGroups) =>
@@ -112,7 +113,7 @@ export default function GroupsList() {
 
         if (!hasConfirm) return;
         try {
-            await groupService.deleteGroup(groupId);
+            await groupDelete(groupId);
 
             setGroups(prevGroups => prevGroups.filter(group => group._id !== groupId));
 
@@ -124,7 +125,7 @@ export default function GroupsList() {
     const editGroup = async (updatedData, groupId) => {
 
         try {
-            const result = await groupService.editGroup(groupId, updatedData);
+            const result = await edit(groupId, updatedData);
 
             setGroups(prevGroups =>
                 prevGroups.map(group =>
