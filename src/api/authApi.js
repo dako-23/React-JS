@@ -9,8 +9,20 @@ export const useLogin = () => {
             `${API_URL}/login`,
             { email, password },
         )
-        return data
+        return data;
     }
 
-    return { login }
+    return { login };
 };
+
+export const useRegister = () => {
+    const register = async (userData) => {
+        const data = request.post(
+            `${API_URL}/register`,
+            userData
+        )
+        return data;
+    }
+
+    return { register };
+}

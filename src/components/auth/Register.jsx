@@ -1,9 +1,11 @@
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
-import authService from "../../services/authService.js";
-import { useState, useActionState } from "react";
+import { useState, useActionState, useContext } from "react";
 import * as yup from "yup";
 import AuthError from "./AuthError.jsx";
+import { UserContext } from "../../contexts/UserContext.jsx";
+import { useRegister } from "../../api/authApi.js";
+import AuthServerError from "./AuthServerError.jsx";
 
 const validationSchema = yup.object().shape({
     username: yup.string().required("Username is required"),
@@ -18,6 +20,8 @@ const validationSchema = yup.object().shape({
 export default function Register() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
+    const { userLoginHandler } = useContext(UserContext)
+    const { register } = useRegister()
 
     const registerSubmitHandler = async (prevState, formData) => {
         const values = Object.fromEntries(formData);
@@ -28,7 +32,10 @@ export default function Register() {
 
             await validationSchema.validate(values, { abortEarly: false });
 
-            await authService.register(userData);
+            const authData = await register(userData);
+
+            userLoginHandler(authData)
+
             navigate('/');
             return values;
         } catch (err) {
