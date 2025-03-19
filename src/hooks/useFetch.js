@@ -1,8 +1,10 @@
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 
 export default function useFetch(fetchFunction, defaultState = []) {
     const [state, setState] = useState(defaultState);
     const [loading, setLoading] = useState(true);
+
+    const stableFetchFunction = useCallback(fetchFunction, []);
 
     useEffect(() => {
         setLoading(true);
@@ -10,7 +12,7 @@ export default function useFetch(fetchFunction, defaultState = []) {
         const abortController = new AbortController();
         const signal = abortController.signal;
 
-        fetchFunction(signal)
+        stableFetchFunction(signal)
             .then(response => setState(response))
             .catch(err => {
                 console.log(err);
@@ -20,7 +22,7 @@ export default function useFetch(fetchFunction, defaultState = []) {
         return () => {
             abortController.abort();
         };
-    }, [fetchFunction]);
+    }, [stableFetchFunction]);
 
     return { loading, state };
 }
