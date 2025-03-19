@@ -9,8 +9,8 @@ const request = async (method, url, data, options = {}) => {
         "Content-Type": "application/json",
     };
 
-    const user = JSON.parse(localStorage.getItem('user'))
-    const accessToken = user.accessToken
+    const user = JSON.parse(localStorage.getItem('user')) || {}
+    const accessToken = user.accessToken || null;
 
     if (accessToken) {
         options.headers['Authorization'] = `Bearer ${accessToken}`;
