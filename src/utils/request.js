@@ -4,14 +4,23 @@ const request = async (method, url, data, options = {}) => {
         options.method = method;
     }
 
+    options.headers = {
+        ...options.headers,
+        "Content-Type": "application/json",
+    };
+
+    const user = JSON.parse(localStorage.getItem('user'))
+    const accessToken = user.accessToken
+
+    if (accessToken) {
+        options.headers['Authorization'] = `Bearer ${accessToken}`;
+    }
+
     if (data) {
         options = {
             ...options,
-            headers: {
-                'Content-Type': 'application/json'
-            },
             body: JSON.stringify(data),
-            credentials: 'include'
+            credentials: 'include',
         }
     }
 
