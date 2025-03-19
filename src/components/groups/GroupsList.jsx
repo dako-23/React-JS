@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { FiPlusCircle } from "react-icons/fi";
 import GroupListItems from "./GroupListItems.jsx";
@@ -6,6 +6,7 @@ import GroupCreate from "./GroupCreate.jsx";
 import groupService from "../../services/groupService.js";
 import Loader from "../Loader.jsx";
 import scrollToTop from "../../helpers/scrollToTop.js";
+import { UserContext } from "../../contexts/UserContext.jsx";
 
 export default function GroupsList() {
     const [groups, setGroups] = useState([])
@@ -14,6 +15,7 @@ export default function GroupsList() {
     const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const groupsPerPage = 4;
+    const { _id } = useContext(UserContext)
 
     useEffect(() => {
         setLoading(true);
@@ -21,7 +23,7 @@ export default function GroupsList() {
         groupService.getAll()
             .then(result => {
                 setGroups(result);
-                const userId = localStorage.getItem('userId')
+                const userId = _id
 
                 const userJoinedGroups = result
                     .filter(group => group.joinedGroup.includes(userId))
@@ -52,7 +54,7 @@ export default function GroupsList() {
         const groupData = Object.fromEntries(formData)
 
         const newGroup = await groupService.create(groupData);
-        const userId = localStorage.getItem("userId");
+        const userId = _id
 
         setGroups(state => [newGroup, ...state]);
 
@@ -66,7 +68,7 @@ export default function GroupsList() {
     const joinGroup = async (groupId) => {
         try {
             await groupService.joinGroup(groupId);
-            const userId = localStorage.getItem("userId");
+            const userId = _id
 
             setGroups((prevGroups) =>
                 prevGroups.map((group) =>
@@ -87,7 +89,7 @@ export default function GroupsList() {
     const leaveGroup = async (groupId) => {
         try {
             await groupService.leaveGroup(groupId);
-            const userId = localStorage.getItem("userId");
+            const userId = _id
 
             setGroups((prevGroups) =>
                 prevGroups.map((group) =>
