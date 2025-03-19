@@ -1,4 +1,6 @@
 import { motion } from 'framer-motion';
+import { useContext } from 'react';
+import { UserContext } from '../../contexts/UserContext.jsx';
 
 export default function GroupChatMessages({
     senderId,
@@ -7,7 +9,8 @@ export default function GroupChatMessages({
     timestamp,
 }) {
 
-    const userId = localStorage.getItem('userId');
+    const { _id } = useContext(UserContext)
+    const userId = _id
 
     return (
         <motion.div
