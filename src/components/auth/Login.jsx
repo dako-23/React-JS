@@ -1,10 +1,11 @@
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
-import { useActionState, useState } from "react";
+import { useActionState, useContext, useState } from "react";
 import AuthError from "./AuthError.jsx";
 import * as yup from "yup";
 import AuthServerError from "./AuthServerError.jsx";
 import { useLogin } from "../../api/authApi.js";
+import { UserContext } from "../../contexts/UserContext.jsx";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Invalid email format").required("Email is required"),
@@ -14,6 +15,7 @@ const validationSchema = yup.object().shape({
 export default function Login() {
   const [error, setError] = useState(null);
   const { login } = useLogin();
+  const { userLoginHandler } = useContext(UserContext)
   const navigate = useNavigate();
 
   const LoginSubmitHandler = async (prevState, formData) => {
@@ -24,11 +26,9 @@ export default function Login() {
 
       await validationSchema.validate(values, { abortEarly: false });
 
-      const userData = await login(values.email, values.password);
+      const authData = await login(values.email, values.password);
 
-      localStorage.setItem('accessToken', userData.accessToken);
-      localStorage.setItem("userId", userData._id);
-      localStorage.setItem("username", userData.username);
+      userLoginHandler(authData)
 
       navigate('/');
 
