@@ -5,9 +5,11 @@ import Home from "./components/home/Home.jsx"
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Login from "./components/auth/Login.jsx";
+import MyProfile from "./components/my-profile/MyProfile.jsx";
 import Register from "./components/auth/Register.jsx";
 import Loader from "./components/Loader.jsx";
 import { UserProvider } from "./contexts/UserContext.jsx";
+import Reviews from "./components/reviews/Reviews.jsx";
 
 const GroupChat = lazy(() => import('./components/group-chat/GroupChat.jsx'));
 const GroupsList = lazy(() => import('./components/groups/GroupsList.jsx'));
@@ -28,6 +30,8 @@ function App() {
             <Route path="/groups" element={<GroupsList />} />
             <Route path="/groups/:id/chat" element={<GroupChat />} />
             <Route path="/about" element={<AboutPage />} />
+            <Route path="/my-profile" element={<MyProfile />} />
+            <Route path="/reviews" element={<Reviews />} />
             {/* <Route path="*" element={<NotFound />} />  */}
           </Routes>
           <Footer />

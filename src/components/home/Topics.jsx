@@ -74,6 +74,9 @@ export default function Topics() {
                                         <h3 className="text-lg font-semibold">{topic.groupName}</h3>
                                         <p className="text-gray-500">{topic.joinedGroup.length} members</p>
                                     </div>
+                                <span className="px-3 py-1 text-sm font-medium text-teal-700 bg-gradient-to-r from-lime-400 to-amber-200 rounded-full">
+                                    {topic.category}
+                                </span>
                                 </div>
                             </div>
                         </Link>
