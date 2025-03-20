@@ -30,4 +30,17 @@ export const useReviewGetLatest = () => {
         getLatest,
     }
 
+};
+
+export const useReviewGetAll = () => {
+
+    const getAll = async () => {
+
+        return request.get(`${API_URL}`);
+    }
+
+    return {
+        getAll,
+    }
+
 }
