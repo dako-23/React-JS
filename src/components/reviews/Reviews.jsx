@@ -104,7 +104,7 @@ export default function Reviews({
 
               {reviews.slice(0, 3).map((review) => (
                 <div key={review._id} className="px-3">
-                  <div className="p-6 bg-white border-2 border-gray-800 shadow-lg rounded-xl text-center">
+                  <div className="p-6 bg-gradient-to-r from-green-200 to-lime-100 border-2 border-gray-800 shadow-lg rounded-xl text-center">
                     <p className="text-lg font-semibold">{review.username}</p>
                     <p className="text-gray-600 mt-2">{review.review}</p>
                     <div className="flex justify-center mt-2">
