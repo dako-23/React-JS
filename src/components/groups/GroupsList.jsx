@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { FiPlusCircle } from "react-icons/fi";
 import GroupListItems from "./GroupListItems.jsx";
@@ -6,34 +6,15 @@ import GroupCreate from "./GroupCreate.jsx";
 import Loader from "../Loader.jsx";
 import scrollToTop from "../../helpers/scrollToTop.js";
 import { UserContext } from "../../contexts/UserContext.jsx";
-import { useGroup } from "../../api/groupApi.js";
+import { useGroup, useGroupGetAll } from "../../api/groupApi.js";
 
 export default function GroupsList() {
-    const [groups, setGroups] = useState([])
-    const [joinedGroups, setJoinedGroups] = useState([]);
     const [showCreateGroup, setShowCreateGroup] = useState(null)
-    const [loading, setLoading] = useState(true);
     const [currentPage, setCurrentPage] = useState(1);
     const groupsPerPage = 4;
-    const { _id } = useContext(UserContext)
-    const { getAll, create, joinGroup: join, leaveGroup: leave, editGroup: edit, groupDelete } = useGroup()
-
-    useEffect(() => {
-        setLoading(true);
-
-        getAll()
-            .then(result => {
-                setGroups(result);
-                const userId = _id
-
-                const userJoinedGroups = result
-                    .filter(group => group.joinedGroup.includes(userId))
-                    .map(group => group._id);
-
-                setJoinedGroups(userJoinedGroups);
-            })
-            .finally(() => setLoading(null));
-    }, []);
+    const { isAuth, _id: userId } = useContext(UserContext)
+    const { create, joinGroup, leaveGroup, editGroup, groupDelete } = useGroup()
+    const { groups, setGroups, joinedGroups, setJoinedGroups, loading } = useGroupGetAll();
 
     const indexOfLastGroup = currentPage * groupsPerPage;
     const indexOfFirstGroup = indexOfLastGroup - groupsPerPage;
@@ -41,21 +22,9 @@ export default function GroupsList() {
 
     const totalPages = Math.ceil(groups.length / groupsPerPage);
 
-    const changePage = (page) => {
-        if (page >= 1 && page <= totalPages) {
-            setCurrentPage(page);
-        }
-    };
-    scrollToTop(currentPage);
-
-    const createGroupHandler = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.target)
-        const groupData = Object.fromEntries(formData)
+    const createGroupHandler = async (groupData) => {
 
         const newGroup = await create(groupData);
-        const userId = _id
 
         setGroups(state => [newGroup, ...state]);
 
@@ -66,10 +35,9 @@ export default function GroupsList() {
         setShowCreateGroup(null)
     }
 
-    const joinGroup = async (groupId) => {
+    const joinGroupHandler = async (groupId) => {
         try {
-            await join(groupId);
-            const userId = _id
+            await joinGroup(groupId);
 
             setGroups((prevGroups) =>
                 prevGroups.map((group) =>
@@ -87,10 +55,9 @@ export default function GroupsList() {
         }
     };
 
-    const leaveGroup = async (groupId) => {
+    const leaveGroupHandler = async (groupId) => {
         try {
-            await leave(groupId);
-            const userId = _id
+            await leaveGroup(groupId);
 
             setGroups((prevGroups) =>
                 prevGroups.map((group) =>
@@ -108,24 +75,10 @@ export default function GroupsList() {
         }
     };
 
-    const deleteGroup = async (groupId, groupName) => {
-        const hasConfirm = confirm(`Are you sure you want to delete ${groupName} group?`)
-
-        if (!hasConfirm) return;
-        try {
-            await groupDelete(groupId);
-
-            setGroups(prevGroups => prevGroups.filter(group => group._id !== groupId));
-
-        } catch (err) {
-            console.error("Error leaving group:", err);
-        }
-    }
-
-    const editGroup = async (updatedData, groupId) => {
+    const editGroupHandler = async (updatedData, groupId) => {
 
         try {
-            const result = await edit(groupId, updatedData);
+            const result = await editGroup(groupId, updatedData);
 
             setGroups(prevGroups =>
                 prevGroups.map(group =>
@@ -138,18 +91,40 @@ export default function GroupsList() {
         }
     }
 
+    const deleteGroup = async (groupId, groupName) => {
+        const hasConfirm = confirm(`Are you sure you want to delete ${groupName} group?`)
+
+        if (!hasConfirm) return;
+
+        try {
+            await groupDelete(groupId);
+
+            setGroups(prevGroups => prevGroups.filter(group => group._id !== groupId));
+
+        } catch (err) {
+            console.error("Error leaving group:", err);
+        }
+    }
+
+
     const toggleJoin = (groupId) => {
         joinedGroups.includes(groupId)
             ?
-            leaveGroup(groupId)
+            leaveGroupHandler(groupId)
             :
-            joinGroup(groupId)
+            joinGroupHandler(groupId)
     };
+
+    const changePage = (page) => {
+        if (page >= 1 && page <= totalPages) {
+            setCurrentPage(page);
+        }
+    };
+    scrollToTop(currentPage);
 
     const closeShowCreateGroupHandler = () => {
         setShowCreateGroup(null)
     }
-
 
     return (
         <motion.div
@@ -165,9 +140,10 @@ export default function GroupsList() {
                 </p>
             </h2>
             <div className="flex justify-center mt-14">
-                <button onClick={setShowCreateGroup} className="flex items-center mb-12 gap-2 px-4 py-3 bg-gray-800 text-white text-lg font-medium rounded-full shadow-md hover:bg-gray-600 transition duration-300">
-                    <FiPlusCircle size={22} /> Create Group
-                </button>
+                {isAuth &&
+                    (<button onClick={setShowCreateGroup} className="flex items-center mb-12 gap-2 px-4 py-3 bg-gray-800 text-white text-lg font-medium rounded-full shadow-md hover:bg-gray-600 transition duration-300">
+                        <FiPlusCircle size={22} /> Create Group
+                    </button>)}
             </div>
             {loading ? (
                 <Loader
@@ -179,7 +155,7 @@ export default function GroupsList() {
                             isJoined={joinedGroups.includes(group._id)}
                             toggleJoin={toggleJoin}
                             deleteGroup={deleteGroup}
-                            editGroup={editGroup}
+                            editGroup={editGroupHandler}
                             {...group}
                         />
                     ))}

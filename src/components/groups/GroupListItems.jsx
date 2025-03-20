@@ -1,9 +1,10 @@
 import { useNavigate } from "react-router-dom";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useEffect, useContext } from "react";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import GroupEdit from "./GroupEdit.jsx";
+import { UserContext } from "../../contexts/UserContext.jsx";
 
 export default function GroupListItems({
     _id,
@@ -13,6 +14,7 @@ export default function GroupListItems({
     rules,
     description,
     imageUrl,
+    _ownerId,
     joinedGroup,
     isJoined,
     toggleJoin,
@@ -21,9 +23,11 @@ export default function GroupListItems({
 }) {
     const [menuOpen, setMenuOpen] = useState(false)
     const [showEditGroup, setShowEditGroup] = useState(null)
+    const { _id: userId } = useContext(UserContext)
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
     const navigate = useNavigate();
+    const isOwner = _ownerId === userId
 
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -55,11 +59,9 @@ export default function GroupListItems({
         const groupData = Object.fromEntries(formData)
 
         try {
-            const res = await editGroup(groupData, _id)
+            await editGroup(groupData, _id)
 
-            if (res) {
-                setShowEditGroup(null)
-            }
+            setShowEditGroup(null)
         } catch (err) {
             return console.log(err);
         }
@@ -112,16 +114,17 @@ export default function GroupListItems({
                     </button>
 
                     <div className="relative">
-                        <button
-                            ref={buttonRef}
-                            onClick={(e) => {
-                                e.stopPropagation();
-                                setMenuOpen(!menuOpen);
-                            }}
-                            className="bg-page-pattern rounded-full p-2 text-gray-700 hover:text-gray-900 shadow-md"
-                        >
-                            <BsThreeDotsVertical size={20} />
-                        </button>
+                        {isOwner && (
+                            <button
+                                ref={buttonRef}
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setMenuOpen(!menuOpen);
+                                }}
+                                className="bg-page-pattern rounded-full p-2 text-gray-700 hover:text-gray-900 shadow-md"
+                            >
+                                <BsThreeDotsVertical size={20} />
+                            </button>)}
 
                         {menuOpen && (
                             <div ref={menuRef} className="absolute bottom-10 right-0 w-32 bg-page-pattern shadow-lg rounded-lg border border-gray-200 z-10">

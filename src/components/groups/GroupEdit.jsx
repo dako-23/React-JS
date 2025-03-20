@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useGroup } from "../../api/groupApi.js";
+import { UserContext } from "../../contexts/UserContext.jsx";
 const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600'
 
 
@@ -11,16 +12,18 @@ export default function GroupEdit({
 }) {
     const [groupInfo, setGroupInfo] = useState([]);
     const [category, setCategory] = useState("");
+    const { _id: userId } = useContext(UserContext)
     const { getOne } = useGroup()
 
     useEffect(() => {
         getOne(groupId)
             .then(result => {
-                setGroupInfo(result)
+                // if (result._ownerId !== userId) return
 
-                if (result.category) {
-                    setCategory(result.category);
-                }
+                setGroupInfo(result)    
+                    if (result.category) {
+                        setCategory(result.category);
+                    }
             })
     }, [])
 
