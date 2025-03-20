@@ -62,30 +62,18 @@ export default function Topics() {
                 {topics.map((topic) => (
                     <div key={topic._id} className="px-3">
                         <Link
-                            to={`/groups/${topic._id}/chat`}
-                            state={{
-                                groupName: topic.groupName,
-                                groupLocation: topic.location,
-                                rules: topic.rules,
-                                description: topic.description
-                            }}>
-                            <div className="p-6 bg-white border-2 border-gray-800 shadow-lg rounded-xl text-center relative">
-                                <h3 className="text-lg font-semibold">{topic.groupName}</h3>
-                                <p className="text-gray-500">{topic.joinedGroup.length} members</p>
-                                <div className="absolute bottom-3 right-3 flex items-center space-x-1">
-                                    <button
-                                        onClick={(e) => handleLike(e, topic.id)}
-                                        className="focus:outline-none"
-                                    >
-                                        <FaHeart size={25} className={`cursor-pointer transition-transform duration-200 
-                                        ${topic.liked
-                                                ?
-                                                'text-red-500 scale-110 font-bold'
-                                                :
-                                                'text-gray-300 hover:scale-110 font-bold'
-                                            }`} />
-                                    </button>
-                                    <span>{topic.likes}</span>
+                            to={'/groups'}>
+                            <div className="p-6 bg-gradient-to-r from-lime-100 to-green-200 border-2 border-gray-800 shadow-lg rounded-xl text-center relative">
+                                <div className="flex items-center space-x-3 mb-2">
+                                    <img
+                                        src={topic.imageUrl}
+                                        alt={topic.groupName}
+                                        className="w-28 h-28 rounded-full object-cover border border-gray-300"
+                                    />
+                                    <div className='text-center flex-1'>
+                                        <h3 className="text-lg font-semibold">{topic.groupName}</h3>
+                                        <p className="text-gray-500">{topic.joinedGroup.length} members</p>
+                                    </div>
                                 </div>
                             </div>
                         </Link>
