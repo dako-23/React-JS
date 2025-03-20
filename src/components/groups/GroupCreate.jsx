@@ -4,8 +4,17 @@ export default function GroupCreate({
     onClose,
     onSubmitCreate
 }) {
-
     const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600'
+
+    const handleSubmitCreate = (e) => {
+        e.preventDefault();
+
+        const formData = new FormData(e.target)
+        const groupData = Object.fromEntries(formData)
+
+        onSubmitCreate(groupData)
+    }
+
 
     return (
         <AnimatePresence>
@@ -22,7 +31,7 @@ export default function GroupCreate({
                 >
                     <div>
                         <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">📌 Create a Group</h2>
-                        <form className="space-y-4" onSubmit={onSubmitCreate} >
+                        <form className="space-y-4" onSubmit={handleSubmitCreate} >
                             <input className={inputClass} type="text" name="groupName" placeholder="Group Name" />
                             <input className={inputClass} type="text" name="location" placeholder="Enter city or area (optional)" />
                             <input className={inputClass} type="text" name="rules" placeholder="Set some group rules (optional)" />
