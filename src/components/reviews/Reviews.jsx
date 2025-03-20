@@ -117,6 +117,8 @@ export default function Reviews({
                         />
                       ))}
                     </div>
+                    <p className="text-sm text-gray-500 mt-3">{new Date(review.createdAt).toLocaleDateString()}</p>
+
                   </div>
                 </div>
               ))}
