@@ -1,7 +1,6 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaCheckCircle } from 'react-icons/fa';
 
-
 export default function SuccessToast({
     message,
     show
@@ -17,7 +16,7 @@ export default function SuccessToast({
                 transition={{ duration: 0.4 }}
                 className="fixed top-16  z-50 bg-lime-600 text-white font-semibold px-4 py-3 rounded-xl shadow-lg flex items-center space-x-2"
             >
-                <FaCheckCircle className="w-5 h-5 text-white" />
+                <FaCheckCircle className="w-8 h-8 text-white" />
                 <span>{message}</span>
             </motion.div>
             )
