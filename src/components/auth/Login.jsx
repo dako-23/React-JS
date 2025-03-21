@@ -89,7 +89,7 @@ export default function Login() {
               type="password"
               name="password"
               placeholder="Password"
-              className={`w-full p-3 border rounded-lg ${error?.email ? "border-red-500" : "border-gray-300"}`}
+              className={`w-full p-3 border rounded-lg ${error?.password ? "border-red-500" : "border-gray-300"}`}
             />
             {error?.password && <AuthError
               err={error.password}
