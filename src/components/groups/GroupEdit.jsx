@@ -9,7 +9,7 @@ const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-60
 
 export default function GroupEdit({
     onClose,
-    onSubmitEdit,
+    onEdit,
     groupId
 }) {
     const [groupInfo, setGroupInfo] = useState([]);
@@ -36,6 +36,19 @@ export default function GroupEdit({
         }
     };
 
+    const handleSubmitEdit = async (e) => {
+        e.preventDefault();
+        const formData = new FormData(e.target);
+        const groupData = Object.fromEntries(formData);
+    
+        try {
+          await onEdit(groupData);
+          onClose();
+        } catch (err) {
+          console.error("Error editing group:", err);
+        }
+      };
+
     return (
         <>
 
@@ -57,7 +70,7 @@ export default function GroupEdit({
                             :
                             <div>
                                 <h2 className="text-2xl font-bold text-gray-800 text-center mb-4">📌 Edit a Group</h2>
-                                <form className="space-y-4" onSubmit={onSubmitEdit} >
+                                <form className="space-y-4" onSubmit={handleSubmitEdit} >
                                     <input className={inputClass} type="text" name="groupName" placeholder="Group Name" defaultValue={groupInfo.groupName} />
                                     <input className={inputClass} type="text" name="location" placeholder="Enter city or area (optional)" defaultValue={groupInfo.location} />
                                     <input className={inputClass} type="text" name="rules" placeholder="Set some group rules (optional)" defaultValue={groupInfo.rules} />

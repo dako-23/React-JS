@@ -52,20 +52,13 @@ export default function GroupListItems({
         setShowEditGroup(null)
     }
 
-    const EditGroupHandler = async (e) => {
-        e.preventDefault();
-
-        const formData = new FormData(e.target)
-        const groupData = Object.fromEntries(formData)
-
+    const handleEditGroup = async (groupData) => {
         try {
-            await editGroup(groupData, _id)
-
-            setShowEditGroup(null)
+            await editGroup(groupData, _id);
+            setShowEditGroup(false);
         } catch (err) {
-            return console.log(err);
+            console.error("Error editing group:", err);
         }
-
     }
 
     return (
@@ -73,7 +66,7 @@ export default function GroupListItems({
             {showEditGroup && <GroupEdit
                 onClose={closeShowCreateGroupHandler}
                 groupId={_id}
-                onSubmitEdit={EditGroupHandler}
+                onEdit={handleEditGroup}
             />}
             <div
                 className="relative p-5 border border-gray-300 rounded-lg shadow-md cursor-pointer transition hover:shadow-lg bg-gradient-to-r from-lime-100 to-green-200"
