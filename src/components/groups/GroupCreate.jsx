@@ -13,8 +13,8 @@ export default function GroupCreate({
         const groupData = Object.fromEntries(formData)
 
         onSubmitCreate(groupData)
+        onClose()
     }
-
 
     return (
         <AnimatePresence>
