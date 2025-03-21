@@ -26,3 +26,27 @@ export const useRegister = () => {
 
     return { register };
 }
+
+export const useCreateProfileInfo = () => {
+    const createProfileInfo = async (userId, updateData) => {
+        const data = request.put(
+            `${API_URL}/${userId}`,
+            updateData
+        )
+        return data;
+    }
+    return { createProfileInfo }
+}
+
+export const useGetUser = () => {
+
+    const getUser = async (userId) => {
+
+        return request.get(`${API_URL}/${userId}`);
+    }
+
+    return {
+        getUser,
+    }
+
+};
