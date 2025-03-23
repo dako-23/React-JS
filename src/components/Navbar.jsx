@@ -1,19 +1,22 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { motion } from "framer-motion";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
+import { UserContext } from "../contexts/UserContext";
+
 
 const navigation = [
-    { name: 'Home', path: '/' },
-    { name: 'Login', path: '/users/login' },
-    { name: 'Register', path: '/users/register' },
-    { name: 'Groups', path: '/groups' },
-    { name: 'About', path: '/about' },
-    { name: 'My Profile', path: '/my-profile' },
-    
+    { name: 'Home', path: '/', visibleFor: 'all' },
+    { name: 'Login', path: '/users/login', visibleFor: 'guest' },
+    { name: 'Register', path: '/users/register', visibleFor: 'guest' },
+    { name: 'Groups', path: '/groups', visibleFor: 'all' },
+    { name: 'About', path: '/about', visibleFor: 'all' },
+    { name: 'My Profile', path: '/my-profile', visibleFor: 'auth' },
+
 ]
 
 export default function Navbar() {
+    const { isAuth } = useContext(UserContext)
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
     const textVariants = {
@@ -66,16 +69,22 @@ export default function Navbar() {
                     ? "flex flex-col absolute top-16 right-0 w-full bg-lime-200 bg-opacity-40 backdrop-blur-md px-4 py-6 z-10"
                     : "hidden"
                     }`}>
-                {navigation.map(nav => (
-                    <li key={nav.name} className="hover:text-lime-700 py-2 md:py-0">
-                        <NavLink
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            style={({ isActive }) => isActive ? { color: 'oklch(0.532 0.157 131.589)' } : {}}
-                            to={nav.path}>
-                            {nav.name}
-                        </NavLink>
-                    </li>
-                ))}
+                {navigation
+                    .filter(nav => 
+                        nav.visibleFor === 'all' ||
+                        nav.visibleFor === 'auth' && isAuth ||
+                        nav.visibleFor === 'guest' && !isAuth
+                    )
+                    .map(nav => (
+                        <li key={nav.name} className="hover:text-lime-700 py-2 md:py-0">
+                            <NavLink
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                style={({ isActive }) => isActive ? { color: 'oklch(0.532 0.157 131.589)' } : {}}
+                                to={nav.path}>
+                                {nav.name}
+                            </NavLink>
+                        </li>
+                    ))}
             </ul>
         </nav>
     </motion.h1 >
