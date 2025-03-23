@@ -5,6 +5,7 @@ import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import GroupEdit from "./GroupEdit.jsx";
 import { UserContext } from "../../contexts/UserContext.jsx";
+import { toast } from "react-toastify";
 
 export default function GroupListItems({
     _id,
@@ -70,7 +71,12 @@ export default function GroupListItems({
             />}
             <div
                 className="relative p-5 border border-gray-300 rounded-lg shadow-md cursor-pointer transition hover:shadow-lg bg-gradient-to-r from-lime-100 to-green-200"
-                onClick={() => isJoined && navigate(`/groups/${_id}/chat`, { state: { groupName, groupLocation: location, rules, description } })}
+                onClick={() => {
+                    if (!isJoined) {
+                        toast.error('');
+                    }
+                    isJoined && navigate(`/groups/${_id}/chat`, { state: { groupName, groupLocation: location, rules, description } })
+                }}
             >
                 {imageUrl && (
                     <motion.img

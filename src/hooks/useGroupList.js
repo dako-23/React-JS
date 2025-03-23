@@ -1,3 +1,4 @@
+import { toast } from "react-toastify";
 import { useGroup, useGroupGetAll } from "../api/groupApi";
 import { useState } from "react";
 
@@ -59,6 +60,7 @@ export function useGroupsList(userId) {
       setJoinedGroups((prev) => [...prev, groupId]);
     } catch (err) {
       console.error("Error joining group:", err);
+      toast.info('You need to be logged in')
     }
   };
 

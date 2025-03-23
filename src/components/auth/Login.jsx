@@ -3,9 +3,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useActionState, useContext, useState } from "react";
 import AuthError from "./AuthError.jsx";
 import * as yup from "yup";
-import AuthServerError from "./AuthServerError.jsx";
 import { useLogin } from "../../api/authApi.js";
 import { UserContext } from "../../contexts/UserContext.jsx";
+import { toast } from "react-toastify";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Invalid email format").required("Email is required"),
@@ -42,7 +42,7 @@ export default function Login() {
         });
         setError(errorMessages);
       } else {
-        setError({ general: err.message });
+        toast.error(err.message)
       }
 
       return values;
@@ -64,11 +64,6 @@ export default function Login() {
           transition={{ duration: 0.5 }}
           className="relative bg-page-pattern w-full max-w-md p-6 bg-white shadow-lg rounded-2xl"
         >
-          {error?.general &&
-            <AuthServerError
-              err={error.general}
-              onClose={() => setError(null)}
-            />}
           <h2 className="text-2xl font-semibold text-center h-14 text-gray-800">Login</h2>
           <motion.form action={loginAction}
             initial={{ opacity: 0 }}
