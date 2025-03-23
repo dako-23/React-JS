@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { lazy, Suspense } from "react";
+import { ToastContainer } from "react-toastify";
 import ScrollToTop from "./helpers/scrollToTop.js";
 import Home from "./components/home/Home.jsx"
 import Navbar from "./components/Navbar";
@@ -9,6 +10,7 @@ import Login from "./components/auth/Login.jsx";
 import Register from "./components/auth/Register.jsx";
 import Loader from "./components/Loader.jsx";
 import { UserProvider } from "./contexts/UserContext.jsx";
+import AuthGuard from "./components/guards/AuthGuard.jsx";
 
 const GroupsList = lazy(() => import('./components/groups/GroupsList.jsx'));
 const GroupChat = lazy(() => import('./components/group-chat/GroupChat.jsx'));
@@ -32,14 +34,29 @@ function App() {
             <Route path="/groups" element={<GroupsList />} />
             <Route path="/groups/:id/chat" element={<GroupChat />} />
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/my-profile" element={<MyProfile />} />
+            <Route element={<AuthGuard />}>
+              <Route path="/my-profile" element={<MyProfile />} />
+            </Route>
             <Route path="/reviews" element={<Reviews />} />
             {/* <Route path="*" element={<NotFound />} />  */}
           </Routes>
+          <ToastContainer
+            position="top-center"
+            autoClose={1500}
+            hideProgressBar
+            newestOnTop={true}
+            closeOnClick
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+            theme="colored"
+            className='mt-16'
+            toastClassName="flex justify-center items-center text-center font-semibold"
+          />
           <Footer />
         </Suspense>
       </Router>
-    </UserProvider>
+    </UserProvider >
   );
 }
 
