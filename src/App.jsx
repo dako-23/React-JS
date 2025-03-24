@@ -32,11 +32,11 @@ function App() {
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/register" element={<Register />} />
             <Route path="/groups" element={<GroupsList />} />
-            <Route path="/groups/:id/chat" element={<GroupChat />} />
-            <Route path="/about" element={<AboutPage />} />
             <Route element={<AuthGuard />}>
-              <Route path="/my-profile" element={<MyProfile />} />
+            <Route path="/groups/:id/chat" element={<GroupChat />} />
             </Route>
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/my-profile" element={<MyProfile />} />
             <Route path="/reviews" element={<Reviews />} />
             {/* <Route path="*" element={<NotFound />} />  */}
           </Routes>

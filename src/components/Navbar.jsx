@@ -3,15 +3,12 @@ import { motion } from "framer-motion";
 import { Link, NavLink } from "react-router-dom";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { UserContext } from "../contexts/UserContext";
-
+import ProfileDropdown from "./profle-dropdown/ProfileDropdown.jsx";
 
 const navigation = [
     { name: 'Home', path: '/', visibleFor: 'all' },
-    { name: 'Login', path: '/users/login', visibleFor: 'guest' },
-    { name: 'Register', path: '/users/register', visibleFor: 'guest' },
     { name: 'Groups', path: '/groups', visibleFor: 'all' },
     { name: 'About', path: '/about', visibleFor: 'all' },
-    { name: 'My Profile', path: '/my-profile', visibleFor: 'auth' },
 
 ]
 
@@ -70,7 +67,7 @@ export default function Navbar() {
                     : "hidden"
                     }`}>
                 {navigation
-                    .filter(nav => 
+                    .filter(nav =>
                         nav.visibleFor === 'all' ||
                         nav.visibleFor === 'auth' && isAuth ||
                         nav.visibleFor === 'guest' && !isAuth
@@ -85,6 +82,7 @@ export default function Navbar() {
                             </NavLink>
                         </li>
                     ))}
+                <ProfileDropdown />
             </ul>
         </nav>
     </motion.h1 >
