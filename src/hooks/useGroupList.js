@@ -1,6 +1,6 @@
-import { toast } from "react-toastify";
-import { useGroup, useGroupGetAll } from "../api/groupApi";
-import { useState } from "react";
+import { toast } from 'react-toastify';
+import { useGroup, useGroupGetAll } from '../api/groupApi';
+import { useState } from 'react';
 
 export function useGroupsList(userId) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -45,6 +45,7 @@ export function useGroupsList(userId) {
     return newGroup;
   };
 
+
   const joinGroupHandler = async (groupId) => {
     try {
       await joinGroup(groupId);
@@ -59,7 +60,7 @@ export function useGroupsList(userId) {
 
       setJoinedGroups((prev) => [...prev, groupId]);
     } catch (err) {
-      console.error("Error joining group:", err);
+      console.error('Error joining group:', err);
       toast.info('You need to be logged in')
     }
   };
@@ -72,16 +73,16 @@ export function useGroupsList(userId) {
         prevGroups.map((group) =>
           group._id === groupId
             ? {
-                ...group,
-                joinedGroup: group.joinedGroup.filter((id) => id !== userId),
-              }
+              ...group,
+              joinedGroup: group.joinedGroup.filter((id) => id !== userId),
+            }
             : group
         )
       );
 
       setJoinedGroups((prev) => prev.filter((id) => id !== groupId));
     } catch (err) {
-      console.error("Error leaving group:", err);
+      console.error('Error leaving group:', err);
     }
   };
 
@@ -97,7 +98,8 @@ export function useGroupsList(userId) {
 
       return result;
     } catch (err) {
-      console.error("Error editing group:", err);
+      console.error('Error editing group:', err);
+      toast.error('Error editing group')
     }
   };
 
@@ -115,7 +117,8 @@ export function useGroupsList(userId) {
         prevGroups.filter((group) => group._id !== groupId)
       );
     } catch (err) {
-      console.error("Error deleting group:", err);
+      console.error('Error deleting group:', err);
+      toast.error('Error deleting group')
     }
   };
 
