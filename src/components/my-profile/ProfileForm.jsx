@@ -8,6 +8,8 @@ export default function ProfileForm({
     isLocked,
     onCancel
 }) {
+
+
     return (
         <motion.div
             initial={{ opacity: 0, y: -20 }}
@@ -15,6 +17,7 @@ export default function ProfileForm({
             transition={{ duration: 0.5 }}
             className="bg-page-pattern w-full max-w-md p-6 bg-white shadow-lg rounded-2xl"
         >
+
             <h2 className="text-2xl font-semibold text-center h-14 text-gray-800">My Profile</h2>
             <div className="flex flex-col items-center">
                 <div className="flex items-center justify-center w-24 h-24 rounded-full border-2 border-gray-800 bg-gray-200 shadow-md overflow-hidden">
@@ -69,6 +72,7 @@ export default function ProfileForm({
                         name='address'
                         placeholder="Enter your address"
                         defaultValue={user.address}
+                        disabled={isLocked}
                     />
                 </div>
                 <div className="mt-4">
