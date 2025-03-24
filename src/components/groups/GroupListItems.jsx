@@ -11,9 +11,6 @@ export default function GroupListItems({
     _id,
     groupName,
     category,
-    location,
-    rules,
-    description,
     imageUrl,
     _ownerId,
     joinedGroup,
@@ -62,6 +59,14 @@ export default function GroupListItems({
         }
     }
 
+    const handleClick = () => {
+
+        if (!isJoined) {
+            return toast.info('You need to join the group first!');
+        }
+        navigate(`/groups/${_id}/chat`)
+    };
+
     return (
         <>
             {showEditGroup && <GroupEdit
@@ -71,12 +76,7 @@ export default function GroupListItems({
             />}
             <div
                 className="relative p-5 border border-gray-300 rounded-lg shadow-md cursor-pointer transition hover:shadow-lg bg-gradient-to-r from-lime-100 to-green-200"
-                onClick={() => {
-                    if (!isJoined) {
-                        toast.error('');
-                    }
-                    isJoined && navigate(`/groups/${_id}/chat`, { state: { groupName, groupLocation: location, rules, description } })
-                }}
+                onClick={handleClick}
             >
                 {imageUrl && (
                     <motion.img

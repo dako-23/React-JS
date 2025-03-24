@@ -1,18 +1,37 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useContext } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import useFetch from '../../hooks/useFetch';
 import { useGroup } from '../../api/groupApi.js';
+import { UserContext } from '../../contexts/UserContext.jsx';
+import { toast } from 'react-toastify';
 
 
 export default function Topics() {
     const { getLatest } = useGroup()
-
     const { loading, state: topics } = useFetch(getLatest)
+    const { _id: userId } = useContext(UserContext)
+    const navigate = useNavigate();
 
+
+
+
+    const handleClick = (group) => {
+
+        const isUserJoined = (group) => {
+            return group.joinedGroup.includes(userId);
+        };
+
+        if (!isUserJoined(group)) {
+            toast.info("You need to join the group first!");
+            return navigate("/groups");
+        }
+
+        navigate(`/groups/${group._id}/chat`);
+    };
 
     const NextArrow = ({ onClick }) => (
         <div className="absolute top-1/2 right-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
@@ -60,28 +79,28 @@ export default function Topics() {
             <Slider {...settings}>
                 {topics.map((topic) => (
                     <div key={topic._id} className="px-3">
-                        <Link
-                            to={'/groups'}>
-                            <div className="p-6 bg-gradient-to-r from-lime-100 to-green-200 border-2 border-gray-800 shadow-lg rounded-xl text-center relative">
-                                <div className="flex items-center space-x-3 mb-2">
-                                    <img
-                                        src={topic.imageUrl}
-                                        alt={topic.groupName}
-                                        className="w-28 h-28 rounded-full object-cover border border-gray-300"
-                                    />
-                                    <div className='text-center flex-1'>
-                                        <h3 className="text-lg font-semibold">{topic.groupName}</h3>
-                                        <p className="text-gray-500">{topic.joinedGroup.length} members</p>
-                                    </div>
-                                    <span className="px-3 py-1 text-sm font-medium text-teal-700 bg-gradient-to-r from-lime-400 to-amber-200 rounded-full">
-                                        {topic.category}
-                                    </span>
+                        <div
+                            onClick={() => handleClick(topic)}
+                            className="cursor-pointer p-6 bg-gradient-to-r from-lime-100 to-green-200 border-2 border-gray-800 shadow-lg rounded-xl text-center relative">
+                            <div className="flex items-center space-x-3 mb-2">
+                                <img
+                                    src={topic.imageUrl}
+                                    alt={topic.groupName}
+                                    className="w-28 h-28 rounded-full object-cover border border-gray-300"
+                                />
+                                <div className='text-center flex-1'>
+                                    <h3 className="text-lg font-semibold">{topic.groupName}</h3>
+                                    <p className="text-gray-500">{topic.joinedGroup.length} members</p>
                                 </div>
+                                <span className="px-3 py-1 text-sm font-medium text-teal-700 bg-gradient-to-r from-lime-400 to-amber-200 rounded-full">
+                                    {topic.category}
+                                </span>
                             </div>
-                        </Link>
+                        </div>
                     </div>
-                ))}
-            </Slider>
-        </div>
+                ))
+                }
+            </Slider >
+        </div >
     );
 }
