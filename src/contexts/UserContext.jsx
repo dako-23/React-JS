@@ -4,9 +4,11 @@ export const UserContext = createContext({
     _id: '',
     username: '',
     email: '',
+    imageUrl: '',
     accessToken: '',
     userLoginHandler: () => null,
     userLogoutHandler: () => null,
+    updateUserPartial: () => null,
     isAuth: false,
 });
 
@@ -26,6 +28,15 @@ export const UserProvider = ({ children }) => {
         setUser(null);
     };
 
+    const updateUserPartial = (newData) => {
+        setUser((prev) => {
+            const updated = { ...prev, ...newData };
+            localStorage.setItem("user", JSON.stringify(updated));
+            return updated;
+        });
+    };
+
+
     useEffect(() => {
         if (!user) {
             const storedUser = localStorage.getItem("user");
@@ -36,7 +47,7 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ ...user, userLoginHandler, userLogoutHandler, isAuth: !!user }}>
+        <UserContext.Provider value={{ ...user, userLoginHandler, userLogoutHandler, updateUserPartial, isAuth: !!user }}>
             {children}
         </UserContext.Provider>
     );
