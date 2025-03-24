@@ -12,21 +12,3 @@ export const useGroupChat = () => {
 
 }
 
-
-
-export default {
-
-    async sendMessage(groupId, senderId, message) {
-        const username = localStorage.getItem('username');
-
-        const res = await fetch(`${API_URL}/${groupId}/send`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ senderId, message, username }),
-            credentials: "include"
-        });
-
-        if (!res.ok) throw new Error("Failed to send message");
-        return await res.json();
-    }
-};
