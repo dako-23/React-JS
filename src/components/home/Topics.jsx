@@ -1,7 +1,6 @@
-import React, { useCallback, useState } from 'react';
+import React from 'react';
 import { Link } from 'react-router-dom';
 import Slider from 'react-slick';
-import { FaHeart } from 'react-icons/fa';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
@@ -74,9 +73,9 @@ export default function Topics() {
                                         <h3 className="text-lg font-semibold">{topic.groupName}</h3>
                                         <p className="text-gray-500">{topic.joinedGroup.length} members</p>
                                     </div>
-                                <span className="px-3 py-1 text-sm font-medium text-teal-700 bg-gradient-to-r from-lime-400 to-amber-200 rounded-full">
-                                    {topic.category}
-                                </span>
+                                    <span className="px-3 py-1 text-sm font-medium text-teal-700 bg-gradient-to-r from-lime-400 to-amber-200 rounded-full">
+                                        {topic.category}
+                                    </span>
                                 </div>
                             </div>
                         </Link>
