@@ -6,7 +6,6 @@ import Home from "./components/home/Home.jsx"
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import Login from "./components/auth/Login.jsx";
-// import MyProfile from "./components/my-profile/MyProfile.jsx";
 import Register from "./components/auth/Register.jsx";
 import Loader from "./components/Loader.jsx";
 import { UserProvider } from "./contexts/UserContext.jsx";

@@ -1,6 +1,6 @@
-import { useCallback, useEffect, useState } from "react";
-import { useReviewCreate, useReviewGetLatest } from "../api/reviewApi.js";
-import useFetch from "./useFetch.js";
+import { useCallback, useEffect, useState } from 'react';
+import { useReviewCreate, useReviewGetLatest } from '../api/reviewApi.js';
+import useFetch from './useFetch.js';
 
 
 export function useReviews() {
@@ -41,7 +41,7 @@ export function useReviews() {
             setReviews((prev) => [newReview, ...prev]);
             closeCreateReviewModal();
         } catch (error) {
-            console.error("Error creating review:", error);
+            console.error('Error creating review:', error);
         }
     };
 

@@ -5,7 +5,6 @@ import { UserContext } from "../contexts/UserContext.jsx";
 const API_URL = 'https://server-tgjz.onrender.com/groups';
 
 
-
 export const useGroup = () => {
     
     const getOne = async (groupId) => {
