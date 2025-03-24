@@ -1,48 +1,20 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { FaChevronLeft, FaChevronRight, FaStar } from 'react-icons/fa';
+import { FaStar } from 'react-icons/fa';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import useFetch from '../../hooks/useFetch.js';
 import Loader from '../Loader.jsx';
 import CreateReview from './CreateReview.jsx';
-import { useReviewCreate, useReviewGetLatest } from '../../api/reviewApi.js';
-import { useCallback } from 'react';
-
-const NextArrow = ({ onClick }) => (
-  <div className="absolute top-1/2 right-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
-    <FaChevronRight size={24} />
-  </div>
-);
-
-const PrevArrow = ({ onClick }) => (
-  <div className="absolute top-1/2 left-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
-    <FaChevronLeft size={24} />
-  </div>
-);
+import { useReviews } from '../../hooks/useReviews.js';
+import { NextArrow, PrevArrow } from '../CarouselArrows.jsx';
 
 const ratingOptions = [1, 2, 3, 4, 5];
 
-export default function LatestReviews({
-
-}) {
-  const [reviews, setReviews] = useState([])
-  const [showCreateReview, setShowCreateReview] = useState(false)
-
-  const { create } = useReviewCreate();
-  const { getLatest } = useReviewGetLatest();
-  
-  const getLatestCallback = useCallback(() => getLatest(), []);
+export default function LatestReviews() {
+  const { handleCreateReview, loading, reviews, showCreateReview, openCreateReviewModal, closeCreateReviewModal } = useReviews()
 
   const navigate = useNavigate()
-
-  const { loading, state: fetchedReviews } = useFetch(getLatestCallback);
-
-  useEffect(() => {
-    setReviews(fetchedReviews);
-  }, [fetchedReviews]);
 
   const settings = {
     dots: true,
@@ -54,31 +26,6 @@ export default function LatestReviews({
     autoplay: false,
     nextArrow: <NextArrow />,
     prevArrow: <PrevArrow />
-  };
-
-  const openCreateReviewModal = () => {
-    setShowCreateReview(true);
-  };
-
-  const closeCreateReviewModal = () => {
-    setShowCreateReview(false);
-  };
-
-  const handleCreateReview = async (reviewData) => {
-
-    if (reviewData.username === '' || reviewData.review === '') return
-
-    try {
-      const newReview = await create({
-        ...reviewData,
-        rating: Number(reviewData.rating) || 1,
-      });
-
-      setReviews((prev) => [newReview, ...prev]);
-      closeCreateReviewModal();
-    } catch (error) {
-      console.error("Error creating review:", error);
-    }
   };
 
   return (

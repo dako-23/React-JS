@@ -3,6 +3,7 @@ import { FaStar } from "react-icons/fa";
 import { useReviewGetAll } from "../../api/reviewApi.js";
 import useFetch from "../../hooks/useFetch.js";
 import Loader from "../Loader.jsx";
+import GroupsPagination from "../pagination/Pagination.jsx";
 
 
 export default function Reviews() {
@@ -55,6 +56,7 @@ export default function Reviews() {
                         ))}
                     </div>
                 )}
+            <GroupsPagination />
             </motion.div>
         </div>
     );

@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from 'react-icons/fa'
-import { useActionState, useState } from "react";
+import { useActionState } from "react";
+import { useReviewsCreate } from "../../hooks/useReviews.js";
 
 
 export default function CreateReview({
@@ -8,24 +9,17 @@ export default function CreateReview({
     onSubmitCreate,
     ratingOptions
 }) {
-    const [rating, setRating] = useState(0);
-    const [hoverRating, setHoverRating] = useState(0);
-    const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600'
-
-    const handleRatingClick = (selectedRating) => {
-        setRating(selectedRating);
-    };
-
-    const handleSubmitReview = (prevState, formData) => {
-        const values = Object.fromEntries(formData);
-        values.rating = rating || 1
-        
-        onSubmitCreate(values);
-
-        return values
-    }
+    const {
+        handleRatingClick,
+        handleSubmitReview,
+        hoverRating,
+        inputClass,
+        setHoverRating,
+        rating,
+    } = useReviewsCreate(onSubmitCreate);
 
     const [values, reviewAction, isPending] = useActionState(handleSubmitReview, { username: '', review: '', rating: '' })
+
 
     return (
         <AnimatePresence>
