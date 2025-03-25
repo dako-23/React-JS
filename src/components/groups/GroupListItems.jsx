@@ -1,11 +1,10 @@
-import { useNavigate } from "react-router-dom";
-import { useRef, useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import GroupEdit from "./GroupEdit.jsx";
 import { UserContext } from "../../contexts/UserContext.jsx";
-import { toast } from "react-toastify";
+import { useGroupListItem } from "../../hooks/useGroupList.js";
 
 export default function GroupListItems({
     _id,
@@ -19,53 +18,19 @@ export default function GroupListItems({
     deleteGroup,
     editGroup
 }) {
-    const [menuOpen, setMenuOpen] = useState(false)
-    const [showEditGroup, setShowEditGroup] = useState(null)
     const { _id: userId } = useContext(UserContext)
-    const menuRef = useRef(null);
-    const buttonRef = useRef(null);
-    const navigate = useNavigate();
     const isOwner = _ownerId === userId
 
-    useEffect(() => {
-        const handleClickOutside = (event) => {
-
-            if (buttonRef.current && buttonRef.current.contains(event.target)) {
-                return;
-            }
-
-            if (menuRef.current && !menuRef.current.contains(event.target)) {
-                setMenuOpen(false);
-            }
-        };
-
-        document.addEventListener("mousedown", handleClickOutside);
-
-        return () => {
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
-    }, []);
-
-    const closeShowCreateGroupHandler = () => {
-        setShowEditGroup(null)
-    }
-
-    const handleEditGroup = async (groupData) => {
-        try {
-            await editGroup(groupData, _id);
-            setShowEditGroup(false);
-        } catch (err) {
-            console.error("Error editing group:", err);
-        }
-    }
-
-    const handleClick = () => {
-
-        if (!isJoined) {
-            return toast.info('You need to join the group first!');
-        }
-        navigate(`/groups/${_id}/chat`)
-    };
+    const { closeShowCreateGroupHandler,
+        handleClick,
+        handleEditGroup,
+        menuOpen,
+        showEditGroup,
+        setMenuOpen,
+        buttonRef,
+        menuRef,
+        setShowEditGroup
+    } = useGroupListItem(editGroup, isJoined, _id)
 
     return (
         <>

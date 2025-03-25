@@ -1,6 +1,7 @@
 import { toast } from 'react-toastify';
 import { useGroup, useGroupGetAll } from '../api/groupApi';
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 export function useGroupsList(userId) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -141,4 +142,66 @@ export function useGroupsList(userId) {
     toggleJoin,
     setCurrentPage,
   };
+}
+
+export function useGroupListItem(editGroup, isJoined, _id) {
+
+  const [menuOpen, setMenuOpen] = useState(false)
+  const [showEditGroup, setShowEditGroup] = useState(null)
+  const menuRef = useRef(null);
+  const buttonRef = useRef(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+
+      if (buttonRef.current && buttonRef.current.contains(event.target)) {
+        return;
+      }
+
+      if (menuRef.current && !menuRef.current.contains(event.target)) {
+        setMenuOpen(false);
+      }
+    };
+
+    document.addEventListener('mousedown', handleClickOutside);
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, []);
+
+  const closeShowCreateGroupHandler = () => {
+    setShowEditGroup(null)
+  }
+
+  const handleEditGroup = async (groupData) => {
+    try {
+      await editGroup(groupData, _id);
+      setShowEditGroup(false);
+    } catch (err) {
+      console.error('Error editing group:', err);
+    }
+  }
+
+  const handleClick = () => {
+
+    if (!isJoined) {
+      return toast.info('You need to join the group first !');
+    }
+    navigate(`/groups/${_id}/chat`)
+  };
+
+  return {
+    menuOpen,
+    showEditGroup,
+    handleClick,
+    handleEditGroup,
+    closeShowCreateGroupHandler,
+    setMenuOpen,
+    buttonRef,
+    menuRef,
+    setShowEditGroup
+  }
+
 }
