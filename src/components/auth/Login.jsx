@@ -5,7 +5,7 @@ import AuthError from "./AuthError.jsx";
 import * as yup from "yup";
 import { useLogin } from "../../api/authApi.js";
 import { UserContext } from "../../contexts/UserContext.jsx";
-import { toast } from "react-toastify";
+import { useToast } from "../../hooks/useToast.js";
 
 const validationSchema = yup.object().shape({
   email: yup.string().email("Invalid email format").required("Email is required"),
@@ -14,6 +14,7 @@ const validationSchema = yup.object().shape({
 
 export default function Login() {
   const [error, setError] = useState(null);
+  const { error: errToast } = useToast()
   const { login } = useLogin();
   const { userLoginHandler } = useContext(UserContext)
   const navigate = useNavigate();
@@ -42,7 +43,7 @@ export default function Login() {
         });
         setError(errorMessages);
       } else {
-        toast.error(err.message)
+        errToast(err.message)
       }
 
       return values;

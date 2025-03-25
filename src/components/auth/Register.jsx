@@ -5,7 +5,7 @@ import * as yup from "yup";
 import AuthError from "./AuthError.jsx";
 import { UserContext } from "../../contexts/UserContext.jsx";
 import { useRegister } from "../../api/authApi.js";
-import { toast } from "react-toastify";
+import { useToast } from "../../hooks/useToast.js";
 
 const validationSchema = yup.object().shape({
     username: yup.string().required("Username is required"),
@@ -20,8 +20,9 @@ const validationSchema = yup.object().shape({
 export default function Register() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
-    const { userLoginHandler } = useContext(UserContext)
-    const { register } = useRegister()
+    const { error: errToast } = useToast();
+    const { userLoginHandler } = useContext(UserContext);
+    const { register } = useRegister();
 
     const registerSubmitHandler = async (prevState, formData) => {
         const values = Object.fromEntries(formData);
@@ -47,7 +48,7 @@ export default function Register() {
                 });
                 setError(errorMessages);
             } else {
-                toast.error(err.message)
+                errToast(err.message)
             }
             return values;
         }

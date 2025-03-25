@@ -2,6 +2,9 @@ import { toast } from 'react-toastify';
 import { useGroup, useGroupGetAll } from '../api/groupApi';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useToast } from './useToast.js';
+
+const { error, success, info, warn } = useToast()
 
 export function useGroupsList(userId) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -35,17 +38,21 @@ export function useGroupsList(userId) {
   };
 
   const createGroupHandler = async (groupData) => {
-    const newGroup = await create(groupData);
+    try {
+      const newGroup = await create(groupData);
+      setGroups((state) => [newGroup, ...state]);
 
-    setGroups((state) => [newGroup, ...state]);
+      if (newGroup._ownerId === userId) {
+        setJoinedGroups((state) => [...state, newGroup._id]);
+      }
 
-    if (newGroup._ownerId === userId) {
-      setJoinedGroups((state) => [...state, newGroup._id]);
+      success('Group created successfully!')
+
+      return newGroup;
+    } catch (err) {
+      console.log(err.message);
     }
-
-    return newGroup;
   };
-
 
   const joinGroupHandler = async (groupId) => {
     try {
@@ -62,7 +69,7 @@ export function useGroupsList(userId) {
       setJoinedGroups((prev) => [...prev, groupId]);
     } catch (err) {
       console.error('Error joining group:', err);
-      toast.info('You need to be logged in')
+      info('You need to be logged in.')
     }
   };
 
@@ -97,10 +104,11 @@ export function useGroupsList(userId) {
         )
       );
 
+      success('Group updated successfully!')
+
       return result;
     } catch (err) {
-      console.error('Error editing group:', err);
-      toast.error('Error editing group')
+      error('Error editing group !')
     }
   };
 
@@ -117,6 +125,8 @@ export function useGroupsList(userId) {
       setGroups((prevGroups) =>
         prevGroups.filter((group) => group._id !== groupId)
       );
+
+      success('Successfuly delete this group!');
     } catch (err) {
       console.error('Error deleting group:', err);
       toast.error('Error deleting group')
@@ -187,7 +197,7 @@ export function useGroupListItem(editGroup, isJoined, _id) {
   const handleClick = () => {
 
     if (!isJoined) {
-      return toast.info('You need to join the group first !');
+      return info('You need to join the group first!');
     }
     navigate(`/groups/${_id}/chat`)
   };
