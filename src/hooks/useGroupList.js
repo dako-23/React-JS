@@ -3,12 +3,11 @@ import { useGroup, useGroupGetAll } from '../api/groupApi';
 import { useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from './useToast.js';
+import { usePagination } from './usePagination.js';
 
 const { error, success, info, warn } = useToast()
 
 export function useGroupsList(userId) {
-  const [currentPage, setCurrentPage] = useState(1);
-  const groupsPerPage = 4;
 
   const {
     create,
@@ -26,16 +25,7 @@ export function useGroupsList(userId) {
     loading,
   } = useGroupGetAll();
 
-  const indexOfLastGroup = currentPage * groupsPerPage;
-  const indexOfFirstGroup = indexOfLastGroup - groupsPerPage;
-  const currentGroups = groups.slice(indexOfFirstGroup, indexOfLastGroup);
-  const totalPages = Math.ceil(groups.length / groupsPerPage);
-
-  const changePage = (page) => {
-    if (page >= 1 && page <= totalPages) {
-      setCurrentPage(page);
-    }
-  };
+  const { currentPage, totalPages, currentData, changePage } = usePagination(groups, 4);
 
   const createGroupHandler = async (groupData) => {
     try {
@@ -141,7 +131,7 @@ export function useGroupsList(userId) {
 
   return {
     loading,
-    currentGroups,
+    currentGroups: currentData,
     joinedGroups,
     currentPage,
     totalPages,
@@ -150,7 +140,6 @@ export function useGroupsList(userId) {
     editGroupHandler,
     deleteGroupHandler,
     toggleJoin,
-    setCurrentPage,
   };
 }
 

@@ -7,7 +7,7 @@ import Loader from "../Loader.jsx";
 import scrollToTop from "../../helpers/scrollToTop.js";
 import { UserContext } from "../../contexts/UserContext.jsx";
 import { useGroupsList } from "../../hooks/useGroupList.js";
-import GroupsPagination from "../pagination/Pagination.jsx";
+import Pagination from "../pagination/Pagination.jsx";
 
 
 export default function GroupsList() {
@@ -65,7 +65,7 @@ export default function GroupsList() {
                     ))}
                 </div>
             )}
-            <GroupsPagination
+            <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onChange={changePage} />

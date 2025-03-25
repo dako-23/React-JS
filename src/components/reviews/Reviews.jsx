@@ -3,12 +3,16 @@ import { FaStar } from "react-icons/fa";
 import { useReviewGetAll } from "../../api/reviewApi.js";
 import useFetch from "../../hooks/useFetch.js";
 import Loader from "../Loader.jsx";
-import GroupsPagination from "../pagination/Pagination.jsx";
+import Pagination from "../pagination/Pagination.jsx";
+import { usePagination } from "../../hooks/usePagination.js";
+import ScrollToTop from "../../helpers/scrollToTop.js";
 
 
 export default function Reviews() {
     const { getAll } = useReviewGetAll();
     const { loading, state: reviews } = useFetch(getAll);
+    const { currentPage, totalPages, currentData, changePage } = usePagination(reviews, 5);
+    ScrollToTop(currentPage);
 
     const ratingOptions = [1, 2, 3, 4, 5];
 
@@ -30,7 +34,7 @@ export default function Reviews() {
                     </p>
                 ) : (
                     <div className="space-y-4">
-                        {reviews.map((review) => (
+                        {currentData.map((review) => (
                             <motion.div
                                 key={review._id}
                                 initial={{ opacity: 0, y: 10 }}
@@ -56,7 +60,10 @@ export default function Reviews() {
                         ))}
                     </div>
                 )}
-            <GroupsPagination />
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onChange={changePage} />
             </motion.div>
         </div>
     );
