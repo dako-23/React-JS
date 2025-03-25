@@ -20,11 +20,10 @@ export default function GroupChat() {
     const [newMessage, setNewMessage] = useState('');
     const [activeUsers, setActiveUsers] = useState([])
     const [loading, setLoading] = useState(true);
-    const { _id, username } = useContext(UserContext)
+    const { _id: userId, username, imageUrl } = useContext(UserContext)
     const { getChatHistory } = useGroupChat()
     const chatContainerRef = useRef(null);
     const { id: groupId } = useParams();
-    const userId = _id
 
 
     useEffect(() => {
@@ -32,7 +31,7 @@ export default function GroupChat() {
 
         setLoading(true)
 
-        socket.emit('joinGroup', { groupId, userId, username });
+        socket.emit('joinGroup', { groupId, userId, username, imageUrl });
 
         socket.on('updateActiveUsers', (users) => {
             setActiveUsers(users);
@@ -54,8 +53,10 @@ export default function GroupChat() {
                 const formattedMessages = data.map(msg => ({
                     ...msg,
                     senderId: msg.senderId?._id || msg.senderId, // always can be a string, important for validation!!
+                    imageUrl: msg.senderId.imageUrl
                 }));
                 setChatMessages(formattedMessages);
+                
 
                 setTimeout(scrollToBottom, 100);
             }).finally(() => setLoading(null))
@@ -74,7 +75,7 @@ export default function GroupChat() {
         if (newMessage.trim() === '' || !groupId || !userId || !username) return;
 
         try {
-            const newMsg = { senderId: userId, message: newMessage, groupId, username };
+            const newMsg = { senderId: userId, message: newMessage, groupId, username, imageUrl };
 
             socket.emit('sendMessage', newMsg);
 
