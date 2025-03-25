@@ -1,14 +1,13 @@
 import React, { useContext } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import Slider from 'react-slick';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
-import { FaChevronLeft, FaChevronRight } from 'react-icons/fa';
 import useFetch from '../../hooks/useFetch';
 import { useGroup } from '../../api/groupApi.js';
 import { UserContext } from '../../contexts/UserContext.jsx';
 import { toast } from 'react-toastify';
-
+import { NextArrow, PrevArrow } from '../CarouselArrows.jsx';
 
 export default function Topics() {
     const { getLatest } = useGroup()
@@ -29,18 +28,6 @@ export default function Topics() {
 
         navigate(`/groups/${group._id}/chat`);
     };
-
-    const NextArrow = ({ onClick }) => (
-        <div className="absolute top-1/2 right-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
-            <FaChevronRight size={24} />
-        </div>
-    );
-
-    const PrevArrow = ({ onClick }) => (
-        <div className="absolute top-1/2 left-[-30px] transform -translate-y-1/2 cursor-pointer text-gray-800 hover:text-gray-600 transition-all" onClick={onClick}>
-            <FaChevronLeft size={24} />
-        </div>
-    );
 
     const settings = {
         dots: true,
