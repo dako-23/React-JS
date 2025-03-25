@@ -1,8 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { useContext, useEffect, useState } from "react";
 import { useGroup } from "../../api/groupApi.js";
-import { UserContext } from "../../contexts/UserContext.jsx";
 import Loader from "../Loader.jsx";
+import { useToast } from "../../hooks/useToast.js";
+import { useEffect, useState } from "react";
 
 const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600'
 
@@ -15,8 +15,8 @@ export default function GroupEdit({
     const [groupInfo, setGroupInfo] = useState([]);
     const [category, setCategory] = useState("");
     const [loading, setLoading] = useState(false);
-    const { _id: userId } = useContext(UserContext)
     const { getOne } = useGroup()
+    const {error} = useToast()
 
     useEffect(() => {
         setLoading(true)
@@ -40,14 +40,19 @@ export default function GroupEdit({
         e.preventDefault();
         const formData = new FormData(e.target);
         const groupData = Object.fromEntries(formData);
-    
+
         try {
-          await onEdit(groupData);
-          onClose();
+            setLoading(true)
+
+            await onEdit(groupData);
+
+            setLoading(false)
+
+            onClose();
         } catch (err) {
-          console.error("Error editing group:", err);
+            error(err.message);
         }
-      };
+    };
 
     return (
         <>
