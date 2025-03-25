@@ -16,9 +16,6 @@ export default function Topics() {
     const { _id: userId } = useContext(UserContext)
     const navigate = useNavigate();
 
-
-
-
     const handleClick = (group) => {
 
         const isUserJoined = (group) => {

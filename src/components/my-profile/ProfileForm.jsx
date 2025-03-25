@@ -9,7 +9,6 @@ export default function ProfileForm({
     onCancel
 }) {
 
-
     return (
         <motion.div
             initial={{ opacity: 0, y: -20 }}
