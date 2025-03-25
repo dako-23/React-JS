@@ -2,20 +2,14 @@ import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useActionState, useContext, useState } from "react";
 import AuthError from "./AuthError.jsx";
-import * as yup from "yup";
 import { useLogin } from "../../api/authApi.js";
 import { UserContext } from "../../contexts/UserContext.jsx";
 import { useToast } from "../../hooks/useToast.js";
 
-const validationSchema = yup.object().shape({
-  email: yup.string().email("Invalid email format").required("Email is required"),
-  password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
-});
-
 export default function Login() {
   const [error, setError] = useState(null);
   const { error: errToast } = useToast()
-  const { login } = useLogin();
+  const { login, validationLoginSchema } = useLogin();
   const { userLoginHandler } = useContext(UserContext)
   const navigate = useNavigate();
 
@@ -25,7 +19,7 @@ export default function Login() {
     try {
       setError(null);
 
-      await validationSchema.validate(values, { abortEarly: false });
+      await validationLoginSchema.validate(values, { abortEarly: false });
 
       const authData = await login(values.email, values.password);
 

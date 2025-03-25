@@ -1,8 +1,14 @@
 import request from "../utils/request.js";
+import * as yup from "yup";
 
 const API_URL = 'https://server-tgjz.onrender.com/users';
 
 export const useLogin = () => {
+
+    const validationLoginSchema = yup.object().shape({
+        email: yup.string().email("Invalid email format").required("Email is required"),
+        password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+    });
 
     const login = async (email, password) => {
         const data = request.post(
@@ -12,10 +18,21 @@ export const useLogin = () => {
         return data;
     }
 
-    return { login };
+    return { login, validationLoginSchema };
 };
 
 export const useRegister = () => {
+
+    const validationRegisterSchema = yup.object().shape({
+        username: yup.string().required("Username is required"),
+        email: yup.string().email("Invalid email format").required("Email is required"),
+        password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+        rePassword: yup
+            .string()
+            .oneOf([yup.ref("password"), null], "Passwords do not match")
+            .required("Confirm password is required"),
+    });
+
     const register = async (userData) => {
         const data = request.post(
             `${API_URL}/register`,
@@ -24,7 +41,7 @@ export const useRegister = () => {
         return data;
     }
 
-    return { register };
+    return { register, validationRegisterSchema };
 }
 
 export const useCreateProfileInfo = () => {

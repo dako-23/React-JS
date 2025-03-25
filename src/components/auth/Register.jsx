@@ -1,28 +1,17 @@
 import { Link, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { useState, useActionState, useContext } from "react";
-import * as yup from "yup";
 import AuthError from "./AuthError.jsx";
 import { UserContext } from "../../contexts/UserContext.jsx";
 import { useRegister } from "../../api/authApi.js";
 import { useToast } from "../../hooks/useToast.js";
-
-const validationSchema = yup.object().shape({
-    username: yup.string().required("Username is required"),
-    email: yup.string().email("Invalid email format").required("Email is required"),
-    password: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
-    rePassword: yup
-        .string()
-        .oneOf([yup.ref("password"), null], "Passwords do not match")
-        .required("Confirm password is required"),
-});
 
 export default function Register() {
     const [error, setError] = useState(null);
     const navigate = useNavigate();
     const { error: errToast } = useToast();
     const { userLoginHandler } = useContext(UserContext);
-    const { register } = useRegister();
+    const { register, validationRegisterSchema } = useRegister();
 
     const registerSubmitHandler = async (prevState, formData) => {
         const values = Object.fromEntries(formData);
@@ -31,7 +20,7 @@ export default function Register() {
         try {
             setError(null);
 
-            await validationSchema.validate(values, { abortEarly: false });
+            await validationRegisterSchema.validate(values, { abortEarly: false });
 
             const authData = await register(userData);
 
