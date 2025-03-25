@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useContext } from "react";
 import Typewriter from "react-typewriter-effect";
 import { motion } from "framer-motion";
 import '@fortawesome/fontawesome-free/css/all.min.css';
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../../contexts/UserContext.jsx";
 
 const textVariants = {
     hidden: { y: -150, opacity: 0 },
@@ -21,6 +22,7 @@ const textVariants = {
 
 export default function Content() {
     const navigate = useNavigate();
+    const { isAuth } = useContext(UserContext)
 
     return (
         <div className="bg-home-pattern h-screen bg-cover bg-center flex items-center justify-center text-white text-2xl font-bold">
@@ -58,14 +60,15 @@ export default function Content() {
                         />
                     </div>
                 </motion.div>
-                <motion.button onClick={() => navigate('/users/login')}
-                    initial={{ opacity: 0 }}
-                    animate={{ opacity: 1 }}
-                    transition={{ duration: 1.5, ease: "easeOut" }}
-                    className="active:opacity-[0.7] absolute bottom-24 left-1/2 transform -translate-x-1/2 font-bold bg-gray-800 shadow-xl shadow-lime-700/100 mx-auto my-12 w-[170px] h-[45px] rounded-lg overflow-hidden transition-all flex items-center justify-center before:ease before:absolute before:right-0 before:top-0 before:h-full before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-lime-500 hover:before:-translate-x-40"
-                >
-                    Sign Up
-                </motion.button>
+                {!isAuth &&
+                    <motion.button onClick={() => navigate('/users/register')}
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        transition={{ duration: 1.5, ease: "easeOut" }}
+                        className="active:opacity-[0.7] absolute bottom-24 left-1/2 transform -translate-x-1/2 font-bold bg-gray-800 shadow-xl shadow-lime-700/100 mx-auto my-12 w-[170px] h-[45px] rounded-lg overflow-hidden transition-all flex items-center justify-center before:ease before:absolute before:right-0 before:top-0 before:h-full before:w-6 before:translate-x-12 before:rotate-6 before:bg-white before:opacity-10 before:duration-700 hover:shadow-lime-500 hover:before:-translate-x-40"
+                    >
+                        Sign Up
+                    </motion.button>}
             </div>
         </div>
     );
