@@ -1,5 +1,5 @@
 
-export default function GroupsPagination({
+export default function Pagination({
     currentPage,
     totalPages,
     onChange
