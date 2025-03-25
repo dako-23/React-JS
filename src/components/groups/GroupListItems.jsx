@@ -21,7 +21,8 @@ export default function GroupListItems({
     const { _id: userId } = useContext(UserContext)
     const isOwner = _ownerId === userId
 
-    const { closeShowCreateGroupHandler,
+    const {
+        closeShowCreateGroupHandler,
         handleClick,
         handleEditGroup,
         menuOpen,

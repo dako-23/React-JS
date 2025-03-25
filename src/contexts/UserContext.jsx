@@ -26,6 +26,7 @@ export const UserProvider = ({ children }) => {
     const userLogoutHandler = () => {
         localStorage.removeItem("user");
         setUser(null);
+        
     };
 
     const updateUserPartial = (newData) => {
