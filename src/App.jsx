@@ -1,9 +1,9 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import React, { lazy, Suspense } from "react";
-import { ToastContainer } from "react-toastify";
 import ScrollToTop from "./helpers/scrollToTop.js";
 import Loader from "./components/Loader.jsx";
 import { UserProvider } from "./contexts/UserContext.jsx";
+import ToastConfig from "./components/notifications/ToastConfig.jsx";
 
 const Home = lazy(() => import('./components/home/Home.jsx'));
 const Navbar = lazy(() => import('./components/Navbar.jsx'));
@@ -39,19 +39,7 @@ function App() {
             <Route path="/reviews" element={<Reviews />} />
             {/* <Route path="*" element={<NotFound />} />  */}
           </Routes>
-          <ToastContainer
-            position="top-center"
-            autoClose={1500}
-            hideProgressBar
-            newestOnTop={true}
-            closeOnClick
-            pauseOnFocusLoss
-            draggable
-            pauseOnHover
-            theme="colored"
-            className='mt-16'
-            toastClassName="flex justify-center items-center text-center font-semibold"
-          />
+          <ToastConfig/>
           <Footer />
         </Suspense>
       </Router>
