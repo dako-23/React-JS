@@ -7,6 +7,7 @@ import ProfileDropdown from "./profle-dropdown/ProfileDropdown.jsx";
 
 const navigation = [
     { name: 'Home', path: '/', visibleFor: 'all' },
+    { name: 'News feed', path: '/news-feed', visibleFor: 'all' },
     { name: 'Groups', path: '/groups', visibleFor: 'all' },
     { name: 'About', path: '/about', visibleFor: 'all' },
 

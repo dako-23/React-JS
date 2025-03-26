@@ -4,6 +4,7 @@ import ScrollToTop from "./helpers/scrollToTop.js";
 import Loader from "./components/Loader.jsx";
 import { UserProvider } from "./contexts/UserContext.jsx";
 import ToastConfig from "./components/notifications/ToastConfig.jsx";
+import NewsFeed from "./components/news-feed/newsFeed.jsx";
 
 const Home = lazy(() => import('./components/home/Home.jsx'));
 const Navbar = lazy(() => import('./components/Navbar.jsx'));
@@ -30,6 +31,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/register" element={<Register />} />
+            <Route path="/news-feed" element={<NewsFeed />} />
             <Route path="/groups" element={<GroupsList />} />
             <Route element={<AuthGuard />}>
               <Route path="/groups/:id/chat" element={<GroupChat />} />
