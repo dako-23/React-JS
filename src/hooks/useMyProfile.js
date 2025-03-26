@@ -18,7 +18,7 @@ export function useMyProfile(userId) {
 
         const updateData = Object.fromEntries(formData);
 
-        updateUserPartial({ imageUrl: updateData.imageUrl })
+        updateUserPartial({ imageUrl: updateData.imageUrl, firstName: updateData.firstName, lastName: updateData.lastName })
 
         try {
             const result = await createProfileInfo(userId, updateData)
