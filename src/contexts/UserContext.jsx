@@ -6,6 +6,8 @@ export const UserContext = createContext({
     email: '',
     imageUrl: '',
     accessToken: '',
+    firstName: '',
+    lastName: '',
     userLoginHandler: () => null,
     userLogoutHandler: () => null,
     updateUserPartial: () => null,
@@ -26,7 +28,7 @@ export const UserProvider = ({ children }) => {
     const userLogoutHandler = () => {
         localStorage.removeItem("user");
         setUser(null);
-        
+
     };
 
     const updateUserPartial = (newData) => {
