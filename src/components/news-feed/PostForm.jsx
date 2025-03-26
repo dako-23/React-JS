@@ -1,6 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext.jsx";
+import { FaUser } from "react-icons/fa";
+
 
 export default function PostForm({
     postAction,
