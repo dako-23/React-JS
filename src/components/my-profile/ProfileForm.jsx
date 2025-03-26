@@ -20,15 +20,18 @@ export default function ProfileForm({
             <h2 className="text-2xl font-semibold text-center h-14 text-gray-800">My Profile</h2>
             <div className="flex flex-col items-center">
                 <div className="flex items-center justify-center w-24 h-24 rounded-full border-2 border-gray-800 bg-gray-200 shadow-md overflow-hidden">
-                    {user.imageUrl ? (
-                        <img
-                            src={user.imageUrl}
-                            alt="Profile"
-                            className="w-full h-full object-cover"
-                        />
-                    ) : (
-                        <FaUser className="text-gray-600 text-5xl" />
-                    )}
+                    {user.imageUrl
+                        ?
+                        (
+                            <img
+                                src={user.imageUrl}
+                                alt="Profile"
+                                className="w-full h-full object-cover"
+                            />)
+                        :
+                        (
+                            <FaUser className="text-gray-600 text-5xl" />
+                        )}
                 </div>
             </div>
             <form action={FormAction} className="space-y-4">
