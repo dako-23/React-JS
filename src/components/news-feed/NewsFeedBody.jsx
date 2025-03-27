@@ -1,5 +1,4 @@
 import { motion, AnimatePresence } from "framer-motion";
-import { FaUser } from "react-icons/fa";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import NewsFeedComments from "./NewsFeedComments.jsx";
 
@@ -9,7 +8,7 @@ export default function NewsFeedBody({
     fadeInUp,
     commentAction,
     expandedComments,
-    toggleComments
+    toggleComments,
 }) {
 
     return (

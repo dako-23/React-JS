@@ -70,8 +70,6 @@ export function useNewsFeed() {
 
         try {
             const newComment = await createComment(commentData, postId);
-            console.log(newComment);
-
 
             setPosts((prevPosts) =>
                 prevPosts.map(post =>
@@ -111,7 +109,9 @@ export function useNewsFeed() {
         search,
         sortOption,
         transition,
-        fadeInUp
+        fadeInUp,
+        loading,
+        isPostPending,
     }
 
 }
