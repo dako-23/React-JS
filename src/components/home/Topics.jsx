@@ -8,6 +8,7 @@ import { useGroup } from '../../api/groupApi.js';
 import { UserContext } from '../../contexts/UserContext.jsx';
 import { toast } from 'react-toastify';
 import { NextArrow, PrevArrow } from '../CarouselArrows.jsx';
+import Loader from '../Loader.jsx';
 
 export default function Topics() {
     const { getLatest } = useGroup()
@@ -60,31 +61,36 @@ export default function Topics() {
                 <div className="h-[2px] w-80 bg-gray-800"></div>
             </div>
             <h2 className="text-gray-800 text-center text-2xl font-bold mb-6">Trending Topics</h2>
-            <Slider {...settings}>
-                {topics.map((topic) => (
-                    <div key={topic._id} className="px-3">
-                        <div
-                            onClick={() => handleClick(topic)}
-                            className="cursor-pointer p-6 bg-gradient-to-r from-lime-100 to-green-200 border-2 border-gray-800 shadow-lg rounded-xl text-center relative">
-                            <div className="flex items-center space-x-3 mb-2">
-                                <img
-                                    src={topic.imageUrl}
-                                    alt={topic.groupName}
-                                    className="w-28 h-28 rounded-full object-cover border border-gray-300"
-                                />
-                                <div className='text-center flex-1'>
-                                    <h3 className="text-lg font-semibold">{topic.groupName}</h3>
-                                    <p className="text-gray-500">{topic.joinedGroup.length} members</p>
+            {loading
+                ?
+                <Loader />
+                :
+                <Slider {...settings}>
+                    {topics.map((topic) => (
+                        <div key={topic._id} className="px-3">
+                            <div
+                                onClick={() => handleClick(topic)}
+                                className="cursor-pointer p-6 bg-gradient-to-r from-lime-100 to-green-200 border-2 border-gray-800 shadow-lg rounded-xl text-center relative">
+                                <div className="flex items-center space-x-3 mb-2">
+                                    <img
+                                        src={topic.imageUrl}
+                                        alt={topic.groupName}
+                                        className="w-28 h-28 rounded-full object-cover border border-gray-300"
+                                    />
+                                    <div className='text-center flex-1'>
+                                        <h3 className="text-lg font-semibold">{topic.groupName}</h3>
+                                        <p className="text-gray-500">{topic.joinedGroup.length} members</p>
+                                    </div>
+                                    <span className="px-3 py-1 text-sm font-medium text-teal-700 bg-gradient-to-r from-lime-400 to-amber-200 rounded-full">
+                                        {topic.category}
+                                    </span>
                                 </div>
-                                <span className="px-3 py-1 text-sm font-medium text-teal-700 bg-gradient-to-r from-lime-400 to-amber-200 rounded-full">
-                                    {topic.category}
-                                </span>
                             </div>
                         </div>
-                    </div>
-                ))
-                }
-            </Slider >
+                    ))
+                    }
+                </Slider >}
+
         </div >
     );
 }
