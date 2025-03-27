@@ -28,9 +28,9 @@ export function useMyProfile(userId) {
             const result = await createProfileInfo(userId, updateData)
             setUser(result)
 
-            setTimeout(() => (setIsLocked(false), setShowNotify(true)), 600);
-            setTimeout(() => (info('Redirect...')), 2000);
-            setTimeout(() => (navigate('/')), 3100);
+            setTimeout(() => (setIsLocked(false), setShowNotify(true)), 1000);
+            setTimeout(() => (info('Redirect...')), 1850);
+            setTimeout(() => (navigate('/')), 3000);
 
         } catch (err) {
             setTimeout(() => {

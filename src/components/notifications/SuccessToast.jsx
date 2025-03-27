@@ -5,7 +5,7 @@ export default function SuccessToast({
     message,
     show
 }) {
-    setTimeout(() => (show(false)), 1500);
+    setTimeout(() => (show(false)), 1000);
     return (
         <AnimatePresence>
             (
