@@ -2,6 +2,8 @@ import { useActionState, useContext, useEffect, useState } from 'react';
 import { useCreateProfileInfo, useGetUser } from '../api/authApi.js';
 import useFetch from './useFetch.js';
 import { UserContext } from '../contexts/UserContext.jsx';
+import { useNavigate } from 'react-router-dom';
+import { useToast } from './useToast.js';
 
 export function useMyProfile(userId) {
 
@@ -12,6 +14,8 @@ export function useMyProfile(userId) {
     const [showNotifyErr, setShowNotifyErr] = useState(false)
     const [user, setUser] = useState([]);
     const { createProfileInfo } = useCreateProfileInfo()
+    const navigate = useNavigate()
+    const { info } = useToast()
 
     const handleSubmitForm = async (prevState, formData) => {
         setIsLocked(true)
@@ -24,7 +28,10 @@ export function useMyProfile(userId) {
             const result = await createProfileInfo(userId, updateData)
             setUser(result)
 
-            setTimeout(() => (setIsLocked(false), setShowNotify(true)), 1500);
+            setTimeout(() => (setIsLocked(false), setShowNotify(true)), 600);
+            setTimeout(() => (info('Redirect...')), 2000);
+            setTimeout(() => (navigate('/')), 3100);
+
         } catch (err) {
             setTimeout(() => {
                 setIsLocked(false);
