@@ -17,7 +17,7 @@ export function useNewsFeed() {
         .sort((a, b) => {
             if (sortOption === "newest") return new Date(b.createdAt) - new Date(a.createdAt);
             if (sortOption === "oldest") return new Date(a.createdAt) - new Date(b.createdAt);
-            // if (sortOption === "popular") return (b.likes || 0) - (a.likes || 0);
+            if (sortOption === "popular") return (b.likes.length || 0) - (a.likes.length || 0);
         });
 
     const toggleComments = (postId) => {
