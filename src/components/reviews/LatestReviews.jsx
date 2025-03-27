@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Slider from 'react-slick';
 import { useNavigate } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
@@ -8,12 +8,15 @@ import Loader from '../Loader.jsx';
 import CreateReview from './CreateReview.jsx';
 import { useReviews } from '../../hooks/useReviews.js';
 import { NextArrow, PrevArrow } from '../CarouselArrows.jsx';
+import { UserContext } from '../../contexts/UserContext.jsx';
+import { useToast } from '../../hooks/useToast.js';
 
 const ratingOptions = [1, 2, 3, 4, 5];
 
 export default function LatestReviews() {
   const { handleCreateReview, loading, reviews, showCreateReview, openCreateReviewModal, closeCreateReviewModal } = useReviews()
-
+  const { isAuth } = useContext(UserContext);
+  const { info } = useToast()
   const navigate = useNavigate()
 
   const settings = {
@@ -73,8 +76,9 @@ export default function LatestReviews() {
             </Slider>
             )}
         <div className="flex justify-center gap-4 mt-8">
+
           <button
-            onClick={openCreateReviewModal}
+            onClick={() => isAuth ? openCreateReviewModal() : info('You need to log in first.') && navigate('/users/login')}
             className="px-5 py-2 bg-gray-800 text-white rounded-lg font-semibold hover:bg-gray-600 transition">
             Add Review
           </button>
