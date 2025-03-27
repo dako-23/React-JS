@@ -19,9 +19,17 @@ export const usePost = () => {
         );
     };
 
+    const like = async (postId, userId) => {
+        return request.post(
+            `${API_URL}/${postId}/like`,
+            {userId}
+        )
+    }
+
     return {
         create,
-        createComment
+        createComment,
+        like
     }
 }
 
@@ -36,7 +44,7 @@ export const usePostGetAll = () => {
             setLoading(true);
             const result = await request.get(`${API_URL}`);
             setPosts(result);
-           
+
 
             return result;
         } catch (error) {

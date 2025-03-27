@@ -1,8 +1,6 @@
 import { useActionState, useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext.jsx";
 import { usePost, usePostGetAll } from "../api/postApi.js";
-import { useToast } from "./useToast.js";
-
 
 export function useNewsFeed() {
     const [search, setSearch] = useState("");
@@ -11,9 +9,8 @@ export function useNewsFeed() {
     const [showPostForm, setShowPostForm] = useState(false);
 
     const { firstName, lastName, imageUrl: imageUrlAuthor } = useContext(UserContext);
-    const { create, createComment } = usePost()
+    const { create, createComment, like } = usePost()
     const { posts, loading, setPosts, } = usePostGetAll()
-    const { success } = useToast()
 
     const filteredPosts = posts
         .filter((p) => p.content.toLowerCase().includes(search.toLowerCase()))
@@ -45,7 +42,6 @@ export function useNewsFeed() {
             setPosts((state) => [newPost, ...state]);
 
             setShowPostForm(false);
-            success('Post created successfully!');
         } catch (err) {
             console.log(err);
         }
@@ -84,6 +80,17 @@ export function useNewsFeed() {
         }
     };
 
+    const handleSubmitLike = async (postId, userId) => {
+
+        const likeInfo = await like(postId, userId)
+
+        setPosts((prevPosts) =>
+            prevPosts.map((post) =>
+                post._id === postId ? likeInfo : post
+            )
+        );
+    }
+
     const [Commentvalues, commentAction, isCommentPending] = useActionState(handleSubmitComment, {
         text: "",
     });
@@ -112,6 +119,7 @@ export function useNewsFeed() {
         fadeInUp,
         loading,
         isPostPending,
+        handleSubmitLike
     }
 
 }
