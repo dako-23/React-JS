@@ -25,8 +25,8 @@ export default function Content() {
     const { isAuth } = useContext(UserContext)
 
     return (
-        <div className="bg-home-pattern h-screen bg-cover bg-center flex items-center justify-center text-white text-2xl font-bold">
-            <div className="flex flex-col text-center justify-center w-full h-full mt-[-600px] mx-auto max-w-[1100px]">
+        <div className="bg-home-pattern h-screen bg-cover bg-center flex flex-col items-center justify-start pt-24 text-white text-2xl font-bold relative">
+            <div className="flex flex-col text-center justify-center items-center max-w-[1100px] px-4">
                 <motion.h1
                     variants={textVariants}
                     initial="hidden"
