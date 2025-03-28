@@ -106,7 +106,7 @@ export function useNewsFeed() {
             setPosts((prevPosts) =>
                 prevPosts.map((post) =>
                     post._id === postId
-                        ? { ...post,}
+                        ? { ...post, isFavorited: !post.isFavorited }
                         : post
                 )
             );

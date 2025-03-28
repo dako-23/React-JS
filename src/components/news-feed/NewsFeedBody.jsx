@@ -38,9 +38,9 @@ export default function NewsFeedBody({
                         <button
                             onClick={() => handleFavorite(post._id, userId)}
                             className="hover:text-blue-500 transition absolute top-3 right-3"
-                            title={isFavorited ? "Remove from favorites" : "Save to favorites"}
+                            title={post.isFavorited ? "Remove from favorites" : "Save to favorites"}
                         >
-                            {isFavorited ? (
+                            {post.isFavorited ? (
                                 <BsBookmarkFill className="text-pink-600 text-xl" />
                             ) : (
                                 <BsBookmark className="text-gray-800 text-xl" />
