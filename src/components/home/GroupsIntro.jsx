@@ -6,7 +6,7 @@ import { FaUsers, FaCalendarAlt, FaBaby } from "react-icons/fa";
 const sections = [
   { id: 1, path: '/groups', title: "💬 Групи", icon: <FaUsers size={30} />, desc: "Намерете майки със сходни интереси!" },
   { id: 2, path: '/', title: "📅 Събития", icon: <FaCalendarAlt size={30} />, desc: "Присъединете се към локални срещи." },
-  { id: 3, path: '/', title: "🍼 Споделяне", icon: <FaBaby size={30} />, desc: "Публикувайте моменти с вашите деца." },
+  { id: 3, path: '/news-feed', title: "🍼 Споделяне", icon: <FaBaby size={30} />, desc: "Публикувайте моменти с вашите деца." },
 ];
 
 export default function GroupsIntro() {

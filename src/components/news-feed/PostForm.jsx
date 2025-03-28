@@ -36,7 +36,7 @@ export default function PostForm({
                         {!showPostForm ? (
                             <button
                                 onClick={() => setShowPostForm(true)}
-                                className="w-full text-left text-gray-500 border border-gray-300 px-4 py-2 rounded-full hover:bg-gray-50"
+                                className="w-full bg-page-pattern text-left text-gray-500 border border-gray-300 px-4 py-2 rounded-full hover:bg-gray-50"
                             >
                                 What's on your mind?
                             </button>
@@ -56,13 +56,13 @@ export default function PostForm({
                                             <textarea
                                                 rows="3"
                                                 placeholder="Share something with your community..."
-                                                className="w-full p-2 border rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-lime-600"
+                                                className="w-full p-2 border bg-page-pattern rounded-md resize-none focus:outline-none focus:ring-2 focus:ring-lime-600"
                                                 name="content"
                                             />
                                             <input
                                                 type="text"
                                                 placeholder="Optional image URL..."
-                                                className="w-full p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-600"
+                                                className="w-full p-2 border bg-page-pattern rounded-md focus:outline-none focus:ring-2 focus:ring-lime-600"
                                                 name="imageUrl"
                                             />
                                             <div className="flex justify-end gap-2">

@@ -73,7 +73,7 @@ export default function NewsFeedComments({
                             type="text"
                             name="text"
                             placeholder="Write a comment..."
-                            className="flex-1 border p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-600"
+                            className="flex-1 border bg-page-pattern p-2 rounded-md focus:outline-none focus:ring-2 focus:ring-lime-600"
                         />
                         <input type="hidden" name="postId" value={postId} />
                         <button

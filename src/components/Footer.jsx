@@ -44,9 +44,8 @@ export default function Footer() {
                     </div>
                     <div className="flex space-x-6 text-gray-400">
                         <Link to="/about" className="hover:text-white">About</Link>
-                        <Link to="/community" className="hover:text-white">Community</Link>
+                        <Link to="/news-feed" className="hover:text-white">Community</Link>
                         <Link to="/" className="hover:text-white">Home</Link>
-                        <Link to="/contact" className="hover:text-white">Contact</Link>
                     </div>
                     <div className="flex space-x-4 mt-4 md:mt-0">
                         <a href="https://web.telegram.org/" target="_blank" rel="noopener noreferrer">

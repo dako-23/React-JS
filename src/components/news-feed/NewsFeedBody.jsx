@@ -17,7 +17,6 @@ export default function NewsFeedBody({
     handleSubmitLike,
     handleFavorite
 }) {
-    const isFavorited = true
     const { _id: userId } = useContext(UserContext)
 
     return (
@@ -33,7 +32,7 @@ export default function NewsFeedBody({
                     <motion.div
                         key={post._id}
                         {...fadeInUp}
-                        className="relative bg-white rounded-xl shadow border border-gray-300 p-4"
+                        className="relative bg-page-pattern rounded-xl shadow border border-gray-300 p-4"
                     >
                         <button
                             onClick={() => handleFavorite(post._id, userId)}
