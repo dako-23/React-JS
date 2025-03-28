@@ -97,10 +97,12 @@ export function useNewsFeed() {
         }
     }
 
-
-
     const handleFavorite = async (postId, userId) => {
         try {
+            if (!userId) {
+                return info('You need to be logged in.');
+            };
+
             await addToFavorite(postId, userId)
 
             setPosts((prevPosts) =>
@@ -111,13 +113,8 @@ export function useNewsFeed() {
                 )
             );
 
-
-            console.log(postId, userId);
-
-
         } catch (err) {
             console.log(err.message);
-            info('You need to be logged in.');
         };
 
     }
