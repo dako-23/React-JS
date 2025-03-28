@@ -2,13 +2,34 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { useGroup } from "../../api/groupApi.js";
 import useFetch from "../../hooks/useFetch.js";
 import Loader from "../Loader.jsx";
-
+import { useGroupsList } from "../../hooks/useGroupList.js";
+import { useEffect, useState } from "react";
+import { useToast } from "../../hooks/useToast.js";
 
 export default function MyGroups() {
-
+    const [groups, setGroups] = useState([]);
     const { getByOwner } = useGroup()
+    const { deleteGroupHandler } = useGroupsList()
+    const { error } = useToast()
 
-    const { loading, state: groups } = useFetch(getByOwner)
+    const { loading, state: fetchedGroups } = useFetch(getByOwner)
+
+    useEffect(() => {
+        setGroups(fetchedGroups);
+    }, [fetchedGroups]);
+
+    const handleDelete = async (groupId, groupName) => {
+
+        try {
+            await deleteGroupHandler(groupId, groupName);
+
+            setGroups(prev => prev.filter(group => group._id !== groupId));
+
+        } catch (err) {
+            error(err.message);
+        }
+
+    };
 
     return (
 
@@ -50,13 +71,7 @@ export default function MyGroups() {
 
                             <div className="flex justify-end gap-3">
                                 <button
-                                    onClick={() => editGroup(group)}
-                                    className="text-sm px-4 py-2 border rounded-md text-gray-700 hover:bg-gray-100 transition"
-                                >
-                                    <AiOutlineEdit className="inline mr-1" /> Edit
-                                </button>
-                                <button
-                                    onClick={() => deleteGroup(group._id, group.groupName)}
+                                    onClick={() => handleDelete(group._id, group.groupName)}
                                     className="text-sm px-4 py-2 border rounded-md text-red-600 border-red-300 hover:bg-red-50 transition"
                                 >
                                     <AiOutlineDelete className="inline mr-1" /> Delete

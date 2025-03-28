@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 
 const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600'
 
-
 export default function GroupEdit({
     onClose,
     onEdit,
