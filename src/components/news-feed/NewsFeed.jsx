@@ -22,7 +22,8 @@ export default function NewsFeed() {
         fadeInUp,
         loading,
         isPostPending,
-        handleSubmitLike
+        handleSubmitLike,
+        handleFavorite
     } = useNewsFeed()
 
 
@@ -70,6 +71,7 @@ export default function NewsFeed() {
                         expandedComments={expandedComments}
                         toggleComments={toggleComments}
                         handleSubmitLike={handleSubmitLike}
+                        handleFavorite={handleFavorite}
                     />
                 </div>
             </>)}

@@ -22,14 +22,22 @@ export const usePost = () => {
     const like = async (postId, userId) => {
         return request.post(
             `${API_URL}/${postId}/like`,
-            {userId}
+            { userId }
+        )
+    }
+
+    const addToFavorite = async (postId, userId) => {
+        request.post(
+            `${API_URL}/${postId}/favorites`,
+            { userId }
         )
     }
 
     return {
         create,
         createComment,
-        like
+        like,
+        addToFavorite
     }
 }
 

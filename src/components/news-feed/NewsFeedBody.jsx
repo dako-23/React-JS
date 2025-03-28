@@ -5,6 +5,7 @@ import { FaUser } from "react-icons/fa";
 import NewsFeedComments from "./NewsFeedComments.jsx";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext.jsx";
+import { BsBookmark, BsBookmarkFill } from "react-icons/bs";
 
 
 export default function NewsFeedBody({
@@ -13,9 +14,10 @@ export default function NewsFeedBody({
     commentAction,
     expandedComments,
     toggleComments,
-    handleSubmitLike
+    handleSubmitLike,
+    handleFavorite
 }) {
-
+    const isFavorited = true
     const { _id: userId } = useContext(UserContext)
 
     return (
@@ -31,14 +33,30 @@ export default function NewsFeedBody({
                     <motion.div
                         key={post._id}
                         {...fadeInUp}
-                        className="bg-white rounded-xl shadow border border-gray-300 p-4"
+                        className="relative bg-white rounded-xl shadow border border-gray-300 p-4"
                     >
+                        <button
+                            onClick={() => handleFavorite(post._id, userId)}
+                            className="hover:text-blue-500 transition absolute top-3 right-3"
+                            title={isFavorited ? "Remove from favorites" : "Save to favorites"}
+                        >
+                            {isFavorited ? (
+                                <BsBookmarkFill className="text-pink-600 text-xl" />
+                            ) : (
+                                <BsBookmark className="text-gray-800 text-xl" />
+                            )}
+                        </button>
                         <div className="flex items-center gap-3 mb-2">
-                            <img
-                                src={post.imageUrlAuthor}
-                                alt={post.username}
-                                className="w-10 h-10 rounded-full object-cover border"
-                            />
+                            {post.imageUrlAuthor
+                                ?
+                                (<img
+                                    src={post.imageUrlAuthor}
+                                    alt={post.username}
+                                    className="w-10 h-10 rounded-full object-cover border"
+                                />)
+                                :
+                                <FaUser className="text-gray-600 w-10 h-10 rounded-full object-cover border" />
+                            }
                             <div>
                                 <p className="font-semibold text-gray-800">
                                     {post.firstName} {post.lastName}
@@ -74,7 +92,7 @@ export default function NewsFeedBody({
                                         {post.likes.length} {post.likes.length === 1 ? 'Like' : 'Likes'}
                                     </span>
                                     {post.likes.length > 0 && (
-                                        <div className="absolute left-0 top-6 w-48 bg-white border border-gray-200 rounded-md shadow-md p-2 z-20 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition duration-200">
+                                        <div className="absolute left-0 top-6 w-48 bg-gradient-to-r from-lime-100 to-green-200 border border-gray-200 rounded-md shadow-md p-2 z-20 opacity-0 group-hover:opacity-100 pointer-events-none group-hover:pointer-events-auto transition duration-200">
                                             <p className="text-xs text-gray-400 mb-1">Liked by:</p>
                                             <ul className="space-y-1 max-h-40 overflow-auto">
                                                 {post.likes.map(user => (
@@ -111,10 +129,10 @@ export default function NewsFeedBody({
                             expandedComments={expandedComments}
                             fadeInUp={fadeInUp}
                         />
-                    </motion.div>
+                    </motion.div >
                 ))
             }
 
-        </AnimatePresence>
+        </AnimatePresence >
     );
 }
