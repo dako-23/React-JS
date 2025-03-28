@@ -1,5 +1,5 @@
 import { useState, useContext, useRef, useEffect } from "react";
-import { FaEdit, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaUserCircle } from "react-icons/fa";
+import { FaEdit, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaUserCircle, FaFileAlt, FaUsers, FaBookmark } from "react-icons/fa";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -37,6 +37,33 @@ export default function ProfileDropdown() {
 
                     {isAuth ? (
                         <>
+                            <button
+                                onClick={() => {
+                                    navigate("/my-profile");
+                                    setIsOpen(false);
+                                }}
+                                className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                            >
+                                <FaFileAlt className="mr-2" /> My Posts
+                            </button>
+                            <button
+                                onClick={() => {
+                                    navigate("/my-profile");
+                                    setIsOpen(false);
+                                }}
+                                className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                            >
+                                <FaUsers className="mr-2" /> My groups
+                            </button>
+                            <button
+                                onClick={() => {
+                                    navigate("/my-profile");
+                                    setIsOpen(false);
+                                }}
+                                className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                            >
+                                <FaBookmark className="mr-2" /> Favorites
+                            </button>
                             <button
                                 onClick={() => {
                                     navigate("/my-profile");
