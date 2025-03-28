@@ -6,7 +6,8 @@ const API_URL = 'https://server-tgjz.onrender.com/groups';
 
 
 export const useGroup = () => {
-    
+    const { _id: userId } = useContext(UserContext);
+
     const getOne = async (groupId) => {
         return request.get(`${API_URL}/${groupId}`)
     };
@@ -14,6 +15,10 @@ export const useGroup = () => {
     const getLatest = async () => {
         return request.get(`${API_URL}/latest`)
     };
+
+    const getByOwner = async () => {
+        return request.get(`${API_URL}/${userId}/my-groups`)
+    }
 
     const create = async (groupData) => {
         return request.post(
@@ -48,7 +53,8 @@ export const useGroup = () => {
         joinGroup,
         leaveGroup,
         editGroup,
-        groupDelete
+        groupDelete,
+        getByOwner
     }
 }
 

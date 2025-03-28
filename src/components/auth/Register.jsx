@@ -26,7 +26,7 @@ export default function Register() {
 
             userLoginHandler(authData)
 
-            navigate('/my-profile');
+            navigate('/my-profile/edit');
             return values;
         } catch (err) {
 

@@ -39,7 +39,7 @@ export default function ProfileDropdown() {
                         <>
                             <button
                                 onClick={() => {
-                                    navigate(`/${userId}/my-groups`);
+                                    navigate(`/my-profile/${userId}/groups`);
                                     setIsOpen(false);
                                 }}
                                 className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
@@ -48,7 +48,7 @@ export default function ProfileDropdown() {
                             </button>
                             <button
                                 onClick={() => {
-                                    navigate("/my-profile");
+                                    navigate(`/my-profile/edit`);
                                     setIsOpen(false);
                                 }}
                                 className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
