@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
 export default function ProfileDropdown() {
-    const { isAuth, imageUrl, userLogoutHandler } = useContext(UserContext);
+    const { isAuth, imageUrl, userLogoutHandler, _id: userId } = useContext(UserContext);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
@@ -39,30 +39,12 @@ export default function ProfileDropdown() {
                         <>
                             <button
                                 onClick={() => {
-                                    navigate("/my-profile");
-                                    setIsOpen(false);
-                                }}
-                                className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
-                            >
-                                <FaFileAlt className="mr-2" /> My Posts
-                            </button>
-                            <button
-                                onClick={() => {
-                                    navigate("/my-profile");
+                                    navigate(`/${userId}/my-groups`);
                                     setIsOpen(false);
                                 }}
                                 className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
                             >
                                 <FaUsers className="mr-2" /> My groups
-                            </button>
-                            <button
-                                onClick={() => {
-                                    navigate("/my-profile");
-                                    setIsOpen(false);
-                                }}
-                                className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
-                            >
-                                <FaBookmark className="mr-2" /> Favorites
                             </button>
                             <button
                                 onClick={() => {

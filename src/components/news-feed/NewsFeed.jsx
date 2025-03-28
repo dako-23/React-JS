@@ -23,7 +23,9 @@ export default function NewsFeed() {
         loading,
         isPostPending,
         handleSubmitLike,
-        handleFavorite
+        handleFavorite,
+        filterOption,
+        setFilterOption
     } = useNewsFeed()
 
 
@@ -33,26 +35,36 @@ export default function NewsFeed() {
                 {...fadeInUp}
                 className="flex justify-between items-center mb-6 gap-4 flex-wrap"
             >
-                <div className="flex items-center gap-2 w-full sm:w-auto">
-                    <FaSearch className="text-gray-500" />
-                    <input
-                        type="text"
-                        placeholder="Search posts..."
-                        value={search}
-                        onChange={(e) => setSearch(e.target.value)}
-                        className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-600 w-full sm:w-64"
-                    />
+                <div className="flex items-center justify-between gap-4 mb-6 w-full max-w-4xl mx-auto px-4">
+                    <select
+                        value={filterOption}
+                        onChange={(e) => setFilterOption(e.target.value)}
+                        className="border p-2 rounded shadow-sm w-32"
+                    >
+                        <option value="all">All Posts</option>
+                        <option value="mine">My Posts</option>
+                        <option value="favorites">Favorites</option>
+                    </select>
+                    <div className="flex items-center gap-2 flex-1 max-w-md mx-4">
+                        <FaSearch className="text-gray-500" />
+                        <input
+                            type="text"
+                            placeholder="Search posts..."
+                            value={search}
+                            onChange={(e) => setSearch(e.target.value)}
+                            className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-600 w-full"
+                        />
+                    </div>
+                    <select
+                        value={sortOption}
+                        onChange={(e) => setSortOption(e.target.value)}
+                        className="border p-2 rounded shadow-sm w-32"
+                    >
+                        <option value="newest">Newest</option>
+                        <option value="oldest">Oldest</option>
+                        <option value="popular">Most Liked</option>
+                    </select>
                 </div>
-
-                <select
-                    className="border p-2 rounded-md focus:outline-none"
-                    value={sortOption}
-                    onChange={(e) => setSortOption(e.target.value)}
-                >
-                    <option value="newest">Newest</option>
-                    <option value="oldest">Oldest</option>
-                    <option value="popular">Most Liked</option>
-                </select>
             </motion.div>
             {loading ? (<Loader />) : (<>
                 <PostForm

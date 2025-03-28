@@ -6,16 +6,24 @@ import { useToast } from "./useToast.js";
 export function useNewsFeed() {
     const [search, setSearch] = useState("");
     const [sortOption, setSortOption] = useState("newest");
+    const [filterOption, setFilterOption] = useState("all");
     const [expandedComments, setExpandedComments] = useState({});
     const [showPostForm, setShowPostForm] = useState(false);
 
-    const { firstName, lastName, imageUrl: imageUrlAuthor } = useContext(UserContext);
+    const { firstName, lastName, imageUrl: imageUrlAuthor, _id: userId } = useContext(UserContext);
     const { create, createComment, like, addToFavorite } = usePost()
     const { posts, loading, setPosts, getAll } = usePostGetAll()
     const { error, info, success, warn } = useToast();
 
     const filteredPosts = posts
-        .filter((p) => p.content.toLowerCase().includes(search.toLowerCase()))
+        .filter((p) =>
+            p.content.toLowerCase().includes(search.toLowerCase())
+        )
+        .filter((p) => {
+            if (filterOption === "mine") return p._ownerId === userId;
+            if (filterOption === "favorites") return p.isFavorited === true;
+            return true;
+        })
         .sort((a, b) => {
             if (sortOption === "newest") return new Date(b.createdAt) - new Date(a.createdAt);
             if (sortOption === "oldest") return new Date(a.createdAt) - new Date(b.createdAt);
@@ -148,7 +156,9 @@ export function useNewsFeed() {
         loading,
         isPostPending,
         handleSubmitLike,
-        handleFavorite
+        handleFavorite,
+        filterOption,
+        setFilterOption
     }
 
 }
