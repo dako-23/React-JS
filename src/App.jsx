@@ -4,6 +4,7 @@ import ScrollToTop from "./helpers/scrollToTop.js";
 import Loader from "./components/Loader.jsx";
 import { UserProvider } from "./contexts/UserContext.jsx";
 import ToastConfig from "./components/notifications/ToastConfig.jsx";
+import NotFound from "./components/not-found/NotFound.jsx";
 
 const Home = lazy(() => import('./components/home/Home.jsx'));
 const Navbar = lazy(() => import('./components/Navbar.jsx'));
@@ -40,7 +41,7 @@ function App() {
             <Route path="/my-profile/edit" element={<MyProfile />} />
             <Route path="/my-profile/:id/groups" element={<MyGroups />} />
             <Route path="/reviews" element={<Reviews />} />
-            {/* <Route path="*" element={<NotFound />} />  */}
+            <Route path="*" element={<NotFound />} /> 
           </Routes>
           <ToastConfig />
           <Footer />
