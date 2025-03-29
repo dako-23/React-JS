@@ -38,11 +38,11 @@ export default function MyGroups() {
                 My Groups
             </h2>
             {loading ? <Loader /> : groups.length === 0 ? (
-                <div className="text-center text-gray-500 border border-dashed border-gray-300 py-10 rounded-lg">
+                <div className="text-center text-gray-500 border border-dashed border-gray-300 py-10 rounded-lg ">
                     You haven't created any groups yet.
                 </div>
             ) : (
-                <ul className="max-w-4xl mx-auto py-12 px-4 space-y-6">
+                <ul className="max-w-4xl mx-auto py-12 px-4 space-y-6 bg-gradient-to-r from-lime-100 to-green-200 rounded-lg">
                     {groups.map((group) => (
                         <li
                             key={group._id}
