@@ -1,5 +1,6 @@
 import { useState, useContext, useRef, useEffect } from "react";
 import { FaEdit, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaUserCircle, FaFileAlt, FaUsers, FaBookmark } from "react-icons/fa";
+import { MdOutlinePassword } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
@@ -54,6 +55,15 @@ export default function ProfileDropdown() {
                                 className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
                             >
                                 <FaEdit className="mr-2" /> Edit Profile
+                            </button>
+                            <button
+                                onClick={() => {
+                                    navigate(`/users/change-password`);
+                                    setIsOpen(false);
+                                }}
+                                className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                            >
+                                <MdOutlinePassword className="mr-2" /> Change Password
                             </button>
                             <button
                                 onClick={() => {

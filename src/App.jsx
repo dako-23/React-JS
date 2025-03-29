@@ -19,6 +19,7 @@ const AuthGuard = lazy(() => import('./components/guards/AuthGuard.jsx'));
 const Footer = lazy(() => import('./components/Footer.jsx'));
 const NewsFeed = lazy(() => import('./components/news-feed/NewsFeed.jsx'));
 const MyGroups = lazy(()=> import('./components/my-groups/MyGroups.jsx'))
+const ChangePassword = lazy(()=> import('./components/auth/ChangePassword.jsx'))
 
 function App() {
 
@@ -32,6 +33,7 @@ function App() {
             <Route path="/" element={<Home />} />
             <Route path="/users/login" element={<Login />} />
             <Route path="/users/register" element={<Register />} />
+            <Route path="/users/change-password" element={<ChangePassword />} />
             <Route path="/news-feed" element={<NewsFeed />} />
             <Route path="/groups" element={<GroupsList />} />
             <Route element={<AuthGuard />}>
