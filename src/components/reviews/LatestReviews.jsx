@@ -20,9 +20,9 @@ export default function LatestReviews() {
   const navigate = useNavigate()
 
   const settings = {
-    dots: true,
-    arrows: true,
-    infinite: true,
+    dots: reviews.length > 1,
+    arrows: reviews.length > 1,
+    infinite: reviews.length > 1,
     speed: 800,
     slidesToShow: 1,
     slidesToScroll: 1,

@@ -31,9 +31,9 @@ export default function Topics() {
     };
 
     const settings = {
-        dots: true,
-        arrows: true,
-        infinite: true,
+        dots: topics.length > 1,
+        arrows: topics.length > 1,
+        infinite: topics.length > 1,
         speed: 500,
         slidesToShow: 2,
         slidesToScroll: 1,
