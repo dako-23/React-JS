@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useReviewCreate, useReviewGetLatest } from '../api/reviewApi.js';
 import useFetch from './useFetch.js';
 
@@ -11,10 +11,7 @@ export function useReviews() {
     const { create } = useReviewCreate();
     const { getLatest } = useReviewGetLatest();
 
-    const getLatestCallback = useCallback(() => getLatest(), []);
-
-
-    const { loading, state: fetchedReviews } = useFetch(getLatestCallback);
+    const { loading, state: fetchedReviews } = useFetch(getLatest);
 
     useEffect(() => {
         setReviews(fetchedReviews);
