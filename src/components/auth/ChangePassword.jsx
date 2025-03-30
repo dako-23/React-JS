@@ -1,16 +1,21 @@
 import { motion } from "framer-motion";
 import { useActionState } from "react";
+import { useChangePassword } from "../../api/authApi.js";
 
 
 
 
 export default function ChangePassword() {
 
+    const { changePassword } = useChangePassword();
+
     const changePasswordHandler = async (prevState, formData) => {
 
         const values = Object.fromEntries(formData);
-        console.log(values);
 
+        const { currentPassword, newPassword } = values
+
+        await changePassword(currentPassword, newPassword)
 
 
     }

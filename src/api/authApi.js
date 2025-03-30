@@ -67,3 +67,16 @@ export const useGetUser = () => {
     }
 
 };
+
+export const useChangePassword = () => {
+
+    const changePassword = async (currentPassword, newPassword) => {
+        return request.post(
+            `${API_URL}/change-password`,
+            { currentPassword, newPassword },
+        )
+    }
+    return {
+        changePassword
+    }
+}
