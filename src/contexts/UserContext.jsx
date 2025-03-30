@@ -12,6 +12,7 @@ export const UserContext = createContext({
     userLogoutHandler: () => null,
     updateUserPartial: () => null,
     isAuth: false,
+    isAdmin: false,
 });
 
 export const UserProvider = ({ children }) => {

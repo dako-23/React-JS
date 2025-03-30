@@ -18,7 +18,7 @@ export default function GroupListItems({
     deleteGroup,
     editGroup
 }) {
-    const { _id: userId } = useContext(UserContext)
+    const { _id: userId, isAdmin } = useContext(UserContext)
     const isOwner = _ownerId === userId
 
     const {
