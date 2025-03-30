@@ -1,3 +1,4 @@
+import "@fortawesome/fontawesome-free/css/all.min.css";
 import { motion } from "framer-motion";
 import { Link, useNavigate } from "react-router-dom";
 import { useActionState, useContext, useState } from "react";
@@ -5,12 +6,13 @@ import AuthError from "./AuthError.jsx";
 import { useLogin } from "../../api/authApi.js";
 import { UserContext } from "../../contexts/UserContext.jsx";
 import { useToast } from "../../hooks/useToast.js";
+import useAuth from "../../hooks/useAuth.js";
 
 export default function Login() {
-  const [error, setError] = useState(null);
   const { error: errToast } = useToast()
   const { login, validationLoginSchema } = useLogin();
-  const { userLoginHandler } = useContext(UserContext)
+  const { userLoginHandler } = useContext(UserContext);
+  const { error, setError, showPassword, toggleVisibility } = useAuth();
   const navigate = useNavigate();
 
   const LoginSubmitHandler = async (prevState, formData) => {
@@ -75,12 +77,20 @@ export default function Login() {
             {error?.email && <AuthError
               err={error.email}
             />}
-            <input
-              type="password"
-              name="password"
-              placeholder="Password"
-              className={`w-full p-3 border rounded-lg ${error?.password ? "border-red-500" : "border-gray-300"}`}
-            />
+            <div className="relative flex items-center">
+              <input
+                type={showPassword.current ? 'text' : 'password'}
+                name="password"
+                placeholder="Password"
+                className={`w-full p-3 pr-10 border rounded-lg ${error?.password ? "border-red-500" : "border-gray-300"}`}
+              />
+              <span
+                onClick={() => toggleVisibility('current')}
+                className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-800"
+              >
+                {showPassword.current ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
+              </span>
+            </div>
             {error?.password && <AuthError
               err={error.password}
             />}

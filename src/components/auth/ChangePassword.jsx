@@ -1,14 +1,22 @@
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
 import { motion } from "framer-motion";
 import { useActionState, useState } from "react";
 import { useChangePassword } from "../../api/authApi.js";
 import { useToast } from "../../hooks/useToast.js";
 import { useNavigate } from "react-router-dom";
 import AuthError from "./AuthError.jsx";
+import useAuth from "../../hooks/useAuth.js";
 
-const { error: errToast, success, info } = useToast();
+
 
 export default function ChangePassword() {
-    const [error, setError] = useState(null);
+
+    const { error: errToast, success, info } = useToast();
+    const { error, setError, showPassword, toggleVisibility } = useAuth();
+
+
+
     const { changePassword, validationChangePasswordSchema } = useChangePassword();
 
     const navigate = useNavigate();
@@ -65,30 +73,55 @@ export default function ChangePassword() {
                         transition={{ duration: 0.5 }}
                         className="space-y-4"
                     >
-                        <input
-                            type="currentPassword"
-                            name="currentPassword"
-                            placeholder="Current Password"
-                            className={`w-full p-3 border rounded-lg ${error?.currentPassword ? "border-red-500" : "border-gray-300"}`}
-                        />
+                        <div className="relative flex items-center">
+                            <input
+                                type={showPassword.current ? 'text' : 'password'}
+                                name="currentPassword"
+                                placeholder="Current Password"
+                                className={`w-full p-3 pr-10 border rounded-lg ${error?.currentPassword ? "border-red-500" : "border-gray-300"}`}
+                            />
+                            <span
+                                onClick={() => toggleVisibility('current')}
+                                className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-800"
+                            >
+                                {showPassword.current
+                                    ? <i className="fas fa-eye-slash" />
+                                    : <i className="fas fa-eye" />}
+                            </span>
+                        </div>
                         {error?.currentPassword && <AuthError
-                            err={error.currentPassword}
-                        />}
-                        <input
-                            type="newPassword"
-                            name="newPassword"
-                            placeholder="New Password"
-                            className={`w-full p-3 border rounded-lg ${error?.newPassword ? "border-red-500" : "border-gray-300"}`}
-                        />
+                            err={error.currentPassword} />}
+                        <div className="relative flex items-center">
+                            <input
+                                type={showPassword.new ? 'text' : 'password'}
+                                name="newPassword"
+                                placeholder="New Password"
+                                className={`w-full p-3 border rounded-lg ${error?.newPassword ? "border-red-500" : "border-gray-300"}`}
+                            />
+                            <span
+                                onClick={() => toggleVisibility('new')}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-800"
+                            >
+                                {showPassword.new ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
+                            </span>
+                        </div>
                         {error?.newPassword && <AuthError
                             err={error.newPassword}
                         />}
-                        <input
-                            type="confirmNewPassword"
-                            name="confirmNewPassword"
-                            placeholder="Confirm New Password"
-                            className={`w-full p-3 border rounded-lg ${error?.confirmNewPassword ? "border-red-500" : "border-gray-300"}`}
-                        />
+                        <div className="relative flex items-center">
+                            <input
+                                type={showPassword.confirm ? 'text' : 'password'}
+                                name="confirmNewPassword"
+                                placeholder="Confirm New Password"
+                                className={`w-full p-3 border rounded-lg ${error?.confirmNewPassword ? "border-red-500" : "border-gray-300"}`}
+                            />
+                            <span
+                                onClick={() => toggleVisibility('confirm')}
+                                className="absolute right-3 top-1/2 transform -translate-y-1/2 cursor-pointer text-gray-500 hover:text-gray-800"
+                            >
+                                {showPassword.confirm ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
+                            </span>
+                        </div>
                         {error?.confirmNewPassword && <AuthError
                             err={error.confirmNewPassword}
                         />}
