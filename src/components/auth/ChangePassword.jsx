@@ -1,23 +1,44 @@
 import { motion } from "framer-motion";
-import { useActionState } from "react";
+import { useActionState, useState } from "react";
 import { useChangePassword } from "../../api/authApi.js";
+import { useToast } from "../../hooks/useToast.js";
+import { useNavigate } from "react-router-dom";
+import AuthError from "./AuthError.jsx";
 
-
-
+const { error: errToast, success, info } = useToast();
 
 export default function ChangePassword() {
+    const [error, setError] = useState(null);
+    const { changePassword, validationChangePasswordSchema } = useChangePassword();
 
-    const { changePassword } = useChangePassword();
+    const navigate = useNavigate();
 
     const changePasswordHandler = async (prevState, formData) => {
-
+        setError(null)
         const values = Object.fromEntries(formData);
-
         const { currentPassword, newPassword } = values
 
-        await changePassword(currentPassword, newPassword)
+        try {
+            await validationChangePasswordSchema.validate(values, { abortEarly: false });
 
+            await changePassword(currentPassword, newPassword)
 
+            success('Password changed successfully!')
+
+            setTimeout(() => (info('Redirect...')), 1700);
+            setTimeout(() => (navigate('/')), 2700);
+
+        } catch (err) {
+            if (err.inner) {
+                const errorMessages = {};
+                err.inner.forEach(e => {
+                    errorMessages[e.path] = e.message;
+                });
+                setError(errorMessages);
+            } else {
+                errToast(err.message)
+            }
+        }
     }
 
 
@@ -27,7 +48,6 @@ export default function ChangePassword() {
             newPassword: '',
             confirmNewPassword: ''
         });
-    const error = false
 
     return (
         <>

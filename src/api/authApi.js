@@ -70,6 +70,15 @@ export const useGetUser = () => {
 
 export const useChangePassword = () => {
 
+    const validationChangePasswordSchema = yup.object().shape({
+        currentPassword: yup.string().min(6, "Password must be at least 6 characters").required("Password is required"),
+        newPassword: yup.string().min(6, "Password must be at least 6 characters").required("New password is required"),
+        confirmNewPassword: yup
+            .string()
+            .oneOf([yup.ref("newPassword"), null], "Passwords do not match")
+            .required("Confirm new password is required"),
+    });
+
     const changePassword = async (currentPassword, newPassword) => {
         return request.post(
             `${API_URL}/change-password`,
@@ -77,6 +86,7 @@ export const useChangePassword = () => {
         )
     }
     return {
-        changePassword
+        changePassword,
+        validationChangePasswordSchema
     }
 }
