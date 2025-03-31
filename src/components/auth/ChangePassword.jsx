@@ -1,61 +1,11 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
-
 import { motion } from "framer-motion";
-import { useActionState, useState } from "react";
-import { useChangePassword } from "../../api/authApi.js";
-import { useToast } from "../../hooks/useToast.js";
-import { useNavigate } from "react-router-dom";
 import AuthError from "./AuthError.jsx";
 import useAuth from "../../hooks/useAuth.js";
 
-
-
 export default function ChangePassword() {
 
-    const { error: errToast, success, info } = useToast();
-    const { error, setError, showPassword, toggleVisibility } = useAuth();
-
-
-
-    const { changePassword, validationChangePasswordSchema } = useChangePassword();
-
-    const navigate = useNavigate();
-
-    const changePasswordHandler = async (prevState, formData) => {
-        setError(null)
-        const values = Object.fromEntries(formData);
-        const { currentPassword, newPassword } = values
-
-        try {
-            await validationChangePasswordSchema.validate(values, { abortEarly: false });
-
-            await changePassword(currentPassword, newPassword)
-
-            success('Password changed successfully!')
-
-            setTimeout(() => (info('Redirect...')), 1700);
-            setTimeout(() => (navigate('/')), 2700);
-
-        } catch (err) {
-            if (err.inner) {
-                const errorMessages = {};
-                err.inner.forEach(e => {
-                    errorMessages[e.path] = e.message;
-                });
-                setError(errorMessages);
-            } else {
-                errToast(err.message)
-            }
-        }
-    }
-
-
-    const [_, changePasswordAction, isPending] = useActionState(changePasswordHandler,
-        {
-            currentPassword: '',
-            newPassword: '',
-            confirmNewPassword: ''
-        });
+    const { error, showPassword, toggleVisibility, changePasswordAction, isPending } = useAuth();
 
     return (
         <>

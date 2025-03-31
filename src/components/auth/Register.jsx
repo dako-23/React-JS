@@ -1,54 +1,13 @@
-import { Link, useNavigate } from "react-router-dom";
+import "@fortawesome/fontawesome-free/css/all.min.css";
+
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { useState, useActionState, useContext } from "react";
 import AuthError from "./AuthError.jsx";
-import { UserContext } from "../../contexts/UserContext.jsx";
-import { useRegister } from "../../api/authApi.js";
-import { useToast } from "../../hooks/useToast.js";
+import useAuth from "../../hooks/useAuth.js";
 
 export default function Register() {
-    const [error, setError] = useState(null);
-    const navigate = useNavigate();
-    const { error: errToast } = useToast();
-    const { userLoginHandler } = useContext(UserContext);
-    const { register, validationRegisterSchema } = useRegister();
 
-    const registerSubmitHandler = async (prevState, formData) => {
-        const values = Object.fromEntries(formData);
-        const userData = { username: values.username, email: values.email, password: values.password };
-
-        try {
-            setError(null);
-
-            await validationRegisterSchema.validate(values, { abortEarly: false });
-
-            const authData = await register(userData);
-
-            userLoginHandler(authData)
-
-            navigate('/my-profile/edit');
-            return values;
-        } catch (err) {
-
-            if (err.inner) {
-                const errorMessages = {};
-                err.inner.forEach(e => {
-                    errorMessages[e.path] = e.message;
-                });
-                setError(errorMessages);
-            } else {
-                errToast(err.message)
-            }
-            return values;
-        }
-    };
-
-    const [values, registerAction, isPending] = useActionState(registerSubmitHandler, {
-        username: '',
-        email: '',
-        password: '',
-        rePassword: '',
-    });
+    const { isRegisterPending: isPending, valuesRegister: values, registerAction, error, showPassword, toggleVisibility } = useAuth();
 
     return (
         <div className="bg-home-pattern h-screen bg-cover bg-center flex items-center justify-center min-h-screen bg-gray-100">
@@ -89,24 +48,38 @@ export default function Register() {
                         err={error.email}
                     />}
 
-                    <input
-                        type="password"
-                        name="password"
-                        placeholder="Password"
-                        className={`w-full p-3 border rounded-lg ${error?.password ? "border-red-500" : "border-gray-300"}`}
-                        defaultValue={values.password}
-                    />
+                    <div className="relative flex items-center">
+                        <input
+                            type={showPassword.current ? 'text' : 'password'}
+                            name="password"
+                            placeholder="Password"
+                            className={`w-full p-3 pr-10 border rounded-lg ${error?.password ? "border-red-500" : "border-gray-300"}`}
+                        />
+                        <span
+                            onClick={() => toggleVisibility('current')}
+                            className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-800"
+                        >
+                            {showPassword.current ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
+                        </span>
+                    </div>
                     {error?.password && <AuthError
                         err={error.password}
                     />}
 
-                    <input
-                        type="password"
-                        name="rePassword"
-                        placeholder="Confirm Password"
-                        className={`w-full p-3 border rounded-lg ${error?.rePassword ? "border-red-500" : "border-gray-300"}`}
-                        defaultValue={values.rePassword}
-                    />
+                    <div className="relative flex items-center">
+                        <input
+                            type={showPassword.new ? 'text' : 'password'}
+                            name="rePassword"
+                            placeholder="Password"
+                            className={`w-full p-3 pr-10 border rounded-lg ${error?.rePassword ? "border-red-500" : "border-gray-300"}`}
+                        />
+                        <span
+                            onClick={() => toggleVisibility('new')}
+                            className="absolute right-3 cursor-pointer text-gray-500 hover:text-gray-800"
+                        >
+                            {showPassword.new ? <i className="fas fa-eye-slash"></i> : <i className="fas fa-eye"></i>}
+                        </span>
+                    </div>
                     {error?.rePassword && <AuthError
                         err={error.rePassword}
                     />}

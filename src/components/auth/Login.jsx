@@ -1,56 +1,12 @@
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import { motion } from "framer-motion";
-import { Link, useNavigate } from "react-router-dom";
-import { useActionState, useContext, useState } from "react";
+import { Link } from "react-router-dom";
 import AuthError from "./AuthError.jsx";
-import { useLogin } from "../../api/authApi.js";
-import { UserContext } from "../../contexts/UserContext.jsx";
-import { useToast } from "../../hooks/useToast.js";
 import useAuth from "../../hooks/useAuth.js";
 
 export default function Login() {
-  const { error: errToast } = useToast()
-  const { login, validationLoginSchema } = useLogin();
-  const { userLoginHandler } = useContext(UserContext);
-  const { error, setError, showPassword, toggleVisibility } = useAuth();
-  const navigate = useNavigate();
 
-  const LoginSubmitHandler = async (prevState, formData) => {
-    const values = Object.fromEntries(formData);
-
-    try {
-      setError(null);
-
-      await validationLoginSchema.validate(values, { abortEarly: false });
-
-      const authData = await login(values.email, values.password);
-
-      userLoginHandler(authData)
-
-      navigate('/');
-
-      return values;
-    } catch (err) {
-
-      if (err.inner) {
-        const errorMessages = {};
-        err.inner.forEach(e => {
-          errorMessages[e.path] = e.message;
-        });
-        setError(errorMessages);
-      } else {
-        errToast(err.message)
-      }
-
-      return values;
-    }
-  };
-
-  const [values, loginAction, isPending] = useActionState(LoginSubmitHandler,
-    {
-      email: '',
-      password: ''
-    });
+  const { error, showPassword, toggleVisibility, loginAction, valuesLogin: values, isLoginPending: isPending } = useAuth();
 
   return (
     <>
