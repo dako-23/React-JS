@@ -4,9 +4,9 @@ import { motion } from "framer-motion";
 import { FaUsers, FaCalendarAlt, FaBaby } from "react-icons/fa";
 
 const sections = [
-  { id: 1, path: '/groups', title: "💬 Групи", icon: <FaUsers size={30} />, desc: "Намерете майки със сходни интереси!" },
-  { id: 2, path: '/', title: "📅 Събития", icon: <FaCalendarAlt size={30} />, desc: "Присъединете се към локални срещи." },
-  { id: 3, path: '/news-feed', title: "🍼 Споделяне", icon: <FaBaby size={30} />, desc: "Публикувайте моменти с вашите деца." },
+  { id: 1, path: '/groups', title: "💬 Groups", icon: <FaUsers size={30} />, desc: "Connect with other moms who share your interests!" },
+  { id: 2, path: '/about', title: "📅 Events", icon: <FaCalendarAlt size={30} />, desc: "For event suggestions or partnerships, feel free to contact us." },
+  { id: 3, path: '/news-feed', title: "🍼 Share", icon: <FaBaby size={30} />, desc: "Share your precious parenting moments with the community." },
 ];
 
 export default function GroupsIntro() {
