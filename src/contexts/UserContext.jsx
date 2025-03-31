@@ -13,6 +13,7 @@ export const UserContext = createContext({
     updateUserPartial: () => null,
     isAuth: false,
     isAdmin: false,
+    isBlocked: false,
 });
 
 export const UserProvider = ({ children }) => {
@@ -39,7 +40,6 @@ export const UserProvider = ({ children }) => {
             return updated;
         });
     };
-
 
     useEffect(() => {
         if (!user) {

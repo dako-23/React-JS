@@ -6,7 +6,7 @@ import { UserContext } from "../contexts/UserContext.jsx";
 
 export default function useAuth() {
 
-    const { error: errToast, success, info } = useToast();
+    const { error: errToast, success, info, warn } = useToast();
     const [error, setError] = useState(null);
     const [showPassword, setShowPassword] = useState({
         username: false,
@@ -75,6 +75,11 @@ export default function useAuth() {
             await validationLoginSchema.validate(valuesLogin, { abortEarly: false });
 
             const authData = await login(valuesLogin.email, valuesLogin.password);
+
+            if (authData.isBlocked) {
+                warn('Your account has been blocked by the administrators.');
+                return navigate('/');
+            }
 
             userLoginHandler(authData)
 
