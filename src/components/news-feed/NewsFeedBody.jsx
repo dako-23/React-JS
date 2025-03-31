@@ -72,7 +72,7 @@ export default function NewsFeedBody({
                             <img
                                 src={post.imageUrl}
                                 alt="Post"
-                                className="w-full h-64 object-cover rounded-lg mb-2 border"
+                                className="w-full h-76 object-cover rounded-lg mb-2 border"
                             />
                         )}
 
