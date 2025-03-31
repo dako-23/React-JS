@@ -1,11 +1,12 @@
 import { useState, useContext, useRef, useEffect } from "react";
-import { FaEdit, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaUserCircle, FaFileAlt, FaUsers, FaBookmark } from "react-icons/fa";
+import { FaEdit, FaSignOutAlt, FaSignInAlt, FaUserPlus, FaUserCircle, FaUsers } from "react-icons/fa";
+import { RxDashboard } from "react-icons/rx";
 import { MdOutlinePassword } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../../contexts/UserContext";
 
 export default function ProfileDropdown() {
-    const { isAuth, imageUrl, userLogoutHandler, _id: userId } = useContext(UserContext);
+    const { isAuth, imageUrl, userLogoutHandler, _id: userId, isAdmin } = useContext(UserContext);
     const [isOpen, setIsOpen] = useState(false);
     const dropdownRef = useRef(null);
     const navigate = useNavigate();
@@ -65,6 +66,17 @@ export default function ProfileDropdown() {
                             >
                                 <MdOutlinePassword className="mr-2" /> Change Password
                             </button>
+                            {isAdmin &&
+                                <button
+                                    onClick={() => {
+                                        navigate(`/admin/dashboard`);
+                                        setIsOpen(false);
+                                    }}
+                                    className="flex items-center w-full px-4 py-2 text-sm text-gray-800 hover:bg-gray-100"
+                                >
+                                    <RxDashboard className="mr-2" /> Dashboard
+                                </button>
+                            }
                             <button
                                 onClick={() => {
                                     userLogoutHandler();
