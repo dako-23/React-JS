@@ -5,6 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, L
 import Loader from "../Loader.jsx";
 import { useToast } from "../../hooks/useToast.js";
 import StatCard from "./StatCard.jsx";
+import UserTable from "./user-table/UserTable.jsx";
 
 export default function AdminDashboard() {
 
@@ -80,6 +81,7 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             </motion.div>
+            <UserTable />
         </div>
     );
 }
