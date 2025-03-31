@@ -1,66 +1,44 @@
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useAdminApi } from "../../../api/adminApi.js";
-import { FaUser } from "react-icons/fa";
+import { FaSearch, FaUser } from "react-icons/fa";
 import Pagination from "../../pagination/Pagination.jsx";
 import { usePagination } from "../../../hooks/usePagination.js";
-import { useToast } from "../../../hooks/useToast.js";
+import useAdmin from "../../../hooks/useAdmin.js";
 
 export default function UserTable() {
-    const [users, setUsers] = useState([]);
-    const { error, info } = useToast();
 
-    const { getAllUsers, blockUser, makeAdmin } = useAdminApi();
+    const { handleToggleAdmin, handleToggleBlock, setUsers, filteredPosts, setSearch, search } = useAdmin();
+    const { currentPage, totalPages, currentData, changePage } = usePagination(filteredPosts, 10)
+    const { getAllUsers } = useAdminApi();
 
     useEffect(() => {
         getAllUsers().then(setUsers).catch(console.error);
     }, []);
 
-    const { currentPage, totalPages, currentData, changePage } = usePagination(users, 10)
-
-    const handleToggleBlock = async (userId) => {
-        try {
-            const updatedUser = await blockUser(userId);
-
-            setUsers(prevUsers =>
-                prevUsers.map(user =>
-                    user._id === userId ? { ...user, isBlocked: updatedUser.isBlocked } : user
-                )
-            );
-
-            updatedUser.isBlocked ? info(`${updatedUser.username} has been successfully blocked.`) : info(`${updatedUser.username} has been unblocked.`)
-
-        } catch (err) {
-            error(err.message);
-        }
-    };
-
-    const handleToggleAdmin = async (userId) => {
-        try {
-            const updatedUser = await makeAdmin(userId);
-
-            setUsers(prevUsers =>
-                prevUsers.map(user =>
-                    user._id === userId ? { ...user, isAdmin: updatedUser.isAdmin } : user
-                )
-            )
-
-            updatedUser.isAdmin ? info(`${updatedUser.username} has been granted with admin privileges.`) : info(`${updatedUser.username} is no longer an admin.`)
-
-        } catch (err) {
-            error(err.message)
-        }
-    };
-
     return (
         <div className="mt-10">
-            <h3 className="text-xl font-bold mb-4">User Management</h3>
+            <div className="flex flex-col items-center justify-center mb-8">
+                <h3 className="text-xl font-bold mb-4 text-center">User Management</h3>
+                <div className="flex items-center gap-2 w-full max-w-md">
+                    <FaSearch className="text-gray-500" />
+                    <input
+                        type="text"
+                        placeholder="Search users..."
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        className="p-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-lime-600 w-full bg-page-pattern"
+                    />
+                </div>
+            </div>
+
             <div className="overflow-x-auto">
-                <table className="min-w-full bg-white border border-gray-200 shadow rounded-xl">
+                <table className="min-w-full bg-page-pattern border border-gray-200 shadow rounded-xl">
                     <thead>
                         <tr className="bg-gray-100 text-left text-sm text-gray-700 uppercase">
                             <th className="p-3">Image</th>
                             <th className="p-3">Username</th>
                             <th className="p-3">First Name</th>
+                            <th className="p-3">Last Name</th>
                             <th className="p-3">Last Name</th>
                             <th className="p-3">Actions</th>
                         </tr>
@@ -78,16 +56,17 @@ export default function UserTable() {
                                 <td className="p-3">{user.username ? user.username : 'Not specified'}</td>
                                 <td className="p-3">{user.firstName ? user.firstName : 'Not specified'}</td>
                                 <td className="p-3">{user.lastName ? user.lastName : 'Not specified'}</td>
+                                <td className="p-3">{user.email ? user.email : 'Not specified'}</td>
                                 <td className="p-3 space-x-2">
                                     <button
                                         onClick={() => handleToggleBlock(user._id)}
-                                        className={`px-3 py-1 rounded text-white text-sm ${user.isBlocked ? "bg-red-600" : "bg-blue-600"} hover:opacity-80`}
+                                        className={`px-3 py-1 rounded w-[80px] text-white text-sm ${user.isBlocked ? "bg-red-600" : "bg-blue-600"} hover:opacity-80`}
                                     >
                                         {user.isBlocked ? "Unblock" : "Block"}
                                     </button>
                                     <button
                                         onClick={() => handleToggleAdmin(user._id)}
-                                        className={`px-3 py-1 rounded text-white text-sm ${user.isAdmin ? "bg-yellow-600" : "bg-lime-700"} hover:opacity-80`}
+                                        className={`px-3 py-1 rounded w-[120px] text-white text-sm ${user.isAdmin ? "bg-yellow-600" : "bg-lime-700"} hover:opacity-80`}
                                     >
                                         {user.isAdmin ? "Revoke Admin" : "Make Admin"}
                                     </button>
