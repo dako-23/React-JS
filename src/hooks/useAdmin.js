@@ -1,14 +1,21 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useAdminApi } from "../api/adminApi";
 import { useToast } from "./useToast";
-
 
 export default function useAdmin() {
     const [users, setUsers] = useState([]);
     const [search, setSearch] = useState('');
 
     const { error, info } = useToast();
-    const { blockUser, makeAdmin } = useAdminApi();
+    const { blockUser, makeAdmin, getAllUsers } = useAdminApi();
+
+    useEffect(() => {
+        try {
+            getAllUsers().then(setUsers)
+        } catch (err) {
+            error(err.message)
+        }
+    }, []);
 
     const filteredPosts = users
         .filter((p) =>

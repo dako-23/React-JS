@@ -7,13 +7,8 @@ import useAdmin from "../../../hooks/useAdmin.js";
 
 export default function UserTable() {
 
-    const { handleToggleAdmin, handleToggleBlock, setUsers, filteredPosts, setSearch, search } = useAdmin();
+    const { handleToggleAdmin, handleToggleBlock, filteredPosts, setSearch, search } = useAdmin();
     const { currentPage, totalPages, currentData, changePage } = usePagination(filteredPosts, 10)
-    const { getAllUsers } = useAdminApi();
-
-    useEffect(() => {
-        getAllUsers().then(setUsers).catch(console.error);
-    }, []);
 
     return (
         <div className="mt-10">
