@@ -2,6 +2,7 @@ import { useContext } from "react";
 import { motion } from "framer-motion";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
+import { FaLock, FaLockOpen } from "react-icons/fa6";
 import GroupEdit from "./GroupEdit.jsx";
 import { UserContext } from "../../contexts/UserContext.jsx";
 import { useGroupListItem } from "../../hooks/useGroupList.js";
@@ -13,10 +14,12 @@ export default function GroupListItems({
     imageUrl,
     _ownerId,
     joinedGroup,
+    isLocked,
     isJoined,
     toggleJoin,
     deleteGroup,
-    editGroup
+    editGroup,
+    toggleLock
 }) {
     const { _id: userId, isAdmin } = useContext(UserContext)
     const isOwner = _ownerId === userId
@@ -30,8 +33,8 @@ export default function GroupListItems({
         setMenuOpen,
         buttonRef,
         menuRef,
-        setShowEditGroup
-    } = useGroupListItem(editGroup, isJoined, _id)
+        setShowEditGroup,
+    } = useGroupListItem(editGroup, isJoined, _id, isLocked)
 
     return (
         <>
@@ -70,16 +73,17 @@ export default function GroupListItems({
                             e.stopPropagation();
                             toggleJoin(_id);
                         }}
-                        className={`px-4 py-2 rounded-lg font-medium transition ${isJoined
+                        className={`px-4 py-2 rounded-lg font-medium transition ${isLocked ? "bg-gray-400 cursor-not-allowed" : isJoined
                             ? "bg-red-700 text-white hover:bg-red-400"
                             : "bg-gray-800 text-white hover:bg-gray-600"
                             }`}
+                        disabled={isLocked}
                     >
-                        {isJoined ? "Leave" : "Join"}
+                        {isLocked ? "Locked" : isJoined ? "Leave" : "Join"}
                     </button>
 
                     <div className="relative">
-                        {isOwner && (
+                        {(isOwner || isAdmin) && (
                             <button
                                 ref={buttonRef}
                                 onClick={(e) => {
@@ -93,7 +97,7 @@ export default function GroupListItems({
 
                         {menuOpen && (
                             <div ref={menuRef} className="absolute bottom-10 right-0 w-32 bg-page-pattern shadow-lg rounded-lg border border-gray-200 z-10">
-                                <button
+                                {isOwner && <button
                                     onClick={(e) => {
                                         e.stopPropagation();
                                         setShowEditGroup(true)
@@ -101,7 +105,8 @@ export default function GroupListItems({
                                     className="flex items-center w-full px-4 py-2 text-gray-800 hover:bg-gray-100"
                                 >
                                     <AiOutlineEdit className="mr-2" /> Edit
-                                </button>
+                                </button>}
+                                {(isOwner || isAdmin)}
                                 <button
                                     onClick={(e) => {
                                         e.stopPropagation();
@@ -111,6 +116,23 @@ export default function GroupListItems({
                                 >
                                     <AiOutlineDelete className="mr-2" /> Delete
                                 </button>
+                                {isAdmin &&
+                                    <button
+                                        onClick={(e) => {
+                                            e.stopPropagation();
+                                            toggleLock(_id);
+                                        }}
+                                        className="flex items-center w-full px-4 py-2 text-yellow-600 hover:bg-yellow-100"
+                                    >
+                                        {isLocked
+                                            ?
+                                            <FaLock className="mr-2" />
+                                            :
+                                            <FaLockOpen className="mr-2" />
+                                        }
+
+                                        {isLocked ? "Unlock" : "Lock"}
+                                    </button>}
                             </div>
                         )}
                     </div>

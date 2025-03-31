@@ -25,6 +25,7 @@ export default function GroupsList() {
         editGroupHandler,
         deleteGroupHandler,
         toggleJoin,
+        toggleLock
     } = useGroupsList(userId);
 
     scrollToTop(currentPage);
@@ -58,6 +59,7 @@ export default function GroupsList() {
                             key={group._id}
                             isJoined={joinedGroups.includes(group._id)}
                             toggleJoin={toggleJoin}
+                            toggleLock={toggleLock}
                             deleteGroup={deleteGroupHandler}
                             editGroup={editGroupHandler}
                             {...group}

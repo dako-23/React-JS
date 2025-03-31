@@ -1,9 +1,10 @@
 import { toast } from 'react-toastify';
 import { useGroup, useGroupGetAll } from '../api/groupApi';
-import { useEffect, useRef, useState } from 'react';
+import { useContext, useEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useToast } from './useToast.js';
 import { usePagination } from './usePagination.js';
+import { UserContext } from '../contexts/UserContext.jsx';
 
 const { error, success, info, warn } = useToast()
 
@@ -15,6 +16,7 @@ export function useGroupsList(userId) {
     leaveGroup,
     editGroup,
     groupDelete,
+    toggleLockGroup
   } = useGroup();
 
   const {
@@ -24,7 +26,6 @@ export function useGroupsList(userId) {
     setJoinedGroups,
     loading,
   } = useGroupGetAll();
-
   const { currentPage, totalPages, currentData, changePage } = usePagination(groups, 4);
 
   const createGroupHandler = async (groupData) => {
@@ -123,6 +124,24 @@ export function useGroupsList(userId) {
     }
   };
 
+  const toggleLock = async (groupId) => {
+
+    try {
+      await toggleLockGroup(groupId);
+
+      setGroups(prev =>
+        prev.map(group =>
+          group._id === groupId
+            ? { ...group, isLocked: !group.isLocked }
+            : group
+        )
+      );
+
+    } catch (err) {
+      error(err.message)
+    }
+  };
+
   const toggleJoin = (groupId) => {
     joinedGroups.includes(groupId)
       ? leaveGroupHandler(groupId)
@@ -140,16 +159,18 @@ export function useGroupsList(userId) {
     editGroupHandler,
     deleteGroupHandler,
     toggleJoin,
+    toggleLock
   };
 }
 
-export function useGroupListItem(editGroup, isJoined, _id) {
+export function useGroupListItem(editGroup, isJoined, _id, isLocked) {
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [showEditGroup, setShowEditGroup] = useState(null)
   const menuRef = useRef(null);
   const buttonRef = useRef(null);
   const navigate = useNavigate();
+  const { isAdmin } = useContext(UserContext);
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -188,7 +209,17 @@ export function useGroupListItem(editGroup, isJoined, _id) {
     if (!isJoined) {
       return info('You need to join the group first!');
     }
-    navigate(`/groups/${_id}/chat`)
+
+    if (isLocked) {
+      if (isAdmin) {
+        return navigate(`/groups/${_id}/chat`);
+      }
+
+      return warn('This group is locked!');
+    }
+
+    navigate(`/groups/${_id}/chat`);
+
   };
 
   return {
