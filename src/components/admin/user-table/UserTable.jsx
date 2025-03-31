@@ -1,5 +1,3 @@
-import { useEffect } from "react";
-import { useAdminApi } from "../../../api/adminApi.js";
 import { FaSearch, FaUser } from "react-icons/fa";
 import Pagination from "../../pagination/Pagination.jsx";
 import { usePagination } from "../../../hooks/usePagination.js";
