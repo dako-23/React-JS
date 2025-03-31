@@ -46,6 +46,11 @@ export const useGroup = () => {
         return request.delete(`${API_URL}/${groupId}/delete`)
     };
 
+    const toggleLockGroup = async (groupId) => {
+
+        return request.patch(`${API_URL}/${groupId}/lock`)
+    };
+
     return {
         getOne,
         getLatest,
@@ -54,7 +59,8 @@ export const useGroup = () => {
         leaveGroup,
         editGroup,
         groupDelete,
-        getByOwner
+        getByOwner,
+        toggleLockGroup
     }
 }
 
