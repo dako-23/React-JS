@@ -4,7 +4,6 @@ import ScrollToTop from "./helpers/scrollToTop.js";
 import Loader from "./components/Loader.jsx";
 import { UserProvider } from "./contexts/UserContext.jsx";
 import ToastConfig from "./components/notifications/ToastConfig.jsx";
-import NotFound from "./components/not-found/NotFound.jsx";
 
 const Home = lazy(() => import('./components/home/Home.jsx'));
 const Navbar = lazy(() => import('./components/Navbar.jsx'));
@@ -21,6 +20,7 @@ const NewsFeed = lazy(() => import('./components/news-feed/NewsFeed.jsx'));
 const MyGroups = lazy(() => import('./components/my-groups/MyGroups.jsx'))
 const ChangePassword = lazy(() => import('./components/auth/ChangePassword.jsx'))
 const AdminDashboard = lazy(() => import('./components/admin/AdminDashboard.jsx'))
+const NotFound = lazy(() => import('./components/not-found/NotFound.jsx'));
 
 function App() {
 
