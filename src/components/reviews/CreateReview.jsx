@@ -1,7 +1,8 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from 'react-icons/fa'
-import { useActionState } from "react";
+import { useActionState, useContext } from "react";
 import { useReviewsCreate } from "../../hooks/useReviews.js";
+import { UserContext } from "../../contexts/UserContext.jsx";
 
 
 export default function CreateReview({
@@ -17,6 +18,8 @@ export default function CreateReview({
         setHoverRating,
         rating,
     } = useReviewsCreate(onSubmitCreate);
+
+    const { firstName, lastName } = useContext(UserContext)
 
     const [values, reviewAction, isPending] = useActionState(handleSubmitReview, { username: '', review: '', rating: '' })
 
@@ -37,7 +40,7 @@ export default function CreateReview({
                     <div>
                         <h2 className="text-2xl font-bold text-gray-800 text-center mb-4"> Share Your Experience</h2>
                         <form className="space-y-4" action={reviewAction} >
-                            <input className={inputClass} type="text" name="username" placeholder="Enter your name" defaultValue={values.username} />
+                            <input className={inputClass} type="text" name="username" placeholder="Enter your name" defaultValue={`${firstName} ${lastName}`} readOnly />
                             <textarea rows="3" className={inputClass} type="text" name="review" placeholder="Write your review here" defaultValue={values.review} />
                             <div className="flex justify-center space-x-2 ">
                                 {ratingOptions.map((star) => (

@@ -1,12 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useReviewCreate, useReviewGetLatest } from '../api/reviewApi.js';
 import useFetch from './useFetch.js';
+import { useToast } from './useToast.js';
 
 
 export function useReviews() {
 
     const [reviews, setReviews] = useState([])
     const [showCreateReview, setShowCreateReview] = useState(false)
+    const { error, success } = useToast()
 
     const { create } = useReviewCreate();
     const { getLatest } = useReviewGetLatest();
@@ -27,7 +29,9 @@ export function useReviews() {
 
     const handleCreateReview = async (reviewData) => {
 
-        if (reviewData.username === '' || reviewData.review === '') return
+        if (reviewData.username === '' || reviewData.review === '') {
+            error('All fields is required!')
+        }
 
         try {
             const newReview = await create({
@@ -36,9 +40,10 @@ export function useReviews() {
             });
 
             setReviews((prev) => [newReview, ...prev]);
+            success('Successfully post your experience!')
             closeCreateReviewModal();
-        } catch (error) {
-            console.error('Error creating review:', error);
+        } catch (err) {
+            console.error('Error creating review:', err);
         }
     };
 
