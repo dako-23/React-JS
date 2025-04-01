@@ -110,18 +110,25 @@ export default function useAuth() {
 
     const changePasswordHandler = async (prevState, formData) => {
         setError(null)
+
         const values = Object.fromEntries(formData);
         const { currentPassword, newPassword } = values
+
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
         try {
             await validationChangePasswordSchema.validate(values, { abortEarly: false });
 
             await changePassword(currentPassword, newPassword)
 
+            await delay(500)
             success('Password changed successfully!')
 
-            setTimeout(() => (info('Redirect...')), 1700);
-            setTimeout(() => (navigate('/')), 2700);
+            await delay(1200);
+            info('Redirect...');
+
+            await delay(1500);
+            navigate('/');
 
         } catch (err) {
             if (err.inner) {

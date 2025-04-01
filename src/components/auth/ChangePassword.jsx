@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth.js";
 
 export default function ChangePassword() {
 
-    const { error, showPassword, toggleVisibility, changePasswordAction, isPending } = useAuth();
+    const { error, showPassword, toggleVisibility, changePasswordAction, isChangePending: isPending } = useAuth();
 
     return (
         <>
