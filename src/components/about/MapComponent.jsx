@@ -10,8 +10,8 @@ const containerStyle = {
 };
 
 const center = {
-  lat: 42.6977,
-  lng: 23.3242,
+  lat: 42.7233,
+  lng: 23.5301,
 };
 
 export default function ContactMap() {
