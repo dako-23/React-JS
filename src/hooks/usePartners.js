@@ -50,7 +50,7 @@ export default function usePartners() {
                 prevPartners.filter(partner => partner._id !== partnerId)
             );
 
-            success('Successfuly delete this post!')
+            success('Successfuly delete this partner!')
 
         } catch (err) {
             error(err.message)
