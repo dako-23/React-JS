@@ -15,6 +15,8 @@ const AboutPage = lazy(() => import('./components/about/About.jsx'));
 const Reviews = lazy(() => import('./components/reviews/Reviews.jsx'));
 const MyProfile = lazy(() => import('./components/my-profile/MyProfile.jsx'));
 const AuthGuard = lazy(() => import('./components/guards/AuthGuard.jsx'));
+const GuestGuard = lazy(() => import('./components/guards/GuestGuard.jsx'));
+const AdminGuard = lazy(() => import('./components/guards/AdminGuard.jsx'));
 const Footer = lazy(() => import('./components/Footer.jsx'));
 const NewsFeed = lazy(() => import('./components/news-feed/NewsFeed.jsx'));
 const MyGroups = lazy(() => import('./components/my-groups/MyGroups.jsx'))
@@ -32,20 +34,24 @@ function App() {
           <Navbar />
           <Routes>
             <Route path="/" element={<Home />} />
-            <Route path="/users/login" element={<Login />} />
-            <Route path="/users/register" element={<Register />} />
-            <Route path="/users/change-password" element={<ChangePassword />} />
             <Route path="/news-feed" element={<NewsFeed />} />
             <Route path="/groups" element={<GroupsList />} />
-            <Route element={<AuthGuard />}>
-              <Route path="/groups/:id/chat" element={<GroupChat />} />
-            </Route>
             <Route path="/about" element={<AboutPage />} />
-            <Route path="/my-profile/edit" element={<MyProfile />} />
-            <Route path="/my-profile/:id/groups" element={<MyGroups />} />
             <Route path="/reviews" element={<Reviews />} />
-            <Route path="/admin/dashboard" element={<AdminDashboard />} />
             <Route path="*" element={<NotFound />} />
+            <Route element={<GuestGuard />}>
+              <Route path="/users/login" element={<Login />} />
+              <Route path="/users/register" element={<Register />} />
+            </Route>
+            <Route element={<AuthGuard />}>
+              <Route path="/users/change-password" element={<ChangePassword />} />
+              <Route path="/groups/:id/chat" element={<GroupChat />} />
+              <Route path="/my-profile/edit" element={<MyProfile />} />
+              <Route path="/my-profile/:id/groups" element={<MyGroups />} />
+            </Route>
+            <Route element={<AdminGuard />}>
+              <Route path="/admin/dashboard" element={<AdminDashboard />} />
+            </Route>
           </Routes>
           <ToastConfig />
           <Footer />

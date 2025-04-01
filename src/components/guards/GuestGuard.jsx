@@ -5,17 +5,17 @@ import { useToast } from "../../hooks/useToast";
 
 
 
-export default function AuthGuard() {
+export default function GuestGuard() {
 
     const { isAuth } = useContext(UserContext)
     const toast = useToast()
 
     useEffect(() => {
-        if (!isAuth) toast.error('You need to be logged in');
+        if (isAuth) toast.error('You are already logged in');
     }, []);
 
-    if (!isAuth) {
-        return <Navigate to='users/login' />
+    if (isAuth) {
+        return <Navigate to='/' />
 
     }
 

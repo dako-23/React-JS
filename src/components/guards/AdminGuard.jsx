@@ -3,19 +3,17 @@ import { UserContext } from "../../contexts/UserContext";
 import { Navigate, Outlet } from "react-router-dom";
 import { useToast } from "../../hooks/useToast";
 
+export default function AdminGuard() {
 
-
-export default function AuthGuard() {
-
-    const { isAuth } = useContext(UserContext)
+    const { isAdmin } = useContext(UserContext)
     const toast = useToast()
 
     useEffect(() => {
-        if (!isAuth) toast.error('You need to be logged in');
+        if (!isAdmin) toast.error('You need to be admin!');
     }, []);
 
-    if (!isAuth) {
-        return <Navigate to='users/login' />
+    if (!isAdmin) {
+        return <Navigate to='/' />
 
     }
 
