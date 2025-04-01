@@ -5,7 +5,7 @@ import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { FaLock, FaLockOpen } from "react-icons/fa6";
 import GroupEdit from "./GroupEdit.jsx";
 import { UserContext } from "../../contexts/UserContext.jsx";
-import { useGroupListItem } from "../../hooks/useGroupList.js";
+import useGroupListItem from "../../hooks/useGroupListItem.js";
 
 export default function GroupListItems({
     _id,
