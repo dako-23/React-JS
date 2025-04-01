@@ -33,11 +33,16 @@ export const usePost = () => {
         )
     }
 
+    const deletePost = async (postId) => {
+        return request.patch(`${API_URL}/${postId}/delete`)
+    }
+
     return {
         create,
         createComment,
         like,
-        addToFavorite
+        addToFavorite,
+        deletePost
     }
 }
 

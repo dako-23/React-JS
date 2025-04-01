@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FiChevronDown, FiChevronUp } from "react-icons/fi";
 import { AiFillHeart, AiOutlineHeart } from "react-icons/ai";
-import { FaUser } from "react-icons/fa";
+import { FaUser, FaTrash } from "react-icons/fa";
 import NewsFeedComments from "./NewsFeedComments.jsx";
 import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext.jsx";
@@ -16,6 +16,7 @@ export default function NewsFeedBody({
     toggleComments,
     handleSubmitLike,
     handleFavorite,
+    handleDelete,
     isCommentPending
 }) {
     const { _id: userId } = useContext(UserContext)
@@ -37,7 +38,7 @@ export default function NewsFeedBody({
                     >
                         <button
                             onClick={() => handleFavorite(post._id, userId)}
-                            className="hover:text-blue-500 transition absolute top-3 right-3"
+                            className="hover:text-blue-500 transition absolute top-3 right-10"
                             title={post.isFavorited ? "Remove from favorites" : "Save to favorites"}
                         >
                             {post.isFavorited ? (
@@ -46,6 +47,16 @@ export default function NewsFeedBody({
                                 <BsBookmark className="text-gray-800 text-xl" />
                             )}
                         </button>
+                        {post._ownerId === userId &&
+                            <button
+                                type="button"
+                                onClick={() => handleDelete(post._id)}
+                                className="transition absolute top-3 right-3 text-red-600 hover:text-red-400"
+                                title="Delete post"
+                            >
+                                <FaTrash className="text-xl" />
+                            </button>}
+
                         <div className="flex items-center gap-3 mb-2">
                             {post.imageUrlAuthor
                                 ?

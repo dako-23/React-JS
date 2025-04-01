@@ -12,7 +12,7 @@ export function useNewsFeed() {
     const [showPostForm, setShowPostForm] = useState(false);
 
     const { firstName, lastName, imageUrl: imageUrlAuthor, _id: userId, isAuth } = useContext(UserContext);
-    const { create, createComment, like, addToFavorite } = usePost()
+    const { create, createComment, like, addToFavorite, deletePost } = usePost()
     const { posts, loading, setPosts } = usePostGetAll()
     const { info, error } = useToast();
     const navigate = useNavigate();
@@ -154,6 +154,27 @@ export function useNewsFeed() {
         }));
     };
 
+    const handleDelete = async (postId) => {
+
+        const hasConfirm = confirm(
+            `Are you sure you want to delete ?`
+        );
+
+        if (!hasConfirm) return;
+
+        try {
+            await deletePost(postId);
+
+            setPosts((prevPosts) =>
+                prevPosts.filter(post => post._id !== postId)
+            );
+
+        } catch (err) {
+            console.log(err.message);
+
+        }
+    };
+
     return {
         filteredPosts,
         postAction,
@@ -174,7 +195,8 @@ export function useNewsFeed() {
         handleFavorite,
         filterOption,
         setFilterOption,
-        isCommentPending
+        isCommentPending,
+        handleDelete
     }
 
 }
