@@ -14,7 +14,7 @@ export function useNewsFeed() {
     const { firstName, lastName, imageUrl: imageUrlAuthor, _id: userId, isAuth } = useContext(UserContext);
     const { create, createComment, like, addToFavorite, deletePost } = usePost()
     const { posts, loading, setPosts } = usePostGetAll()
-    const { info, error } = useToast();
+    const { info, error, success } = useToast();
     const navigate = useNavigate();
 
     const handleSubmitPost = async (_, formData) => {
@@ -168,6 +168,8 @@ export function useNewsFeed() {
             setPosts((prevPosts) =>
                 prevPosts.filter(post => post._id !== postId)
             );
+
+            success('Successfuly delete this post!')
 
         } catch (err) {
             console.log(err.message);
