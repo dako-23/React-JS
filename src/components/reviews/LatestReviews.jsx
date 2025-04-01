@@ -4,39 +4,56 @@ import { useNavigate } from 'react-router-dom';
 import { FaStar } from 'react-icons/fa';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
+import { NextArrow, PrevArrow } from '../CarouselArrows.jsx';
 import Loader from '../Loader.jsx';
 import CreateReview from './CreateReview.jsx';
 import { useReviews } from '../../hooks/useReviews.js';
-import { NextArrow, PrevArrow } from '../CarouselArrows.jsx';
 import { UserContext } from '../../contexts/UserContext.jsx';
 import { useToast } from '../../hooks/useToast.js';
 
 const ratingOptions = [1, 2, 3, 4, 5];
 
 export default function LatestReviews() {
-  const { handleCreateReview, loading, reviews, showCreateReview, openCreateReviewModal, closeCreateReviewModal } = useReviews()
+
+  const
+    {
+      reviewAction,
+      isPending,
+      loading,
+      reviews,
+      showCreateReview,
+      openCreateReviewModal,
+      closeCreateReviewModal,
+      values,
+      hoverRating,
+      rating,
+      setHoverRating,
+      handleRatingClick,
+      settings
+    } = useReviews()
+
+  const sliderSettings = {
+    ...settings,
+    nextArrow: <NextArrow />,
+    prevArrow: <PrevArrow />
+  }
+
   const { isAuth } = useContext(UserContext);
   const { info } = useToast()
   const navigate = useNavigate()
-
-  const settings = {
-    dots: reviews.length > 1,
-    arrows: reviews.length > 1,
-    infinite: reviews.length > 1,
-    speed: 800,
-    slidesToShow: 1,
-    slidesToScroll: 1,
-    autoplay: false,
-    nextArrow: <NextArrow />,
-    prevArrow: <PrevArrow />
-  };
 
   return (
     <>
       {showCreateReview && <CreateReview
         ratingOptions={ratingOptions}
         onClose={closeCreateReviewModal}
-        onSubmitCreate={handleCreateReview}
+        reviewAction={reviewAction}
+        values={values}
+        isPending={isPending}
+        handleRatingClick={handleRatingClick}
+        hoverRating={hoverRating}
+        setHoverRating={setHoverRating}
+        rating={rating}
       />}
 
       <div className="max-w-3xl mx-auto py-10 relative">
@@ -50,7 +67,7 @@ export default function LatestReviews() {
           (<Loader />)
           : reviews.length === 0
             ? (<p className="text-center text-gray-600 text-lg mt-4 font-bold">No reviews yet. Be the first to leave your feedback!</p>)
-            : (<Slider {...settings}>
+            : (<Slider {...sliderSettings}>
 
               {reviews.slice(0, 3).map((review) => (
                 <div key={review._id} className="px-3">

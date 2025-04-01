@@ -1,28 +1,24 @@
 import { motion, AnimatePresence } from "framer-motion";
 import { FaStar } from 'react-icons/fa'
-import { useActionState, useContext } from "react";
-import { useReviewsCreate } from "../../hooks/useReviews.js";
+import { useContext } from "react";
 import { UserContext } from "../../contexts/UserContext.jsx";
 
 
 export default function CreateReview({
     onClose,
-    onSubmitCreate,
-    ratingOptions
+    reviewAction,
+    ratingOptions,
+    values,
+    isPending,
+    handleRatingClick,
+    hoverRating,
+    setHoverRating,
+    rating
 }) {
-    const {
-        handleRatingClick,
-        handleSubmitReview,
-        hoverRating,
-        inputClass,
-        setHoverRating,
-        rating,
-    } = useReviewsCreate(onSubmitCreate);
 
     const { firstName, lastName } = useContext(UserContext)
 
-    const [values, reviewAction, isPending] = useActionState(handleSubmitReview, { username: '', review: '', rating: '' })
-
+    const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600';
 
     return (
         <AnimatePresence>
