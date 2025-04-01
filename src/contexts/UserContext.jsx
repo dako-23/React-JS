@@ -17,19 +17,24 @@ export const UserContext = createContext({
 });
 
 export const UserProvider = ({ children }) => {
+
     const [user, setUser] = useState(() => {
         const storedUser = localStorage.getItem("user");
         return storedUser ? JSON.parse(storedUser) : null;
     });
+    const [wasRedirected, setWasRedirected] = useState(false);
 
     const userLoginHandler = (authData) => {
         localStorage.setItem("user", JSON.stringify(authData));
         setUser(authData);
+        setWasRedirected(false);
     };
+
 
     const userLogoutHandler = () => {
         localStorage.removeItem("user");
         setUser(null);
+        setWasRedirected(true)
 
     };
 
@@ -51,7 +56,7 @@ export const UserProvider = ({ children }) => {
     }, []);
 
     return (
-        <UserContext.Provider value={{ ...user, userLoginHandler, userLogoutHandler, updateUserPartial, isAuth: !!user }}>
+        <UserContext.Provider value={{ ...user, userLoginHandler, userLogoutHandler, updateUserPartial, isAuth: !!user, wasRedirected, setWasRedirected }}>
             {children}
         </UserContext.Provider>
     );

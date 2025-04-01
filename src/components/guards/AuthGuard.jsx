@@ -3,21 +3,20 @@ import { UserContext } from "../../contexts/UserContext";
 import { Navigate, Outlet } from "react-router-dom";
 import { useToast } from "../../hooks/useToast";
 
-
-
 export default function AuthGuard() {
-
-    const { isAuth } = useContext(UserContext)
-    const toast = useToast()
+    const { isAuth, wasRedirected, setWasRedirected } = useContext(UserContext);
+    const toast = useToast();
 
     useEffect(() => {
-        if (!isAuth) toast.error('You need to be logged in');
-    }, []);
+        if (!isAuth && !wasRedirected) {
+            toast.error("You need to be logged in");
+            setWasRedirected(true);
+        }
+    }, [isAuth]);
 
     if (!isAuth) {
-        return <Navigate to='users/login' />
-
+        return <Navigate to={wasRedirected ? "/" : "/users/login"} />;
     }
 
-    return <Outlet />
+    return <Outlet />;
 }
