@@ -1,4 +1,4 @@
-import { FaPlusCircle } from "react-icons/fa";
+import { FaPlusCircle, FaTrash } from "react-icons/fa";
 import AddPartner from "./AddPartner.jsx";
 
 export default function PartnerTable({
@@ -6,7 +6,8 @@ export default function PartnerTable({
     postAction,
     showModal,
     setShowModal,
-    isPostPending
+    isPostPending,
+    handleDelete
 }) {
 
     return (
@@ -34,6 +35,7 @@ export default function PartnerTable({
                             <th className="p-3">Logo</th>
                             <th className="p-3">Name</th>
                             <th className="p-3">Website</th>
+                            <th className="p-3 text-right">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -51,6 +53,16 @@ export default function PartnerTable({
                                     >
                                         {partner.url}
                                     </a>
+                                </td>
+                                <td className="p-3 text-right">
+                                    <button
+                                        type="button"
+                                        onClick={() => handleDelete(partner._id)}
+                                        className="text-red-600 hover:text-red-400"
+                                        title="Delete partner"
+                                    >
+                                        <FaTrash className="text-xl" />
+                                    </button>
                                 </td>
                             </tr>
                         ))}

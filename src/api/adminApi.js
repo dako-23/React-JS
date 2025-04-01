@@ -24,6 +24,10 @@ export const useAdminApi = () => {
         return request.patch(`${API_URL}/${userId}/make-admin`);
     }
 
+    const deletePartner = async (partnerId) => {
+        return request.patch(`${API_URL}/${partnerId}/delete-partner`);
+    }
+
     const createPartner = async (postData) => {
         return request.post(
             `${API_URL}/partner-create`,
@@ -36,6 +40,7 @@ export const useAdminApi = () => {
         blockUser,
         makeAdmin,
         getAllPartners,
-        createPartner
+        createPartner,
+        deletePartner
     }
 }

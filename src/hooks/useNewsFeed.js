@@ -172,8 +172,7 @@ export function useNewsFeed() {
             success('Successfuly delete this post!')
 
         } catch (err) {
-            console.log(err.message);
-
+            error(err.message)
         }
     };
 

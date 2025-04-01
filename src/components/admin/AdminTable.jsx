@@ -11,7 +11,7 @@ export default function AdminTable() {
 
     const [activeTable, setActiveTable] = useState("users");
     const { handleToggleAdmin, handleToggleBlock, filteredPosts, setUserSearch, userSearch } = useUsers();
-    const { filteredPartners, postAction, showModal, setShowModal, isPostPending, setPartnerSearch, partnerSearch } = usePartners();
+    const { filteredPartners, postAction, showModal, setShowModal, isPostPending, setPartnerSearch, partnerSearch, handleDelete } = usePartners();
     const { currentPage, totalPages, currentData, changePage } = usePagination(activeTable === "users" ? filteredPosts : filteredPartners, 10)
 
     return (
@@ -61,6 +61,7 @@ export default function AdminTable() {
                         setShowModal={setShowModal}
                         postAction={postAction}
                         isPostPending={isPostPending}
+                        handleDelete={handleDelete}
                     />}
                 <Pagination
                     currentPage={currentPage}

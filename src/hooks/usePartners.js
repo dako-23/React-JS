@@ -6,7 +6,7 @@ export default function usePartners() {
     const [partners, setPartners] = useState([]);
     const [partnerSearch, setPartnerSearch] = useState('');
     const [showModal, setShowModal] = useState(false);
-    const { getAllPartners, createPartner } = useAdminApi();
+    const { getAllPartners, createPartner, deletePartner } = useAdminApi();
     const { error, success } = useToast();
 
     useEffect(() => {
@@ -23,7 +23,6 @@ export default function usePartners() {
     const handleSubmitPartner = async (_, formData) => {
 
         const values = Object.fromEntries(formData);
-        console.log(values);
 
         try {
             const newPartner = await createPartner(values);
@@ -32,9 +31,33 @@ export default function usePartners() {
 
             setShowModal(false);
         } catch (err) {
-            console.log(err);
+            error(err.message)
         }
     };
+
+    const handleDelete = async (partnerId) => {
+
+        const hasConfirm = confirm(
+            `Are you sure you want to delete ?`
+        );
+
+        if (!hasConfirm) return;
+
+        try {
+            await deletePartner(partnerId)
+
+            setPartners((prevPartners) =>
+                prevPartners.filter(partner => partner._id !== partnerId)
+            );
+
+            success('Successfuly delete this post!')
+
+        } catch (err) {
+            error(err.message)
+        }
+
+
+    }
 
     const [__, postAction, isPostPending] = useActionState(handleSubmitPartner, {
         content: "",
@@ -51,6 +74,7 @@ export default function usePartners() {
         setPartners,
         setPartnerSearch,
         partnerSearch,
-        filteredPartners
+        filteredPartners,
+        handleDelete
     };
 }
