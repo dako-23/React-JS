@@ -11,12 +11,11 @@ export function useNewsFeed() {
     const [expandedComments, setExpandedComments] = useState({});
     const [showPostForm, setShowPostForm] = useState(false);
 
-    const { firstName, lastName, imageUrl: imageUrlAuthor, _id: userId } = useContext(UserContext);
+    const { firstName, lastName, imageUrl: imageUrlAuthor, _id: userId, isAuth } = useContext(UserContext);
     const { create, createComment, like, addToFavorite } = usePost()
     const { posts, loading, setPosts } = usePostGetAll()
-    const { info } = useToast();
+    const { info, error } = useToast();
     const navigate = useNavigate();
-
 
     const handleSubmitPost = async (_, formData) => {
 
@@ -45,6 +44,12 @@ export function useNewsFeed() {
     });
 
     const handleSubmitComment = async (_, formData) => {
+        if (!firstName || !lastName) {
+
+            info('Complete your profile first!');
+
+            return navigate('/my-profile/edit');
+        }
         const values = Object.fromEntries(formData);
         const commentData = {
             ...values,
@@ -66,9 +71,7 @@ export function useNewsFeed() {
             );
 
         } catch (err) {
-            info('Complete your profile first!');
-
-            navigate('/my-profile/edit')
+            error(err.message);
         }
     };
 
@@ -77,9 +80,11 @@ export function useNewsFeed() {
     });
 
     const handleSubmitLike = async (postId, userId) => {
+
+        if (!isAuth) return info('You need to be logged in.');
+
         if (!firstName || !lastName) {
             info('Complete your profile first!');
-
             return navigate('/my-profile/edit');
         }
 
@@ -94,13 +99,12 @@ export function useNewsFeed() {
                 )
             );
         } catch (err) {
-            console.log(err.message);
-            info('You need to be logged in.');
+            error(err.message);
         }
     }
 
     const handleFavorite = async (postId, userId) => {
-        if (!userId) {
+        if (!isAuth) {
             return info('You need to be logged in.');
         };
 
@@ -116,7 +120,7 @@ export function useNewsFeed() {
             );
 
         } catch (err) {
-            console.log(err.message);
+            error(err.message);
         };
 
     }
