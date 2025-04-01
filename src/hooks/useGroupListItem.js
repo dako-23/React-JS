@@ -1,6 +1,7 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UserContext } from "../contexts/UserContext.jsx";
+import { useToast } from "./useToast.js";
 
 export default function useGroupListItem(editGroup, isJoined, _id, isLocked) {
 
@@ -10,6 +11,7 @@ export default function useGroupListItem(editGroup, isJoined, _id, isLocked) {
     const buttonRef = useRef(null);
     const navigate = useNavigate();
     const { isAdmin } = useContext(UserContext);
+    const { info, warn } = useToast();
 
     useEffect(() => {
         const handleClickOutside = (event) => {
