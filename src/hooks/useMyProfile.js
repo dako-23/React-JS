@@ -8,39 +8,41 @@ import { useToast } from './useToast.js';
 export function useMyProfile(userId) {
 
     const { updateUserPartial } = useContext(UserContext)
-
-    const [isLocked, setIsLocked] = useState(false);
-    const [showNotify, setShowNotify] = useState(false)
-    const [showNotifyErr, setShowNotifyErr] = useState(false)
+    const [showNotify, setShowNotify] = useState(false);
+    const [showNotifyErr, setShowNotifyErr] = useState(false);
     const [user, setUser] = useState([]);
-    const { createProfileInfo } = useCreateProfileInfo()
-    const navigate = useNavigate()
-    const { info } = useToast()
+    const { createProfileInfo } = useCreateProfileInfo();
+    const navigate = useNavigate();
+    const { info } = useToast();
 
     const handleSubmitForm = async (prevState, formData) => {
-        setIsLocked(true)
 
         const updateData = Object.fromEntries(formData);
 
-        updateUserPartial({ imageUrl: updateData.imageUrl, firstName: updateData.firstName, lastName: updateData.lastName })
+        const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
         try {
-            const result = await createProfileInfo(userId, updateData)
-            setUser(result)
+            const result = await createProfileInfo(userId, updateData);
+            setUser(result);
 
-            setTimeout(() => (setIsLocked(false), setShowNotify(true)), 1000);
-            setTimeout(() => (info('Redirect...')), 1850);
-            setTimeout(() => (navigate('/')), 3000);
+            await delay(500);
+            setShowNotify(true);
 
+            await delay(850);
+            info('Redirect...');
+
+            await delay(1150);
+            navigate('/');
         } catch (err) {
-            setTimeout(() => {
-                setIsLocked(false);
-                setShowNotifyErr(true);
-            }, 1500);
+            await delay(1500);
+            setShowNotifyErr(true);
         }
+
+        updateUserPartial({ imageUrl: updateData.imageUrl, firstName: updateData.firstName, lastName: updateData.lastName })
+
     }
 
-    const [values, FormAction, isPending] = useActionState(handleSubmitForm, { firstName: '', lastName: '', address: '', imageUrl: '' })
+    const [_, FormAction, isPending] = useActionState(handleSubmitForm, { firstName: '', lastName: '', address: '', imageUrl: '' })
 
     const { getUser } = useGetUser()
 
@@ -52,7 +54,6 @@ export function useMyProfile(userId) {
     }, [fetchedUser]);
 
     return {
-        isLocked,
         showNotify,
         showNotifyErr,
         user,
@@ -60,6 +61,7 @@ export function useMyProfile(userId) {
         setShowNotify,
         setShowNotifyErr,
         loading,
+        isPending
     }
 
 }

@@ -9,7 +9,7 @@ import { useMyProfile } from '../../hooks/useMyProfile.js';
 
 export default function MyProfile() {
     const { _id: userId, email, } = useContext(UserContext);
-    const { FormAction, isLocked, showNotify, showNotifyErr, user, setShowNotify, setShowNotifyErr, loading,} = useMyProfile(userId)
+    const { FormAction, isLocked, showNotify, showNotifyErr, user, setShowNotify, setShowNotifyErr, loading, isPending} = useMyProfile(userId)
     const navigate = useNavigate()
 
     return (
@@ -33,7 +33,7 @@ export default function MyProfile() {
                         user={user}
                         email={email}
                         FormAction={FormAction}
-                        isLocked={isLocked}
+                        isLocked={isPending}
                         onCancel={() => navigate('/')}
                     />
                 </>
