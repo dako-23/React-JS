@@ -9,7 +9,11 @@ export const useAdminApi = () => {
     }
 
     const getAllUsers = async () => {
-        return request.get(`${API_URL}/all`);
+        return request.get(`${API_URL}/all-users`);
+    };
+
+    const getAllPartners = async () => {
+        return request.get(`${API_URL}/all-partners`);
     };
 
     const blockUser = async (userId) => {
@@ -19,10 +23,19 @@ export const useAdminApi = () => {
     const makeAdmin = async (userId) => {
         return request.patch(`${API_URL}/${userId}/make-admin`);
     }
+
+    const createPartner = async (postData) => {
+        return request.post(
+            `${API_URL}/partner-create`,
+            postData
+        );
+    };
     return {
         getStats,
         getAllUsers,
         blockUser,
-        makeAdmin
+        makeAdmin,
+        getAllPartners,
+        createPartner
     }
 }

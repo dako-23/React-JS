@@ -2,9 +2,9 @@ import { useEffect, useState } from "react";
 import { useAdminApi } from "../api/adminApi";
 import { useToast } from "./useToast";
 
-export default function useAdmin() {
+export default function useUsers() {
     const [users, setUsers] = useState([]);
-    const [search, setSearch] = useState('');
+    const [userSearch, setUserSearch] = useState('');
 
     const { error, info } = useToast();
     const { blockUser, makeAdmin, getAllUsers } = useAdminApi();
@@ -19,7 +19,7 @@ export default function useAdmin() {
 
     const filteredPosts = users
         .filter((p) =>
-            p.username.toLowerCase().includes(search.toLowerCase())
+            p.username.toLowerCase().includes(userSearch.toLowerCase())
         )
 
     const handleToggleBlock = async (userId) => {
@@ -63,7 +63,7 @@ export default function useAdmin() {
         users,
         setUsers,
         filteredPosts,
-        setSearch,
-        search
+        userSearch,
+        setUserSearch
     }
 }

@@ -5,7 +5,7 @@ import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer, LineChart, L
 import Loader from "../Loader.jsx";
 import { useToast } from "../../hooks/useToast.js";
 import StatCard from "./StatCard.jsx";
-import UserTable from "./user-table/UserTable.jsx";
+import AdminTable from "./AdminTable.jsx";
 
 export default function AdminDashboard() {
 
@@ -30,9 +30,10 @@ export default function AdminDashboard() {
         { name: 'Admins', value: stats.users.admins },
         { name: 'Posts', value: stats.posts.total },
         { name: 'Groups', value: stats.groups.total },
+        { name: 'Partners', value: stats.partners.total },
         { name: 'Locked Groups', value: stats.groups.locked },
         { name: 'Favorites', value: stats.favorites },
-        { name: 'Reviews', value: stats.reviews.total }
+        { name: 'Reviews', value: stats.reviews.total },
     ];
 
     return (
@@ -48,9 +49,10 @@ export default function AdminDashboard() {
                     <StatCard title="Admins" value={stats.users.admins} />
                     <StatCard title="Total Posts" value={stats.posts.total} />
                     <StatCard title="Groups" value={stats.groups.total} />
+                    <StatCard title="Partners" value={stats.partners.total} />
                     <StatCard title="Locked Groups" value={stats.groups.locked} />
-                    <StatCard title="Favorites" value={stats.favorites} />
                     <StatCard title="Avg. Rating" value={stats.reviews.avgRating.toFixed(1)} />
+                    <StatCard title="Favorites" value={stats.favorites} />
                 </div>
 
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-10">
@@ -81,7 +83,7 @@ export default function AdminDashboard() {
                     </div>
                 </div>
             </motion.div>
-            <UserTable />
+            <AdminTable />
         </div>
     );
 }
