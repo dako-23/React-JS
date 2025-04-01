@@ -25,7 +25,8 @@ export default function NewsFeed() {
         handleSubmitLike,
         handleFavorite,
         filterOption,
-        setFilterOption
+        setFilterOption,
+        isCommentPending
     } = useNewsFeed()
 
 
@@ -84,6 +85,7 @@ export default function NewsFeed() {
                         toggleComments={toggleComments}
                         handleSubmitLike={handleSubmitLike}
                         handleFavorite={handleFavorite}
+                        isCommentPending={isCommentPending}
                     />
                 </div>
             </>)}

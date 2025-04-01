@@ -2,6 +2,7 @@ import { useActionState, useContext, useState } from "react";
 import { UserContext } from "../contexts/UserContext.jsx";
 import { usePost, usePostGetAll } from "../api/postApi.js";
 import { useToast } from "./useToast.js";
+import { useNavigate } from "react-router-dom";
 
 export function useNewsFeed() {
     const [search, setSearch] = useState("");
@@ -12,8 +13,121 @@ export function useNewsFeed() {
 
     const { firstName, lastName, imageUrl: imageUrlAuthor, _id: userId } = useContext(UserContext);
     const { create, createComment, like, addToFavorite } = usePost()
-    const { posts, loading, setPosts, getAll } = usePostGetAll()
-    const { error, info, success, warn } = useToast();
+    const { posts, loading, setPosts } = usePostGetAll()
+    const { info } = useToast();
+    const navigate = useNavigate();
+
+
+    const handleSubmitPost = async (_, formData) => {
+
+        const values = Object.fromEntries(formData);
+        const postData = {
+            ...values,
+            firstName,
+            lastName,
+            imageUrlAuthor
+        }
+
+        try {
+            const newPost = await create(postData);
+
+            setPosts((state) => [newPost, ...state]);
+
+            setShowPostForm(false);
+        } catch (err) {
+            console.log(err);
+        }
+    };
+
+    const [__, postAction, isPostPending] = useActionState(handleSubmitPost, {
+        content: "",
+        imageUrl: "",
+    });
+
+    const handleSubmitComment = async (_, formData) => {
+        const values = Object.fromEntries(formData);
+        const commentData = {
+            ...values,
+            firstName,
+            lastName,
+            imageUrlComment: imageUrlAuthor
+        }
+        const postId = commentData.postId
+
+        try {
+            const newComment = await createComment(commentData, postId);
+
+            setPosts((prevPosts) =>
+                prevPosts.map(post =>
+                    post._id === postId
+                        ? { ...post, comments: [newComment, ...post.comments] }
+                        : post
+                )
+            );
+
+        } catch (err) {
+            info('Complete your profile first!');
+
+            navigate('/my-profile/edit')
+        }
+    };
+
+    const [_, commentAction, isCommentPending] = useActionState(handleSubmitComment, {
+        text: "",
+    });
+
+    const handleSubmitLike = async (postId, userId) => {
+        if (!firstName || !lastName) {
+            info('Complete your profile first!');
+
+            return navigate('/my-profile/edit');
+        }
+
+        try {
+            const likeInfo = await like(postId, userId)
+
+            setPosts((prevPosts) =>
+                prevPosts.map((post) =>
+                    post._id === postId
+                        ? { ...likeInfo, isFavorited: post.isFavorited }
+                        : post
+                )
+            );
+        } catch (err) {
+            console.log(err.message);
+            info('You need to be logged in.');
+        }
+    }
+
+    const handleFavorite = async (postId, userId) => {
+        if (!userId) {
+            return info('You need to be logged in.');
+        };
+
+        try {
+            await addToFavorite(postId, userId)
+
+            setPosts((prevPosts) =>
+                prevPosts.map((post) =>
+                    post._id === postId
+                        ? { ...post, isFavorited: !post.isFavorited }
+                        : post
+                )
+            );
+
+        } catch (err) {
+            console.log(err.message);
+        };
+
+    }
+
+    const transition = { duration: 0.3, ease: "easeInOut" };
+
+    const fadeInUp = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition,
+    };
 
     const filteredPosts = posts
         .filter((p) =>
@@ -36,109 +150,6 @@ export function useNewsFeed() {
         }));
     };
 
-    const handleSubmitPost = async (prevState, formData) => {
-
-        const values = Object.fromEntries(formData);
-        const postData = {
-            ...values,
-            firstName,
-            lastName,
-            imageUrlAuthor
-        }
-
-        try {
-            const newPost = await create(postData);
-
-            setPosts((state) => [newPost, ...state]);
-
-            setShowPostForm(false);
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
-    const [postValues, postAction, isPostPending] = useActionState(handleSubmitPost, {
-        content: "",
-        imageUrl: "",
-    });
-
-    const handleSubmitComment = async (prevState, formData) => {
-
-        const values = Object.fromEntries(formData);
-        const commentData = {
-            ...values,
-            firstName,
-            lastName,
-            imageUrlComment: imageUrlAuthor
-        }
-        const postId = commentData.postId
-
-
-        try {
-            const newComment = await createComment(commentData, postId);
-
-            setPosts((prevPosts) =>
-                prevPosts.map(post =>
-                    post._id === postId
-                        ? { ...post, comments: [newComment, ...post.comments] }
-                        : post
-                )
-            );
-
-        } catch (err) {
-            error(err.message);
-        }
-    };
-
-    const handleSubmitLike = async (postId, userId) => {
-        try {
-            const likeInfo = await like(postId, userId)
-
-            setPosts((prevPosts) =>
-                prevPosts.map((post) =>
-                    post._id === postId ? likeInfo : post
-                )
-            );
-        } catch (err) {
-            console.log(err.message);
-            info('You need to be logged in.');
-        }
-    }
-
-    const handleFavorite = async (postId, userId) => {
-        try {
-            if (!userId) {
-                return info('You need to be logged in.');
-            };
-
-            await addToFavorite(postId, userId)
-
-            setPosts((prevPosts) =>
-                prevPosts.map((post) =>
-                    post._id === postId
-                        ? { ...post, isFavorited: !post.isFavorited }
-                        : post
-                )
-            );
-
-        } catch (err) {
-            console.log(err.message);
-        };
-
-    }
-
-    const [Commentvalues, commentAction, isCommentPending] = useActionState(handleSubmitComment, {
-        text: "",
-    });
-
-    const transition = { duration: 0.3, ease: "easeInOut" };
-
-    const fadeInUp = {
-        initial: { opacity: 0, y: 20 },
-        animate: { opacity: 1, y: 0 },
-        transition,
-    };
-
     return {
         filteredPosts,
         postAction,
@@ -158,7 +169,8 @@ export function useNewsFeed() {
         handleSubmitLike,
         handleFavorite,
         filterOption,
-        setFilterOption
+        setFilterOption,
+        isCommentPending
     }
 
 }

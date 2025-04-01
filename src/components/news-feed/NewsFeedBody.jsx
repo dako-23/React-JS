@@ -15,7 +15,8 @@ export default function NewsFeedBody({
     expandedComments,
     toggleComments,
     handleSubmitLike,
-    handleFavorite
+    handleFavorite,
+    isCommentPending
 }) {
     const { _id: userId } = useContext(UserContext)
 
@@ -127,6 +128,7 @@ export default function NewsFeedBody({
                             commentAction={commentAction}
                             expandedComments={expandedComments}
                             fadeInUp={fadeInUp}
+                            isCommentPending={isCommentPending}
                         />
                     </motion.div >
                 ))
