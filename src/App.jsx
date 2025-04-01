@@ -15,7 +15,6 @@ const AboutPage = lazy(() => import('./components/about/About.jsx'));
 const Reviews = lazy(() => import('./components/reviews/Reviews.jsx'));
 const MyProfile = lazy(() => import('./components/my-profile/MyProfile.jsx'));
 const AuthGuard = lazy(() => import('./components/guards/AuthGuard.jsx'));
-const GuestGuard = lazy(() => import('./components/guards/GuestGuard.jsx'));
 const AdminGuard = lazy(() => import('./components/guards/AdminGuard.jsx'));
 const Footer = lazy(() => import('./components/Footer.jsx'));
 const NewsFeed = lazy(() => import('./components/news-feed/NewsFeed.jsx'));
@@ -39,14 +38,12 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/reviews" element={<Reviews />} />
             <Route path="*" element={<NotFound />} />
-            <Route element={<GuestGuard />}>
-              <Route path="/users/login" element={<Login />} />
-              <Route path="/users/register" element={<Register />} />
-            </Route>
+            <Route path="/users/login" element={<Login />} />
+            <Route path="/users/register" element={<Register />} />
             <Route element={<AuthGuard />}>
+              <Route path="/my-profile/edit" element={<MyProfile />} />
               <Route path="/users/change-password" element={<ChangePassword />} />
               <Route path="/groups/:id/chat" element={<GroupChat />} />
-              <Route path="/my-profile/edit" element={<MyProfile />} />
               <Route path="/my-profile/:id/groups" element={<MyGroups />} />
             </Route>
             <Route element={<AdminGuard />}>
