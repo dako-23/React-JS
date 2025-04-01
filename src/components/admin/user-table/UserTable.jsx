@@ -32,7 +32,7 @@ export default function UserTable() {
                             <th className="p-3">Username</th>
                             <th className="p-3">First Name</th>
                             <th className="p-3">Last Name</th>
-                            <th className="p-3">Last Name</th>
+                            <th className="p-3">Email</th>
                             <th className="p-3">Actions</th>
                         </tr>
                     </thead>
