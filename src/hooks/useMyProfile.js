@@ -15,7 +15,7 @@ export function useMyProfile(userId) {
     const navigate = useNavigate();
     const { info } = useToast();
 
-    const handleSubmitForm = async (prevState, formData) => {
+    const handleSubmitForm = async (_, formData) => {
 
         const updateData = Object.fromEntries(formData);
 
@@ -34,7 +34,6 @@ export function useMyProfile(userId) {
             await delay(1150);
             navigate('/');
         } catch (err) {
-            await delay(1500);
             setShowNotifyErr(true);
         }
 
