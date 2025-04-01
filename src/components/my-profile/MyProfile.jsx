@@ -8,8 +8,9 @@ import ErrorToast from '../notifications/ErrorToast.jsx';
 import { useMyProfile } from '../../hooks/useMyProfile.js';
 
 export default function MyProfile() {
+    
     const { _id: userId, email, } = useContext(UserContext);
-    const { FormAction, isLocked, showNotify, showNotifyErr, user, setShowNotify, setShowNotifyErr, loading, isPending} = useMyProfile(userId)
+    const { FormAction, showNotify, showNotifyErr, user, setShowNotify, setShowNotifyErr, loading, isPending } = useMyProfile(userId)
     const navigate = useNavigate()
 
     return (
