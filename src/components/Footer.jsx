@@ -43,9 +43,10 @@ export default function Footer() {
                         <p className="text-sm text-gray-400">A place where moms connect, share, and support each other.</p>
                     </div>
                     <div className="flex space-x-6 text-gray-400">
+                        <Link to="/" className="hover:text-white">Home</Link>
                         <Link to="/about" className="hover:text-white">About</Link>
                         <Link to="/news-feed" className="hover:text-white">Community</Link>
-                        <Link to="/" className="hover:text-white">Home</Link>
+                        <Link to="/terms-and-conditions" className="hover:text-white">Terms & Conditions</Link>
                     </div>
                     <div className="flex space-x-4 mt-4 md:mt-0">
                         <a href="https://web.telegram.org/" target="_blank" rel="noopener noreferrer">
