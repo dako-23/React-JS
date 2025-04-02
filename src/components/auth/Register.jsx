@@ -84,6 +84,21 @@ export default function Register() {
                         err={error.rePassword}
                     />}
 
+                    <div className="flex items-center space-x-2 mt-2">
+                        <input
+                            type="checkbox"
+                            name="agreeToTerms"
+                            id="agreeToTerms"
+                            className="w-4 h-4 text-lime-600 border-gray-300 rounded focus:ring-lime-500"
+                        />
+                        <label htmlFor="agreeToTerms" className="text-sm text-gray-700">
+                            I agree to the <Link to="/terms-and-conditions" className="text-lime-700 font-semibold underline">Terms & Conditions</Link>
+                        </label>
+                    </div>
+                    {error?.agreeToTerms && (
+                        <p className="text-sm text-red-500 mt-1">{error.agreeToTerms}</p>
+                    )}
+
                     <motion.button
                         whileHover={{ scale: 1.05 }}
                         whileTap={{ scale: 0.95 }}

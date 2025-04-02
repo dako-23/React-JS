@@ -31,6 +31,8 @@ export default function useAuth() {
 
     const registerSubmitHandler = async (prevState, formData) => {
         const valuesRegister = Object.fromEntries(formData);
+        valuesRegister.agreeToTerms = formData.get("agreeToTerms") === "on";
+        
         const userData = { username: valuesRegister.username, email: valuesRegister.email, password: valuesRegister.password };
 
         try {
@@ -64,6 +66,7 @@ export default function useAuth() {
         email: '',
         password: '',
         rePassword: '',
+        agreeToTerms: false
     });
 
     const LoginSubmitHandler = async (prevState, formData) => {

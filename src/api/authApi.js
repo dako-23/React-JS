@@ -31,6 +31,9 @@ export const useRegister = () => {
             .string()
             .oneOf([yup.ref("password"), null], "Passwords do not match")
             .required("Confirm password is required"),
+        agreeToTerms: yup
+            .boolean()
+            .oneOf([true], "You must agree to the Terms & Conditions")
     });
 
     const register = async (userData) => {
