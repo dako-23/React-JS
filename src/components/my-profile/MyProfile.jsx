@@ -27,7 +27,7 @@ export default function MyProfile() {
                         />}
                     {showNotifyErr &&
                         <ErrorToast
-                            message={'Profile update failed!'}
+                            message={'First name and last name are required once set.'}
                             show={setShowNotifyErr}
                         />}
                     <ProfileForm

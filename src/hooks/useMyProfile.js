@@ -18,6 +18,11 @@ export function useMyProfile(userId) {
     const handleSubmitForm = async (_, formData) => {
 
         const updateData = Object.fromEntries(formData);
+        const { firstName, lastName } = updateData;
+
+        if (!firstName || !lastName || firstName.trim() === '' || lastName.trim() === ''){
+            return info('First Name & Last Name is required.')
+        }
 
         const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
 
