@@ -29,7 +29,7 @@ export default function Register() {
                     <input
                         type="text"
                         name="username"
-                        placeholder="Username"
+                        placeholder="Username*"
                         className={`w-full p-3 border rounded-lg ${error?.username ? "border-red-500" : "border-gray-300"}`}
                         defaultValue={values.username}
                     />
@@ -40,7 +40,7 @@ export default function Register() {
                     <input
                         type="email"
                         name="email"
-                        placeholder="Email"
+                        placeholder="Email*"
                         className={`w-full p-3 border rounded-lg ${error?.email ? "border-red-500" : "border-gray-300"}`}
                         defaultValue={values.email}
                     />
@@ -52,7 +52,7 @@ export default function Register() {
                         <input
                             type={showPassword.current ? 'text' : 'password'}
                             name="password"
-                            placeholder="Password"
+                            placeholder="Password*"
                             className={`w-full p-3 pr-10 border rounded-lg ${error?.password ? "border-red-500" : "border-gray-300"}`}
                         />
                         <span
@@ -70,7 +70,7 @@ export default function Register() {
                         <input
                             type={showPassword.new ? 'text' : 'password'}
                             name="rePassword"
-                            placeholder="Password"
+                            placeholder="Confirm Password*"
                             className={`w-full p-3 pr-10 border rounded-lg ${error?.rePassword ? "border-red-500" : "border-gray-300"}`}
                         />
                         <span

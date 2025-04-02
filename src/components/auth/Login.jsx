@@ -27,7 +27,7 @@ export default function Login() {
             <input
               type="email"
               name="email"
-              placeholder="Email"
+              placeholder="Email*"
               className={`w-full p-3 border rounded-lg ${error?.email ? "border-red-500" : "border-gray-300"}`}
               defaultValue={values.email} />
             {error?.email && <AuthError
@@ -37,7 +37,7 @@ export default function Login() {
               <input
                 type={showPassword.current ? 'text' : 'password'}
                 name="password"
-                placeholder="Password"
+                placeholder="Password*"
                 className={`w-full p-3 pr-10 border rounded-lg ${error?.password ? "border-red-500" : "border-gray-300"}`}
               />
               <span

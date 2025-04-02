@@ -36,7 +36,7 @@ export default function ProfileForm({
             </div>
             <form action={FormAction} className="space-y-4">
                 <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700">First Name</label>
+                    <label className="block text-sm font-medium text-gray-700">First Name*</label>
                     <input
                         type="text"
                         className={`mt-1 w-full p-2 border rounded-lg ${isLocked ? "bg-gray-100 cursor-not-allowed" : ""}`}
@@ -47,7 +47,7 @@ export default function ProfileForm({
                     />
                 </div>
                 <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700">Last Name</label>
+                    <label className="block text-sm font-medium text-gray-700">Last Name*</label>
                     <input
                         type="text"
                         className={`mt-1 w-full p-2 border rounded-lg ${isLocked ? "bg-gray-100 cursor-not-allowed" : ""}`}
@@ -58,7 +58,7 @@ export default function ProfileForm({
                     />
                 </div>
                 <div className="mt-4">
-                    <label className="block text-sm font-medium text-gray-700">Email</label>
+                    <label className="block text-sm font-medium text-gray-700">Email*</label>
                     <input
                         type="email"
                         className="mt-1 w-full p-2 border rounded-lg bg-gray-100 cursor-not-allowed"

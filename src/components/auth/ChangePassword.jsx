@@ -27,7 +27,7 @@ export default function ChangePassword() {
                             <input
                                 type={showPassword.current ? 'text' : 'password'}
                                 name="currentPassword"
-                                placeholder="Current Password"
+                                placeholder="Current Password*"
                                 className={`w-full p-3 pr-10 border rounded-lg ${error?.currentPassword ? "border-red-500" : "border-gray-300"}`}
                             />
                             <span
@@ -45,7 +45,7 @@ export default function ChangePassword() {
                             <input
                                 type={showPassword.new ? 'text' : 'password'}
                                 name="newPassword"
-                                placeholder="New Password"
+                                placeholder="New Password*"
                                 className={`w-full p-3 border rounded-lg ${error?.newPassword ? "border-red-500" : "border-gray-300"}`}
                             />
                             <span
@@ -62,7 +62,7 @@ export default function ChangePassword() {
                             <input
                                 type={showPassword.confirm ? 'text' : 'password'}
                                 name="confirmNewPassword"
-                                placeholder="Confirm New Password"
+                                placeholder="Confirm New Password*"
                                 className={`w-full p-3 border rounded-lg ${error?.confirmNewPassword ? "border-red-500" : "border-gray-300"}`}
                             />
                             <span
