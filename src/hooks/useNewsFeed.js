@@ -23,6 +23,8 @@ export function useNewsFeed() {
             await navigate('/my-profile/edit')
             return
         }
+
+        return true
     }
 
     const handleSubmitPost = async (_, formData) => {
