@@ -47,20 +47,15 @@ export default function useGroupListItem(editGroup, isJoined, _id, isLocked) {
 
     const handleClick = () => {
 
+        if (isLocked) {
+            return isAdmin ? navigate(`/groups/${_id}/chat`) : warn('This group is locked!');
+        }
+
         if (!isJoined) {
             return info('You need to join the group first!');
         }
 
-        if (isLocked) {
-            if (isAdmin) {
-                return navigate(`/groups/${_id}/chat`);
-            }
-
-            return warn('This group is locked!');
-        }
-
         navigate(`/groups/${_id}/chat`);
-
     };
 
     return {
