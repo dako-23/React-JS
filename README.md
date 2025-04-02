@@ -1,100 +1,115 @@
 # Momma's Gang
 
-Momma's Gang
-This is a responsive React and Tailwind CSS project that I created as part of my final project for SoftUni.
+**Momma's Gang** is a modern, fully responsive social platform designed specifically for moms. This is my final React project from SoftUni, built with real-world features, intuitive UX, and a beautiful UI.
 
-- Technologies Used
+## ✨ Technologies Used
 
-- Front-End Stack
+### 🧩 Front-End Stack
+- **React.js**
+- **Vite**
+- **Tailwind CSS**
+- **Framer Motion** – for smooth animations
+- **React Icons** – icon support
+- **React Router DOM** – routing
+- **React Toastify** – notifications
+- **Yup** – form validation
+- **EmailJS** – client-side email sending
+- **Recharts** – admin dashboard charts
 
-2. React.js 
+### 🧠 State & Real-Time Features
+- **Socket.io** – real-time chat and active user updates
+- **Local Storage** – persistent user sessions
+- **React Hooks** – efficient and clean state logic
 
-3. Vite 
+## 🚀 Getting Started
 
-4. Tailwind CSS 
+1. Clone the repository:  
+   `git clone https://github.com/dako-23/React-JS`
 
-5. Framer Motion 
+2. Install dependencies:  
+   `npm install`
 
-6. React Icons 
+3. Start the development server:  
+   `npm run dev`
 
-7. PostCSS 
+4. Open in browser:  
+   `http://localhost:5173`
 
-- State & Real-Time Features
+## 🌍 Deployment
+- Front-end is deployed via **Firebase Hosting**: [https://dako23.web.app](https://dako23.web.app)
+- Back-end runs on **Render.com** (see [backend repo](https://github.com/dako-23/Server))
 
-1. Socket.io – Live chat & active user updates
+> ⚠️ Note: Third-party cookies must be enabled for proper authentication via cookies.
 
-2. Local Storage – Persistent user sessions
+---
 
-3. React Hooks 
+## 💡 Features
 
-# Getting Started
+### 🗂️ Group Management
+- Create and manage groups
+- Join/Leave group chats
+- Group chat locking by admins
+- Pagination
 
-1. To get a local copy up and running, follow these steps:
+### 💬 Real-Time Chat
+- Live chat with Socket.io
+- Active users displayed in real-time
+- Admins can lock groups to restrict chat access
 
-- Clone the repository git clone https://github.com/dako-23/React-JS
+### 👥 User System
+- Secure JWT authentication
+- Role-based logic (Admins/Users)
+- Block/Unblock users from admin panel
 
-- Install dependencies npm install
+### 📰 News Feed
+- Posts from all users (with image, name)
+- Like, comment, and favorite posts
+- See who liked a post
+- Delete your own posts
+- Search bar & filtering by content
 
-- Start the development server npm run dev
-
-- Open http://localhost:5173 to view it in the browser.
-
-2. Deployment & Performance
-- The client-side is hosted on Firebase Hosting - https://dako23.web.app/
-
-- The backend is hosted on Render.com, managing real-time interactions and database.
-
-- Users may need to enable third-party cookies for smooth authentication.
-
-3. Key Features
-- Group Creation & Management – Users can create and manage groups.
-
-- Real-Time Chat – Powered by Socket.io, users can send and receive messages instantly.
-
-- User Authentication – Secure JWT-based authentication with session cookies.
-
-- Live User Tracking – See active users in group chats in real-time.
-
-- Pagination & Search – Navigate through groups easily with a smooth pagination system.
-
-- Fully Responsive Design – Optimized for mobile, tablet, and desktop.
-
-- Animations & Effects – Smooth UI interactions with Framer Motion and React Typed.
-
-# Back-End Architecture of the Application
-
-- The back-end of this application is built using Express.js. It handles all API requests, manages real-time WebSocket connections, and communicates with the database to store and retrieve data.
-
-1. Server Setup & Deployment
-The application runs on an Express.js server, extended with an HTTP server to enable real-time communication via Socket.io. The back-end is deployed on Render.com - https://github.com/dako-23/Server ensuring a scalable and reliable hosting solution.
-
-Note: Since Render uses dynamic IPs and strict CORS policies, users may need to enable third-party cookies in their browser to avoid authentication issues when setting session cookies.
-
-2. Database & Data Management
-For persistent storage, the application uses MongoDB. The database is hosted remotely, ensuring data persistence and availability.
-
-4. API Endpoints
-The server exposes multiple RESTful API endpoints, including:
-
-- User Authentication (Register/Login/Logout) – Uses JWT-based authentication with secure HTTP-only cookies.
-
-- Group Management – Allows users to create, update, delete, and join/leave groups.
-
-- Chat System – Fetches chat history, sends messages, and handles real-time updates via WebSockets.
-
-- All API requests are secured using authentication and validation middleware.
-
-5. Security & Middleware
-- The application ensures robust security through:
-
-- JWT Authentication – Used for protected routes and session management.
-
-- CORS Configuration – Allows cross-origin requests, ensuring seamless interaction between the front-end and back-end.
-
-- Middleware Functions – Handle request validation, error management, and cookie parsing for authentication.
-
-- Important: Some browsers (e.g. Google Chrome) may block third-party cookies by default. To ensure a smooth authentication experience, users should allow third-party cookies in their browser settings.
+### 🌟 Reviews System
+- Add a review with a star rating
+- Leave your feedback 😊
+- **View All Reviews** button to explore reviews from other users
+- Average rating displayed in the admin dashboard
+- Pagination
 
 
+### 👤 Profile Dropdown
+- Custom user dropdown via avatar
+- Quick links to:
+  - My Groups
+  - Edit Profile
+  - Change Password
+  - Logout
 
+### 📍 About Page
+- Integrated **Google Maps**
+- Contact form with **EmailJS** (sends directly to my email inbox)
+
+### 📊 Admin Dashboard
+- Graphs with **Recharts**
+- Statistics for:
+  - Total users
+  - Admins
+  - Posts
+  - Groups
+  - Partners
+  - Locked groups
+  - Avg. rating reviews
+  - Favorites
+- Manage users (block/make admin)
+- Manage partners (add/delete)
+
+---
+
+## ⚙️ Backend Overview
+
+Built with **Express.js** and **MongoDB**:
+- User auth, group and post management, chat functionality
+- API secured with JWT, cookie-parser, and custom middleware
+- Real-time chat over WebSockets (Socket.io)
+
+> Backend repo: [https://github.com/dako-23/Server](https://github.com/dako-23/Server)
 
