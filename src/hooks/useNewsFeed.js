@@ -12,7 +12,6 @@ export function useNewsFeed() {
     const [showPostForm, setShowPostForm] = useState(false);
     const [isCommentPendingId, setIsCommentPendingId] = useState(null);
 
-
     const { firstName, lastName, imageUrl: imageUrlAuthor, _id: userId, isAuth } = useContext(UserContext);
     const { create, createComment, like, addToFavorite, deletePost } = usePost()
     const { posts, loading, setPosts } = usePostGetAll()
@@ -42,6 +41,10 @@ export function useNewsFeed() {
             lastName,
             imageUrlAuthor
         }
+
+        const { content } = values
+
+        if (!content || content.trim() === '') return info('Write something...')
 
         try {
             const newPost = await create(postData);
