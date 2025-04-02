@@ -17,9 +17,21 @@ export function useNewsFeed() {
     const { info, error, success } = useToast();
     const navigate = useNavigate();
 
+    const userProfileValidate = async () => {
+        if (!firstName || !lastName || firstName.trim() === '' || lastName.trim() === '') {
+            info('Complete your profile first!');
+            await navigate('/my-profile/edit')
+            return
+        }
+    }
+
     const handleSubmitPost = async (_, formData) => {
+        const validUser = await userProfileValidate();
+
+        if (!validUser) return;
 
         const values = Object.fromEntries(formData);
+
         const postData = {
             ...values,
             firstName,
@@ -34,7 +46,8 @@ export function useNewsFeed() {
 
             setShowPostForm(false);
         } catch (err) {
-            console.log(err);
+            console.log(err.message);
+
         }
     };
 
@@ -44,12 +57,10 @@ export function useNewsFeed() {
     });
 
     const handleSubmitComment = async (_, formData) => {
-        if (!firstName || !lastName) {
+        const validUser = await userProfileValidate();
 
-            info('Complete your profile first!');
+        if (!validUser) return;
 
-            return navigate('/my-profile/edit');
-        }
         const values = Object.fromEntries(formData);
         const commentData = {
             ...values,
@@ -83,10 +94,9 @@ export function useNewsFeed() {
 
         if (!isAuth) return info('You need to be logged in.');
 
-        if (!firstName || !lastName) {
-            info('Complete your profile first!');
-            return navigate('/my-profile/edit');
-        }
+        const validUser = await userProfileValidate();
+
+        if (!validUser) return;
 
         try {
             const likeInfo = await like(postId, userId)
