@@ -38,7 +38,7 @@ export default function NewsFeedBody({
                     >
                         <button
                             onClick={() => handleFavorite(post._id, userId)}
-                            className="hover:text-blue-500 transition absolute top-3 right-10"
+                            className="hover:text-blue-500 transition absolute top-3 right-3"
                             title={post.isFavorited ? "Remove from favorites" : "Save to favorites"}
                         >
                             {post.isFavorited ? (
@@ -51,7 +51,7 @@ export default function NewsFeedBody({
                             <button
                                 type="button"
                                 onClick={() => handleDelete(post._id)}
-                                className="transition absolute top-3 right-3 text-red-600 hover:text-red-400"
+                                className="transition absolute top-3 right-10 text-red-600 hover:text-red-400"
                                 title="Delete post"
                             >
                                 <FaTrash className="text-xl" />
