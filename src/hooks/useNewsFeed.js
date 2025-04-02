@@ -10,6 +10,8 @@ export function useNewsFeed() {
     const [filterOption, setFilterOption] = useState("all");
     const [expandedComments, setExpandedComments] = useState({});
     const [showPostForm, setShowPostForm] = useState(false);
+    const [isCommentPendingId, setIsCommentPendingId] = useState(null);
+
 
     const { firstName, lastName, imageUrl: imageUrlAuthor, _id: userId, isAuth } = useContext(UserContext);
     const { create, createComment, like, addToFavorite, deletePost } = usePost()
@@ -73,6 +75,7 @@ export function useNewsFeed() {
         const postId = commentData.postId
 
         try {
+            setIsCommentPendingId(postId)
             const newComment = await createComment(commentData, postId);
 
             setPosts((prevPosts) =>
@@ -82,13 +85,14 @@ export function useNewsFeed() {
                         : post
                 )
             );
-
+            setIsCommentPendingId(null)
         } catch (err) {
             error(err.message);
+            setIsCommentPendingId(null)
         }
     };
 
-    const [_, commentAction, isCommentPending] = useActionState(handleSubmitComment, {
+    const [_, commentAction] = useActionState(handleSubmitComment, {
         text: "",
     });
 
@@ -208,7 +212,7 @@ export function useNewsFeed() {
         handleFavorite,
         filterOption,
         setFilterOption,
-        isCommentPending,
+        isCommentPending: isCommentPendingId,
         handleDelete
     }
 

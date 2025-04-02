@@ -17,7 +17,7 @@ export default function NewsFeedComments({
     return (
         <>
             <div className="space-y-3">
-                {isCommentPending 
+                {isCommentPending === postId
                     ?
                     <Loader />
                     :
