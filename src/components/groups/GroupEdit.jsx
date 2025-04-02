@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 const inputClass = 'w-full p-3 border rounded-lg focus:ring-2 focus:ring-lime-600'
 
 export default function GroupEdit({
-    onClose,
-    onEdit,
+    closeEditModal,
+    handleEditGroup,
     groupId
 }) {
     const [groupInfo, setGroupInfo] = useState([]);
@@ -37,17 +37,17 @@ export default function GroupEdit({
 
     const handleSubmitEdit = async (e) => {
         e.preventDefault();
+
         const formData = new FormData(e.target);
         const groupData = Object.fromEntries(formData);
 
         try {
             setLoading(true)
 
-            await onEdit(groupData);
+            await handleEditGroup(groupData);
 
             setLoading(false)
 
-            onClose();
         } catch (err) {
             error(err.message);
         }
@@ -61,7 +61,7 @@ export default function GroupEdit({
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.5 }}
                     className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50"
-                    onClick={onClose}
+                    onClick={closeEditModal}
                 >
                     <motion.div
                         className="bg-page-pattern p-6 rounded-xl shadow-xl w-full max-w-md"
@@ -87,7 +87,7 @@ export default function GroupEdit({
                                     </select>
                                     <input className={inputClass} id="imageUrl" name="imageUrl" type="text" placeholder="Image Url" defaultValue={groupInfo.imageUrl} />
                                     <div className="flex justify-between">
-                                        <button onClick={onClose} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600">Cancel</button>
+                                        <button onClick={closeEditModal} className="px-4 py-2 bg-gray-800 text-white rounded-lg hover:bg-gray-600">Cancel</button>
                                         <button className="px-4 py-2 bg-lime-600 text-white rounded-lg hover:bg-lime-700">Edit</button>
                                     </div>
                                 </form>

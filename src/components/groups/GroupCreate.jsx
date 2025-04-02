@@ -23,7 +23,6 @@ export default function GroupCreate({
 
             setIsLoading(false)
 
-            onClose()
         } catch (err) {
             error(err.message);
         }

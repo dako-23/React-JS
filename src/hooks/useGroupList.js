@@ -2,8 +2,9 @@ import { toast } from 'react-toastify';
 import { useGroup, useGroupGetAll } from '../api/groupApi';
 import { useToast } from './useToast.js';
 import { usePagination } from './usePagination.js';
+import { useState } from 'react';
 
-const { error, success, info, warn } = useToast()
+const { error, success, info } = useToast()
 
 export function useGroupsList(userId) {
 
@@ -23,9 +24,20 @@ export function useGroupsList(userId) {
     setJoinedGroups,
     loading,
   } = useGroupGetAll();
+
+  const [showCreateGroup, setShowCreateGroup] = useState(false);
+  const onClose = () => setShowCreateGroup(false)
+
   const { currentPage, totalPages, currentData, changePage } = usePagination(groups, 4);
 
   const createGroupHandler = async (groupData) => {
+
+    const { groupName, description, imageUrl, category } = groupData;
+
+    if (!groupName || !description || !imageUrl || !category) {
+      return info('Fields with * is required.')
+    }
+
     try {
       const newGroup = await create(groupData);
       setGroups((state) => [newGroup, ...state]);
@@ -35,6 +47,8 @@ export function useGroupsList(userId) {
       }
 
       success('Group created successfully!')
+
+      onClose()
 
       return newGroup;
     } catch (err) {
@@ -83,6 +97,7 @@ export function useGroupsList(userId) {
   };
 
   const editGroupHandler = async (updatedData, groupId) => {
+
     try {
       const result = await editGroup(groupId, updatedData);
 
@@ -95,6 +110,7 @@ export function useGroupsList(userId) {
       success('Group updated successfully!')
 
       return result;
+      
     } catch (err) {
       error('Error editing group !')
     }
@@ -122,7 +138,7 @@ export function useGroupsList(userId) {
   };
 
   const toggleLock = async (groupId) => {
-    
+
     try {
       await toggleLockGroup(groupId);
 
@@ -156,6 +172,9 @@ export function useGroupsList(userId) {
     editGroupHandler,
     deleteGroupHandler,
     toggleJoin,
-    toggleLock
+    toggleLock,
+    onClose,
+    setShowCreateGroup,
+    showCreateGroup
   };
 }

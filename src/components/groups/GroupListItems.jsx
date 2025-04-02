@@ -25,23 +25,23 @@ export default function GroupListItems({
     const isOwner = _ownerId === userId
 
     const {
-        closeShowCreateGroupHandler,
+        closeEditModal,
         handleClick,
         handleEditGroup,
         menuOpen,
-        showEditGroup,
+        showEditModal,
         setMenuOpen,
         buttonRef,
         menuRef,
-        setShowEditGroup,
+        setShowEditModal,
     } = useGroupListItem(editGroup, isJoined, _id, isLocked)
 
     return (
         <>
-            {showEditGroup && <GroupEdit
-                onClose={closeShowCreateGroupHandler}
+            {showEditModal && <GroupEdit
+                closeEditModal={closeEditModal}
                 groupId={_id}
-                onEdit={handleEditGroup}
+                handleEditGroup={handleEditGroup}
             />}
             <div
                 className="relative p-5 border border-gray-300 rounded-lg shadow-md cursor-pointer transition hover:shadow-lg bg-gradient-to-r from-lime-100 to-green-200"
@@ -100,7 +100,7 @@ export default function GroupListItems({
                                 {isOwner && <button
                                     onClick={(e) => {
                                         e.stopPropagation();
-                                        setShowEditGroup(true)
+                                        setShowEditModal(true)
                                     }}
                                     className="flex items-center w-full px-4 py-2 text-gray-800 hover:bg-gray-100"
                                 >

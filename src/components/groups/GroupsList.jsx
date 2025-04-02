@@ -12,7 +12,6 @@ import Pagination from "../pagination/Pagination.jsx";
 
 export default function GroupsList() {
     const { isAuth, _id: userId } = useContext(UserContext);
-    const [showCreateGroup, setShowCreateGroup] = useState(false);
 
     const {
         loading,
@@ -25,7 +24,10 @@ export default function GroupsList() {
         editGroupHandler,
         deleteGroupHandler,
         toggleJoin,
-        toggleLock
+        toggleLock,
+        onClose,
+        setShowCreateGroup,
+        showCreateGroup
     } = useGroupsList(userId);
 
     scrollToTop(currentPage);
@@ -62,6 +64,7 @@ export default function GroupsList() {
                             toggleLock={toggleLock}
                             deleteGroup={deleteGroupHandler}
                             editGroup={editGroupHandler}
+                            onClose={onClose}
                             {...group}
                         />
                     ))}
@@ -72,8 +75,8 @@ export default function GroupsList() {
                 totalPages={totalPages}
                 onChange={changePage} />
             {showCreateGroup && <GroupCreate
-                onClose={() => setShowCreateGroup(false)}
                 onSubmitCreate={createGroupHandler}
+                onClose={onClose}
             />}
         </motion.div >
     );

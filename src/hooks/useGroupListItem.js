@@ -6,7 +6,7 @@ import { useToast } from "./useToast.js";
 export default function useGroupListItem(editGroup, isJoined, _id, isLocked) {
 
     const [menuOpen, setMenuOpen] = useState(false)
-    const [showEditGroup, setShowEditGroup] = useState(null)
+    const [showEditModal, setShowEditModal] = useState(null)
     const menuRef = useRef(null);
     const buttonRef = useRef(null);
     const navigate = useNavigate();
@@ -32,14 +32,21 @@ export default function useGroupListItem(editGroup, isJoined, _id, isLocked) {
         };
     }, []);
 
-    const closeShowCreateGroupHandler = () => {
-        setShowEditGroup(null)
+    const closeEditModal = () => {
+        setShowEditModal(null)
     }
 
     const handleEditGroup = async (groupData) => {
+
+        const { groupName, description, imageUrl, category } = groupData;
+
+        if (!groupName || !description || !imageUrl || !category) {
+            return info('Fields with * is required.')
+        }
+
         try {
             await editGroup(groupData, _id);
-            setShowEditGroup(false);
+            setShowEditModal(false);
         } catch (err) {
             console.error('Error editing group:', err);
         }
@@ -60,14 +67,14 @@ export default function useGroupListItem(editGroup, isJoined, _id, isLocked) {
 
     return {
         menuOpen,
-        showEditGroup,
+        showEditModal,
+        setShowEditModal,
         handleClick,
         handleEditGroup,
-        closeShowCreateGroupHandler,
+        closeEditModal,
         setMenuOpen,
         buttonRef,
         menuRef,
-        setShowEditGroup
     }
 
 }
